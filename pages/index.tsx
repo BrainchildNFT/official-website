@@ -11,7 +11,7 @@ export default function Home() {
         <meta name="description" content=""/>
       </Head>
       <Layout>
-        <div className="bg-primary">
+        <div className="bg-light h-500">
           Here is the body of our project
         </div>
       </Layout>

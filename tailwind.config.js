@@ -26,6 +26,7 @@ module.exports = {
     },
     colors: {
       white: '#FFFFFF',
+      black: '#000000',
       primary: {
         DEFAULT: '#373839',
         50: '#343536',
@@ -57,7 +58,7 @@ module.exports = {
         400: '#D37100',
       },
       danger: {
-        DEFAULT: '#E54D4D',
+        DEFAULT: '#AF5F5F',
         50: '#FFEDED',
         75: '#FFA3A3',
         100: '#E54D4D',
@@ -97,14 +98,23 @@ module.exports = {
     fontSize: {
       ...range(minFontSize, maxFontSize).reduce((merged, f) => ({ ...merged, [f]: `${f}px`}), {})
     },
+    letterSpacing: {
+      tightest: '-.075em',
+      tighter: '-.05em',
+      normal: '0',
+      wider: '.05em',
+      widest: '.3em',
+    },
     spacing: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {})
     },
     maxWidth: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {})
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),
+      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {})
     },
     minWidth: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {})
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),
+      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {})
     },
     maxHeight: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),

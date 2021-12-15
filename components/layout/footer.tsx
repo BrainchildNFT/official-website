@@ -10,7 +10,7 @@ export function Footer() {
           <p className="text-14 font-Subjectivity font-bold text-white mb-20 mt-30 lg:mt-0 tracking-widest">COMPANY</p>
           <ul className="flex flex-col">
             <li className="py-10"><Link href="/about-us"><a>About Us</a></Link></li>
-            <li className="py-10"><Link href="/collections"><a>We're Hiring</a></Link></li>
+            <li className="py-10"><Link href="/collections"><a>We&apos;re Hiring</a></Link></li>
             <li className="py-10"><Link href="/about-us"><a>How It Works</a></Link></li>
           </ul>
         </div>

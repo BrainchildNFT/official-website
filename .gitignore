@@ -33,5 +33,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# IDE
+.idea
+
+# environment
+.env*.local
+
 # typescript
 *.tsbuildinfo
+
+# service worker generation
+public/sw.js*
+public/workbox-*

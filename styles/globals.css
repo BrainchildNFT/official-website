@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+html {
+  font-size: 20px;
+  font-family: Inter, Voyage, sans-serif;
+}
+
+.font-Subjectivity {
+  font-family: Subjectivity, sans-serif;
 }
 
 a {
@@ -15,6 +16,53 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+.btn {
+  @apply focus:outline-none focus:ring disabled:opacity-50 font-bold rounded-full disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-primary focus:ring-primary-75 text-white;
+}
+
+.btn-warning {
+  @apply bg-warning to-warning-75 focus:ring-warning-75 text-white;
+}
+
+.btn-danger {
+  @apply bg-danger focus:ring-danger-75 text-white;
+}
+
+.btn-white {
+  @apply bg-white focus:ring-light-75 text-primary;
+}
+
+.btn-light {
+  @apply bg-light focus:ring-light-75 text-light-500;
+}
+
+.btn-lg {
+  @apply px-60 py-15 text-20 rounded-full;
+}
+
+.btn-md {
+  @apply px-20 py-15 text-20 rounded-full;
+}
+
+.btn-sm {
+  @apply px-10 py-10 text-14 rounded-full;
+}
+
+.btn-mini {
+  height: 30px;
+  @apply px-5 py-5 text-10 rounded-full;
+}
+
+.border-gradient-light {
+  border-image: url('#') 1 round;
+  border-image-source: linear-gradient(270.16deg, rgba(255, 255, 255, 0.4) 1.04%, rgba(255, 255, 255, 0) 48.58%, rgba(255, 255, 255, 0.4) 100.31%);
+}
+
+.border-gradient-dark {
+  border-image: url('#') 1 round;
+  border-image-source: linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%);
 }

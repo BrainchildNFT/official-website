@@ -30,7 +30,8 @@ jobs:
           command: |
             ssh -o StrictHostKeyChecking=no ubuntu@3.144.88.18 \
             "echo Start deploy && \
-            cd ~/brainchildnft && \
+            cd ~/official-website && \
+            git checkout staging && \
             git pull && \
             npm i && \
             npm run build && \

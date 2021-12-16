@@ -53,13 +53,3 @@ jobs:
           privateKey: ${{ secrets.SSH_KEY }}
           debug: false
           command: /home/ubuntu/job/deploy.sh
-
-      - name: Slack Notify
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-        if: always() # Pick up events even if the job fails or is canceled.

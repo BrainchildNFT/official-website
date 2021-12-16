@@ -66,3 +66,13 @@ a {
   border-image: url('#') 1 round;
   border-image-source: linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%);
 }
+
+.dark-background-image {
+  @apply bg-secondary;
+  background-image: url('/assets/images/dark-background-tile.png');
+}
+
+.light-background-image {
+  @apply bg-light;
+  background-image: url('/assets/images/light-background-tile.png');
+}

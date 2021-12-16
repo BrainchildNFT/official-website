@@ -27,6 +27,7 @@ module.exports = {
     colors: {
       white: '#FFFFFF',
       black: '#000000',
+      transparent: 'rgba(0,0,0,0)',
       primary: {
         DEFAULT: '#373839',
         50: '#343536',
@@ -37,7 +38,7 @@ module.exports = {
         400: '#00857F',
       },
       secondary: {
-        DEFAULT: '#0A2540',
+        DEFAULT: '#151617',
         50: '#D2E3F3',
         100: '#0A2540',
       },

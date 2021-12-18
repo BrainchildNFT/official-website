@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import EthClock from '../components/landing-page/EthClock';
 import {Layout} from '../components/layout/layout';
 
 export default function Home() {
@@ -11,9 +12,7 @@ export default function Home() {
         <meta name="description" content=""/>
       </Head>
       <Layout>
-        <div className="bg-light h-500">
-          Here is the body of our project
-        </div>
+        <EthClock />
       </Layout>
     </>
   );

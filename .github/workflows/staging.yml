@@ -1,11 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy Production
+name: Deploy Staing
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [prod]
+    branches: [staging]
 
 jobs:
   bulid:
@@ -45,11 +45,12 @@ jobs:
         run: npm run build
 
       - name: run deploy script on host server
-        uses: JimCronqvist/action-ssh@master
+        uses: JimCronqvist/action-ssh@masterclear
+
         env:
           NAME: "Root"
         with:
-          hosts: ${{secrets.USER}}@${{secrets.HOST}}
-          privateKey: ${{ secrets.SSH_KEY }}
+          hosts: ${{secrets.STAGING_USER}}@${{secrets.STAGING_HOST}}
+          privateKey: ${{ secrets.STAGING_SSH_KEY }}
           debug: false
           command: /home/ubuntu/job/deploy.sh

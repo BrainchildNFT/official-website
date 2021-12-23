@@ -11,6 +11,10 @@ html {
   font-family: Subjectivity, sans-serif;
 }
 
+.font-Voyage {
+  font-family: Voyage, sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -67,12 +71,64 @@ a {
   border-image-source: linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%);
 }
 
+.border-gradient-dark-linner {
+  border-image: url('#') 1 round;
+  border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%);
+}
+
 .dark-background-image {
   @apply bg-secondary;
   background-image: url('/assets/images/dark-background-tile.png');
 }
 
 .light-background-image {
-  @apply bg-light;
-  background-image: url('/assets/images/light-background-tile.png');
+  @apply bg-light;  background-image: url('/assets/images/light-background-tile.png');
+}
+
+.faq-content-background {
+  background: conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0) -38.96deg, rgba(255, 255, 255, 0.395276) 63.31deg, #FFFFFF 169.87deg, rgba(255, 255, 255, 0) 321.04deg, rgba(255, 255, 255, 0.395276) 423.31deg),
+  linear-gradient(0deg, #A44242, #A44242);
+
+}
+
+/* swiper */
+.swiper-pagination-bullet {
+  @apply bg-white bg-opacity-60 w-10 h-10 rounded-full mx-5;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-opacity-100;
+}
+
+/* screen */
+.h-screen-without-navbar {
+  height: calc(100vh - 105px);
+}
+.h-screen-without-navbar-and-state {
+  height: calc(100vh - 155px);
+}
+
+/* background */
+.eth-clock-back {
+  background: url('/assets/images/landing-page/eth-clock-design-with-empty-back.png') no-repeat center center;
+}
+
+/* animataion */
+.animate-spin-60s {
+  animation: spin 60s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* vertical letter */
+.vertical-letter {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
 }

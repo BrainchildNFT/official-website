@@ -45,7 +45,7 @@ jobs:
         run: npm run build
 
       - name: run deploy script on host server
-        uses: JimCronqvist/action-ssh@masterclear
+        uses: JimCronqvist/action-ssh@master
 
         env:
           NAME: "Root"

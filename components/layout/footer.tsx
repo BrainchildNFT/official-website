@@ -39,14 +39,6 @@ export function Footer() {
             <li className="py-10"><Link href="/collections"><a>Docs</a></Link></li>
           </ul>
         </div>
-        <div>
-          <p className="text-14 font-Subjectivity font-bold text-white mb-20 mt-30 lg:mt-0 tracking-widest">RELEVENT LINKS</p>
-          <ul className="flex flex-col">
-            <li className="py-10"><Link href="/about-us"><a>Opensea</a></Link></li>
-            <li className="py-10"><Link href="/collections"><a>Whitepapaer</a></Link></li>
-            <li className="py-10"><Link href="/collections"><a>Docs</a></Link></li>
-          </ul>
-        </div>
       </div>
       <div className="lg:flex justify-center mt-100 leading-10">
         <Link href="/"><a className="flex items-center justify-center"><Image className="cursor-pointer" src="/assets/images/logo/logo-light-large.svg" width={201} height={63} alt="Brainchild logo" /></a></Link>

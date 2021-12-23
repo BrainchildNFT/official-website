@@ -65,36 +65,38 @@ export default function Home() {
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
-        <section className="relative dark-background-image h-screen-without-navbar-and-state overflow-hidden bg-fixed">
-          <div className="px-30 flex flex-col xl:flex-row items-end xl:items-center justify-center text-white text-28 text-right xl:text-center font-light pt-55 xl:pt-125">
-            <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit"><span className="font-bold sm:font-light xl:font-bold">5000</span> Mints</p>
-            <div className="hidden xl:block bg-white w-5 h-5 mx-30" />
-            <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">Upto <span className="font-bold sm:font-light xl:font-bold">Level 10</span> Enhancement</p>
-            <div className="hidden xl:block bg-white w-5 h-5 mx-30" />
-            <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">Perpetually <span className="font-bold sm:font-light xl:font-bold">Redeemable</span></p>
-            <div className="hidden xl:block bg-white w-5 h-5 mx-30" />
-            <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:hidden xl:block">Mint Price <span className="font-bold sm:font-light xl:font-bold">0.12 Eth</span></p>
-          </div>
+        <section className="relative dark-background-image h-screen-without-navbar overflow-hidden bg-fixed">
+          <div className="absolute w-full h-full">
+            <div className="relative h-screen-without-navbar">
+              <div className="px-30 flex flex-col xl:flex-row items-end xl:items-center justify-center text-white text-28 text-right xl:text-center font-light pt-55 xl:pt-125">
+                <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit"><span className="font-bold sm:font-light xl:font-bold">5000</span> Mints</p>
+                <div className="hidden xl:block bg-white w-5 h-5 mx-30" />
+                <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">Upto <span className="font-bold sm:font-light xl:font-bold">Level 10</span> Enhancement</p>
+                <div className="hidden xl:block bg-white w-5 h-5 mx-30" />
+                <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">Perpetually <span className="font-bold sm:font-light xl:font-bold">Redeemable</span></p>
+                <div className="hidden xl:block bg-white w-5 h-5 mx-30" />
+                <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:hidden xl:block">Mint Price <span className="font-bold sm:font-light xl:font-bold">0.12 Eth</span></p>
+              </div>
 
-          <div className="relative pt-140 flex justify-center items-center">
-            <div className="absolute w-1/2 flex items-center justify-center">
-              <Image className="" src="/assets/images/landing-page/eth-clock-design.png" layout="intrinsic" width={547} height={547} alt="Ethereum Clock Design" />
+              <div className="relative pt-140 flex justify-center items-center">
+                <div className="absolute w-1/2 flex items-center justify-center">
+                  <Image className="" src="/assets/images/landing-page/eth-clock-design.png" layout="intrinsic" width={547} height={547} alt="Ethereum Clock Design" />
+                </div>
+                <div>
+                  <Image className="animate-spin-60s" src="/assets/images/landing-page/eth-clock-letter.png" layout="intrinsic" width={1063} height={1063} alt="Ethereum Clock Letter" />
+                </div>
+              </div>
             </div>
-            <div>
-              <Image className="animate-spin-60s" src="/assets/images/landing-page/eth-clock-letter.png" layout="intrinsic" width={1063} height={1063} alt="Ethereum Clock Letter" />
+
+            {/*state bar*/}
+            <div className={'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 ' + stateBarBackground}>
+              {raffleState === RaffleState.Waiting && <p className="font-medium text-center">Raffle begins on 15 Jan, 2022 at 1:03 PM GMT</p>}
+              {raffleState === RaffleState.Live && <p className="font-medium text-center">Raffle Results <span className="text-30 font-bold">LIVE NOW!</span> end on 15 Jan, 2022 at 1:03 PM GMT</p>}
+              {raffleState === RaffleState.Ended && <p className="font-medium text-center">Raffle Results <span className="text-30 font-bold">LIVE NOW!</span></p>}
+
+              {raffleState !== RaffleState.Ended && <p className="font-medium text-center"><span className="text-30 font-bold">01:23:45:12</span> Left</p>}
+              {raffleState === RaffleState.Ended && <p className="font-medium text-center">Connect wallet to check if you’re whitelisted</p>}
             </div>
-          </div>
-        </section>
-
-        {/*state bar*/}
-        <section onClick={() => setRaffleState(RaffleState.Live)}>
-          <div className={'lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 ' + stateBarBackground}>
-            {raffleState === RaffleState.Waiting && <p className="font-medium text-center">Raffle begins on 15 Jan, 2022 at 1:03 PM GMT</p>}
-            {raffleState === RaffleState.Live && <p className="font-medium text-center">Raffle Results <span className="text-30 font-bold">LIVE NOW!</span> end on 15 Jan, 2022 at 1:03 PM GMT</p>}
-            {raffleState === RaffleState.Ended && <p className="font-medium text-center">Raffle Results <span className="text-30 font-bold">LIVE NOW!</span></p>}
-
-            {raffleState !== RaffleState.Ended && <p className="font-medium text-center"><span className="text-30 font-bold">01:23:45:12</span> Left</p>}
-            {raffleState === RaffleState.Ended && <p className="font-medium text-center">Connect wallet to check if you’re whitelisted</p>}
           </div>
         </section>
 

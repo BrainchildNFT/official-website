@@ -104,9 +104,6 @@ a {
 .h-screen-without-navbar {
   height: calc(100vh - 105px);
 }
-.h-screen-without-navbar-and-state {
-  height: calc(100vh - 155px);
-}
 
 /* background */
 .eth-clock-back {

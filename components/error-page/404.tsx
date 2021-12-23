@@ -5,7 +5,7 @@ export default function Error404() {
   return (<section className="w-screen h-screen">
     <div className="container mx-auto flex flex-col justify-center items-center h-full">
       <div className="py-30 md:py-40">
-        <Link href="/" passHref><Image className="cursor-pointer" src="/assets/images/logo-dark-large.svg" width={500} height={150} alt="Brainchild logo" /></Link>
+        <Link href="/" passHref><Image className="cursor-pointer" src="/assets/images/logo/logo-dark-large.svg" width={500} height={150} alt="Brainchild logo" /></Link>
       </div>
       <div className="py-0 md:py-30 xl:py-50">
         <h1 className="text-warning text-120 md:text-140 mt text-center leading-none">404</h1>

@@ -4,10 +4,10 @@ function range(start, end, increment = 1) {
 }
 
 const minFontSize = 5;
-const maxFontSize = 140;
+const maxFontSize = 200;
 
 const minSpacingPixel = 0;
-const maxSpacingPixel = 1200;
+const maxSpacingPixel = 1800;
 const spacingPixelIncrement = 5;
 
 const vhs = ['10vh', '20vh', '30vh', '40vh', '50vh', '60vh', '70vh', '80vh', '90vh', '100vh'];
@@ -25,8 +25,31 @@ module.exports = {
       '2xl': '1536px',
     },
     colors: {
-      white: '#FFFFFF',
-      black: '#000000',
+      white: {
+        DEFAULT: 'rgba(255,255,255,1)',
+        10: 'rgba(255,255,255,0.1)',
+        20: 'rgba(255,255,255,0.2)',
+        30: 'rgba(255,255,255,0.3)',
+        40: 'rgba(255,255,255,0.4)',
+        50: 'rgba(255,255,255,0.5)',
+        60: 'rgba(255,255,255,0.6)',
+        70: 'rgba(255,255,255,0.7)',
+        80: 'rgba(255,255,255,0.8)',
+        90: 'rgba(255,255,255,0.9)',
+      },
+      black: {
+        DEFAULT: 'rgba(0,0,0,1)',
+        10: 'rgba(0,0,0,0.1)',
+        20: 'rgba(0,0,0,0.2)',
+        30: 'rgba(0,0,0,0.3)',
+        40: 'rgba(0,0,0,0.4)',
+        50: 'rgba(0,0,0,0.5)',
+        60: 'rgba(0,0,0,0.6)',
+        70: 'rgba(0,0,0,0.7)',
+        80: 'rgba(0,0,0,0.8)',
+        90: 'rgba(0,0,0,0.9)',
+      },
+      transparent: 'rgba(0,0,0,0)',
       primary: {
         DEFAULT: '#373839',
         50: '#343536',
@@ -37,12 +60,12 @@ module.exports = {
         400: '#00857F',
       },
       secondary: {
-        DEFAULT: '#0A2540',
+        DEFAULT: '#151617',
         50: '#D2E3F3',
         100: '#0A2540',
       },
       success: {
-        DEFAULT: '#74B06F',
+        DEFAULT: '#268C6D',
         50: '#E8FCE6',
         75: '#BFE3BC',
         100: '#74B06F',

@@ -32,7 +32,7 @@ export function Navbar() {
           <ul className="flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18 xl:text-14 text-primary xl:text-white">
             <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0"><Link href="/collections"><a className="relative xl:px-25 xl:py-10">Collections</a></Link></li>
             <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0"><Link href="/about-us"><a className="relative xl:px-25 xl:py-10">About Us</a></Link></li>
-            <li className="pt-20 pb-10 px-20 xl:px-0 nav-link hidden xl:block"><Link href="/opensea"><a className="relative xl:px-25 xl:py-10"><Icon name="search" color="white" size={18} /></a></Link></li>
+            <li className="pt-20 pb-10 px-20 xl:px-0 nav-link hidden xl:block"><Link href="/search"><a className="relative xl:px-25 xl:py-10"><Icon name="search" color="white" size={18} /></a></Link></li>
             <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0"><Link href="/opensea"><a className="relative xl:px-25 xl:py-10">Opensea</a></Link></li>
             <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0"><Link href="/other"><a className="relative xl:px-25 xl:py-10">Other</a></Link></li>
           </ul>

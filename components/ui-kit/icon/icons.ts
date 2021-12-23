@@ -67,6 +67,13 @@ export const brainchildIcons = {
         <path id="XMLID_224_" d="M325.606,229.393l-150.004-150C172.79,76.58,168.974,75,164.996,75c-3.979,0-7.794,1.581-10.607,4.394  l-149.996,150c-5.858,5.858-5.858,15.355,0,21.213c5.857,5.857,15.355,5.858,21.213,0l139.39-139.393l139.397,139.393  C307.322,253.536,311.161,255,315,255c3.839,0,7.678-1.464,10.607-4.394C331.464,244.748,331.464,235.251,325.606,229.393z" stroke="${getColor(color)}"/>
     </svg>
   `,
+  hyperLink: (size = 330, color?: string) => `
+    <svg width="${size}" height="${size}" fill="none" viewBox="0 0 24 25" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 13.5V19.5C18 20.0304 17.7893 20.5391 17.4142 20.9142C17.0391 21.2893 16.5304 21.5 16 21.5H5C4.46957 21.5 3.96086 21.2893 3.58579 20.9142C3.21071 20.5391 3 20.0304 3 19.5V8.5C3 7.96957 3.21071 7.46086 3.58579 7.08579C3.96086 6.71071 4.46957 6.5 5 6.5H11" stroke-linecap="round" stroke-linejoin="round" stroke="${getColor(color)}"/>
+      <path d="M15 3.5H21V9.5" stroke-linecap="round" stroke-linejoin="round" stroke="${getColor(color)}"/>
+      <path d="M10 14.5L21 3.5" stroke-linecap="round" stroke-linejoin="round" stroke="${getColor(color)}"/>
+    </svg>
+  `,
   check: (size = 24, color?: string) => `
     <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 6L9 17L4 12" stroke="${getColor(color)}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

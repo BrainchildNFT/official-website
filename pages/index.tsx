@@ -65,7 +65,7 @@ export default function Home() {
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
-        <section className="relative dark-background-image h-screen-without-navbar overflow-hidden bg-fixed">
+        <section className="relative dark-background-image h-screen-without-navbar overflow-hidden">
           <div className="relative h-screen-without-navbar">
             <div className="px-30 flex flex-col xl:flex-row items-end xl:items-center justify-center text-white text-28 text-right xl:text-center font-light pt-55 xl:pt-125">
               <p className="pb-30 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit"><span className="font-bold sm:font-light xl:font-bold">5000</span> Mints</p>
@@ -222,7 +222,7 @@ export default function Home() {
                       onMouseEnter={() => { if(isDesktop ) {setCurrentFaqIndex(index)}}}
                       onMouseLeave={() => { if(isDesktop ) {setCurrentFaqIndex(-1)}}}
                       onClick={() => { if(!isDesktop ) {setCurrentFaqIndex(currentFaqIndex == index ? -1 : index)}}}
-                      className="flex items-center justify-between transition-all border border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10"
+                      className="flex items-center justify-between transition-all border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10"
                     >{faq.name} {!isDesktop && <Icon name={index === currentFaqIndex ? 'down' : 'up'} color="white" size={18} />}</p>
                     <p className={'faq-content-background lg:hidden w-full text-white text-24 font-semibold p-30 transition-all my-5 ' + (index === currentFaqIndex ? 'block' : 'hidden')}>{faq.content}</p>
                   </>)

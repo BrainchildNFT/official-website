@@ -75,7 +75,7 @@ export default function Home() {
             <div className="px-30 flex flex-col xl:flex-row items-end xl:items-center justify-center text-white text-20 sm:text-28 text-right xl:text-center font-light pt-35 xl:pt-125">
               <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
                 <span
-                  className="font-bold sm:font-light xl:font-bold italic"
+                  className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
                   5000
@@ -86,7 +86,7 @@ export default function Home() {
               <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
                 Upto{' '}
                 <span
-                  className="font-bold sm:font-light xl:font-bold italic"
+                  className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
                   Level 10
@@ -97,7 +97,7 @@ export default function Home() {
               <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
                 Perpetually{' '}
                 <span
-                  className="font-bold sm:font-light xl:font-bold italic"
+                  className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
                   Redeemable
@@ -107,7 +107,7 @@ export default function Home() {
               <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:hidden xl:block">
                 Mint Price{' '}
                 <span
-                  className="font-bold sm:font-light xl:font-bold italic"
+                  className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
                   0.12 Eth
@@ -187,7 +187,7 @@ export default function Home() {
 
         <div className="light-background-image overflow-hidden">
           {/*Immerse yourself in the new age of LUXURY*/}
-          <section className="relative pt-130 pb-60 border border-1">
+          <section className="relative pt-130 pb-60">
             <div className="border-y border-gradient-dark p-25">
               <p className="text-primary-50 whitespace-nowrap transition eas-in-out transform -translate-y-1">
                 Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
@@ -225,17 +225,18 @@ export default function Home() {
 
             <div className="container mx-auto relative block lg:hidden text-primary-50 z-50">
               <p className="text-right">
-                Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
-                eget mi augue malesuada scelerisque sed consequat, non. Sagittis
-                magnis ac, auctor dictum tristique turpis posuere. Fermentum
-                euismod sed pretium amet viverra odio ut. Mattis urna eget mi
-                augue malesuada scelerisque sed consequat, non.
+                Luxury has always been a timeless phenomenon but has it ever
+                truly been forever?
+                <br />
+                <br />
+                Well, Our NFTs are redeemable forever... Yes,
               </p>
+              <p className="text-right font-Voyage text-80">Forever.</p>
             </div>
           </section>
 
           {/*Experience NFTs beyond Cryptoverse Section*/}
-          <section className="relative border border-1">
+          <section className="relative">
             <div className="container mx-auto flex flex-col pt-95 lg:pt-0 lg:items-center justify-center lg:h-screen">
               <div className="relative font-Voyage text-108 lg:text-130 text-primary-75 text-right pr-120 pb-120 lg:pr-100 lg:pb-100">
                 <p className="leading-none sm:leading-tight">
@@ -277,7 +278,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row lg:hidden pt-160 pb-80">
+              {/* <div className="flex flex-col sm:flex-row lg:hidden pt-160 pb-80">
                 <div className="relative flex justify-center pb-195 sm:pb-0 sm:w-1/2 px-20">
                   <Image
                     className="cursor-pointer"
@@ -297,20 +298,12 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="flex items-end justify-center sm:w-1/2 px-20">
-                  <p className="text-primary-50 text-justify">
-                    Mattis urna eget mi augue malesuada scelerisque sed
-                    consequat, non. Sagittis magnis ac, auctor dictum tristique
-                    turpis posuere. Fermentum euismod sed pretium amet viverra
-                    odio ut.
-                  </p>
-                </div>
-              </div>
+              </div> */}
             </div>
           </section>
 
           {/*And more NFTs*/}
-          <section className="relative py-200 border border-1">
+          <section className="relative py-200">
             <div className="flex justify-between items-center px-20 sm:px-80 xl:px-200">
               <p className="font-Voyage text-30 sm:text-50 text-primary-75">
                 and more...
@@ -336,7 +329,7 @@ export default function Home() {
                     <div className="flex flex-col lg:flex-row">
                       <div>
                         <Image
-                          className="rounded-lg overflow-hidden cursor-pointer relative z-40"
+                          className="overflow-hidden cursor-pointer relative z-40"
                           src={nft.image}
                           width={nft.width}
                           height={nft.height}
@@ -347,7 +340,7 @@ export default function Home() {
                         />
                       </div>
                       <div className="lg:max-w-350 lg:-ml-100 mt-50 relative z-50">
-                        <span className="text-50 sm:text-80 text-primary-75 leading-none mb-20">
+                        <span className="text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Voyage">
                           {nft.name}
                         </span>
                         <p className="mt-20 p-20 border border-gradient-dark-linner">
@@ -362,8 +355,8 @@ export default function Home() {
           </section>
 
           {/*Collaboration*/}
-          <section className="relative dark-background-image border border-1">
-            <div className="container mx-auto pt-50 sm:pt-200 text-white sm:text-center">
+          <section className="relative dark-background-image">
+            <div className="container mx-auto p-30 pt-50 sm:pt-200 text-white sm:text-center font-Voyage">
               <p className="text-45 lg:text-80">exquisite</p>
               <p className="text-justify sm:text-center break-all text-80 lg:text-100 xl:text-150">
                 Collaborations
@@ -373,9 +366,15 @@ export default function Home() {
                 artists
               </p>
             </div>
-            <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110 mb-50 sm:mb-300">
-              <div className="w-200 h-200 bg-white flex items-center justify-center my-80 sm:my-0">
-                <span>Connect</span>
+            <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110">
+              <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0">
+                <Image
+                  src="/assets/images/landing-page/radial-connect.png"
+                  layout="intrinsic"
+                  width={420}
+                  height={420}
+                  alt="Hand Drawing White Hourse"
+                />
               </div>
               <div className="text-white">
                 <p className="sm:max-w-290">
@@ -399,14 +398,14 @@ export default function Home() {
           </section>
 
           {/*FAQs*/}
-          <section className="relative dark-background-image border border-1">
+          <section className="relative dark-background-image">
             <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
               <div className="lg:w-1/3 flex lg:justify-center lg:items-center text-white">
-                <p className="lg:hidden px-30 text-80 lg:vertical-letter">
+                <p className="lg:hidden px-30 text-80 lg:vertical-letter font-[Voyage]">
                   FAQ
                 </p>
                 {currentFaqIndex === -1 && (
-                  <p className="hidden lg:block text-130 vertical-letter">
+                  <p className="hidden lg:block text-130 vertical-letter font-Voyage">
                     FAQ
                   </p>
                 )}

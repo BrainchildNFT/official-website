@@ -1,47 +1,30 @@
 function range(start, end, increment = 1) {
-  const count = Math.floor((end - start + increment) / increment)
-  return Array(count)
-    .fill(0)
-    .map((_, idx) => start + idx * increment)
+  const count = Math.floor((end - start + increment) / increment);
+  return Array(count).fill(0).map((_, idx) => start + idx * increment);
 }
 
-const minFontSize = 5
-const maxFontSize = 200
+const minFontSize = 5;
+const maxFontSize = 200;
 
-const minSpacingPixel = 0
-const maxSpacingPixel = 1800
-const spacingPixelIncrement = 5
+const minSpacingPixel = 0;
+const maxSpacingPixel = 1800;
+const spacingPixelIncrement = 5;
 
-const vhs = [
-  '10vh',
-  '20vh',
-  '30vh',
-  '40vh',
-  '50vh',
-  '60vh',
-  '70vh',
-  '80vh',
-  '90vh',
-  '100vh',
-]
+const vhs = ['10vh', '20vh', '30vh', '40vh', '50vh', '60vh', '70vh', '80vh', '90vh', '100vh'];
 
 module.exports = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   media: false, // or 'media' or 'class'
   theme: {
     screens: {
-      xs: '480px',
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
       '2xl': '1536px',
     },
     colors: {
-      inherit: 'inherit',
       white: {
         DEFAULT: 'rgba(255,255,255,1)',
         10: 'rgba(255,255,255,0.1)',
@@ -114,9 +97,6 @@ module.exports = {
         400: '#6D6D6D',
         500: '#2C2C2C',
       },
-      pink: {
-        gray: '#AF5F5F',
-      },
     },
     fontFamily: {
       poppins: ['Inter', 'sans-serif'],
@@ -130,9 +110,6 @@ module.exports = {
       inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
       none: 'none',
     },
-    // borderRadius: {
-    //   half: '50%',
-    // },
     container: {
       padding: {
         DEFAULT: '1rem',
@@ -142,10 +119,7 @@ module.exports = {
       },
     },
     fontSize: {
-      ...range(minFontSize, maxFontSize).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
-        {}
-      ),
+      ...range(minFontSize, maxFontSize).reduce((merged, f) => ({ ...merged, [f]: `${f}px`}), {})
     },
     letterSpacing: {
       tightest: '-.075em',
@@ -155,38 +129,23 @@ module.exports = {
       widest: '.3em',
     },
     spacing: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
-        {}
-      ),
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {})
     },
     maxWidth: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
-        {}
-      ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),
+      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {})
     },
     minWidth: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
-        {}
-      ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),
+      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {})
     },
     maxHeight: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
-        {}
-      ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),
+      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {})
     },
     minHeight: {
-      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
-        {}
-      ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce((merged, f) => ({ ...merged, [f]: `${f}px` }), {}),
+      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {})
     },
     extend: {},
   },
@@ -198,5 +157,7 @@ module.exports = {
       textColor: ['active'],
     },
   },
-  plugins: [require('@tailwindcss/aspect-ratio')],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

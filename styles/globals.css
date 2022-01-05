@@ -88,7 +88,13 @@ a {
 .faq-content-background {
   background: conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0) -38.96deg, rgba(255, 255, 255, 0.395276) 63.31deg, #FFFFFF 169.87deg, rgba(255, 255, 255, 0) 321.04deg, rgba(255, 255, 255, 0.395276) 423.31deg),
   linear-gradient(0deg, #A44242, #A44242);
+}
 
+.road-map-letter-background {
+  background: conic-gradient(from -68.85deg at 57.26% 57.65%, rgba(255, 255, 255, 0) -38.96deg, rgba(255, 255, 255, 0.395276) 63.31deg, rgba(255, 255, 255, 0) 135.19deg, #FFFFFF 170.58deg, rgba(255, 255, 255, 0) 321.04deg, rgba(255, 255, 255, 0.395276) 423.31deg);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* swiper */

@@ -4,7 +4,7 @@ function range(start, end, increment = 1) {
 }
 
 const minFontSize = 5;
-const maxFontSize = 200;
+const maxFontSize = 300;
 
 const minSpacingPixel = 0;
 const maxSpacingPixel = 1800;

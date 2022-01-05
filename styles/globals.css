@@ -2,6 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Black.woff2')
+    format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Black-Italic.woff2')
+    format('woff2');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Light.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Light-Italic.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Medium.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Medium-Italic.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Bold-Italic.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Thin.woff2')
+    format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Subjectivity Serif';
+  src: url('/assets/fonts/Subjectivity Serif/SubjectivitySerif-Thin-Italic.woff2')
+    format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
+
 html {
   font-size: 20px;
   font-family: Inter, Voyage, sans-serif;
@@ -18,6 +98,19 @@ html {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.fill-opacity-0 {
+  fill-opacity: 0;
+}
+
+.fill-opacity-1 {
+  fill-opacity: 1;
+}
+
+.back-drop {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(116.667px);
 }
 
 .btn {
@@ -63,17 +156,32 @@ a {
 
 .border-gradient-light {
   border-image: url('#') 1 round;
-  border-image-source: linear-gradient(270.16deg, rgba(255, 255, 255, 0.4) 1.04%, rgba(255, 255, 255, 0) 48.58%, rgba(255, 255, 255, 0.4) 100.31%);
+  border-image-source: linear-gradient(
+    270.16deg,
+    rgba(255, 255, 255, 0.4) 1.04%,
+    rgba(255, 255, 255, 0) 48.58%,
+    rgba(255, 255, 255, 0.4) 100.31%
+  );
 }
 
 .border-gradient-dark {
   border-image: url('#') 1 round;
-  border-image-source: linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%);
+  border-image-source: linear-gradient(
+    270.16deg,
+    rgba(0, 0, 0, 0.4) 1.04%,
+    rgba(0, 0, 0, 0) 48.58%,
+    rgba(0, 0, 0, 0.4) 100.31%
+  );
 }
 
 .border-gradient-dark-linner {
   border-image: url('#') 1 round;
-  border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%);
+  border-image-source: linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.4) 1.04%,
+    rgba(0, 0, 0, 0) 48.58%,
+    rgba(0, 0, 0, 0.4) 100.31%
+  );
 }
 
 .dark-background-image {
@@ -82,13 +190,20 @@ a {
 }
 
 .light-background-image {
-  @apply bg-light;  background-image: url('/assets/images/light-background-tile.png');
+  @apply bg-light;
+  background-image: url('/assets/images/light-background-tile.png');
 }
 
 .faq-content-background {
-  background: conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0) -38.96deg, rgba(255, 255, 255, 0.395276) 63.31deg, #FFFFFF 169.87deg, rgba(255, 255, 255, 0) 321.04deg, rgba(255, 255, 255, 0.395276) 423.31deg),
-  linear-gradient(0deg, #A44242, #A44242);
-
+  background: conic-gradient(
+      from 180deg at 50% 50%,
+      rgba(255, 255, 255, 0) -38.96deg,
+      rgba(255, 255, 255, 0.395276) 63.31deg,
+      #ffffff 169.87deg,
+      rgba(255, 255, 255, 0) 321.04deg,
+      rgba(255, 255, 255, 0.395276) 423.31deg
+    ),
+    linear-gradient(0deg, #a44242, #a44242);
 }
 
 /* swiper */
@@ -107,12 +222,13 @@ a {
 
 /* background */
 .eth-clock-back {
-  background: url('/assets/images/landing-page/eth-clock-design-with-empty-back.png') no-repeat center center;
+  background: url('/assets/images/landing-page/eth-clock-design-with-empty-back.png')
+    no-repeat center center;
 }
 
 /* animataion */
 .animate-spin-60s {
-  animation: spin 60s linear infinite;
+  animation: spin 30s steps(20) infinite;
 }
 
 @keyframes spin {

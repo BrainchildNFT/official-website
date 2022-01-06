@@ -218,12 +218,12 @@ a {
   background: conic-gradient(
       from 180deg at 50% 50%,
       rgba(255, 255, 255, 0) -38.96deg,
-      rgba(255, 255, 255, 0.395276) 63.31deg,
+      rgba(255, 255, 255, 0.2) 63.31deg,
       #ffffff 169.87deg,
       rgba(255, 255, 255, 0) 321.04deg,
-      rgba(255, 255, 255, 0.395276) 423.31deg
+      rgba(255, 255, 255, 0.2) 423.31deg
     ),
-    linear-gradient(0deg, #a44242, #a44242);
+    #a44242;
 }
 
 .road-map-letter-background {

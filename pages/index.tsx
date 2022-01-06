@@ -347,7 +347,7 @@ export default function Home() {
                         />
                       </div>
                       <div className="lg:max-w-350 lg:-ml-100 mt-50 relative z-50">
-                        <span className="text-50 sm:text-80 text-primary-75 leading-none mb-20">
+                        <span className="font-Voyage text-50 sm:text-80 text-primary-75 leading-none mb-20">
                           {nft.name}
                         </span>
                         <p className="mt-20 p-20 border border-gradient-dark-linner">
@@ -365,7 +365,7 @@ export default function Home() {
 
         {/*Collaboration*/}
         <section className="relative dark-background-image border border-1">
-          <div className="container mx-auto pt-50 sm:pt-200 text-white sm:text-center">
+          <div className="container mx-auto pt-50 sm:pt-200 text-white sm:text-center font-Voyage">
             <p className="text-45 lg:text-80">exquisite</p>
             <p className="text-justify sm:text-center break-all text-80 lg:text-100 xl:text-150">
                 Collaborations
@@ -404,9 +404,9 @@ export default function Home() {
         <section className="relative dark-background-image border border-1">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
             <div className="lg:w-1/3 flex lg:justify-center lg:items-center text-white">
-              <p className="lg:hidden px-30 text-80 lg:vertical-letter">FAQ</p>
+              <p className="font-Voyage lg:hidden px-30 text-80 lg:vertical-letter">FAQ</p>
               {currentFaqIndex === -1 && (
-                  <p className="hidden lg:block text-130 vertical-letter">
+                  <p className="font-Voyage hidden lg:block text-130 vertical-letter">
                     FAQ
                   </p>
               )}
@@ -428,7 +428,7 @@ export default function Home() {
                     onClick={() => { if(!isDesktop ) {setCurrentFaqIndex(currentFaqIndex == index ? -1 : index
                     )
                             }
-                          }}className="flex items-center justify-between transition-all border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10"
+                          }} className="flex items-center justify-between transition-all border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10"
                   >{faq.name} {' '}
                           {!isDesktop && (
                             <Icon

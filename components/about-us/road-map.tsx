@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import disableScroll from 'disable-scroll';
 
 export default function RoadMap() {
   const [currentRoadMap, setCurrentRoadMap] = useState(0);
   const [marginTop, setMarginTop] = useState(0);
-  const [childrenHeights, setChildrenHeights] = useState([]);
+  const [childrenHeights, setChildrenHeights] = useState<number[]>([]);
 
-  const roadMapContentRef = useRef();
+  const roadMapContentRef: MutableRefObject<any> = useRef();
   const roadMapPeriodNames = [
     {
       year: 2021,
@@ -27,7 +27,7 @@ export default function RoadMap() {
     },
   ];
 
-  const onMouseWheel = ($event) => {
+  const onMouseWheel = ($event: any) => {
     const newMarginTop = marginTop + $event.deltaY;
     if (newMarginTop >= 0 && newMarginTop <= (roadMapContentRef.current.clientHeight - 600)) {
       let heightSum = 0;
@@ -48,7 +48,7 @@ export default function RoadMap() {
     disableScroll.off()
   }
 
-  const roadMapPeriodClicked = (index) => {
+  const roadMapPeriodClicked = (index: number) => {
     setCurrentRoadMap(index);
     let heightSum = 0;
     for (let i = 0; i < index; i ++) {
@@ -58,7 +58,7 @@ export default function RoadMap() {
   }
 
   useEffect(() => {
-    const tmpChildrenHeight = Array.from(roadMapContentRef.current.children).map(item => item.clientHeight);
+    const tmpChildrenHeight: any[] = Array.from(roadMapContentRef.current.children).map((item: any) => item.clientHeight);
     setChildrenHeights(tmpChildrenHeight);
   }, [])
 

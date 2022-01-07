@@ -108,7 +108,7 @@ export default function AboutUs() {
           </section>
 
           <section className="relative">
-            <div className="absolute top-0 h-full w-full">
+            <div className="absolute h-full w-full">
               <Image src="/assets/images/about-us/three-faces.png" layout="fill" height={2562} width={1780} alt="Three Faces" />
             </div>
             <div className="px-40 lg:px-100 xl:px-300 pb-100 lg:pb-120 xl:pb-150">

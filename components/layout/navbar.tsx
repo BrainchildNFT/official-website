@@ -7,15 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Icon from '../ui-kit/icon'
 import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import {
-  faDiscord,
-  faInstagram,
-  faReddit,
-  faRedditAlien,
-  faTelegram,
-  faTelegramPlane,
-  faTwitter,
-} from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faInstagram, faRedditAlien, faTelegramPlane, faTwitter, } from '@fortawesome/free-brands-svg-icons'
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -152,7 +144,7 @@ export function Navbar() {
                         background:
                           'linear-gradient(270.16deg, rgba(255, 255, 255, 0) 1.04%, rgba(255, 255, 255, 0.4) 48.58%, rgba(255, 255, 255, 0) 100.31%)',
                       }}
-                    ></div>
+                    />
                     <div className="flex mt-20 items-center tracking-wider">
                       <FontAwesomeIcon
                         icon={faFileAlt}
@@ -177,7 +169,7 @@ export function Navbar() {
                         background:
                           'linear-gradient(270.16deg, rgba(255, 255, 255, 0) 1.04%, rgba(255, 255, 255, 0.4) 48.58%, rgba(255, 255, 255, 0) 100.31%)',
                       }}
-                    ></div>
+                    />
                     <div className="flex mt-20">
                       <a href="https://t.me/joinchat/KxQp5cc1K35lM2Jl">
                         <FontAwesomeIcon
@@ -348,7 +340,7 @@ export function Navbar() {
               </div>
             </ul>
           </div>
-          <div className="hidden xl:flex px-20 xl:px-0">
+          <div className="hidden xl:flex px-20 xl:px-0 xl:mr-50">
             <ConnectWalletButton />
           </div>
         </div>

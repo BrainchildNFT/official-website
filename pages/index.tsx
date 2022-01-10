@@ -66,7 +66,7 @@ export default function Home() {
     <>
       <Head>
         <title>Brainchild: HomePage</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Unlocking innovative ownership experiences by connecting to web3. Redeem, upgrade, enhance NFTs that traverse both digital and real world." />
       </Head>
       <Layout>
         {/*Ether clock landing page*/}

@@ -49,7 +49,7 @@ export default function AboutUs() {
     <>
       <Head>
         <title>Brainchild: About Us</title>
-        <meta name="description" content=""/>
+        <meta name="description" content="We collaborate with artists, design studios & brands to provide experimental interactions and novel experience around product ownership enabled by blockchain."/>
       </Head>
       <Layout>
         <div className="dark-background-image">

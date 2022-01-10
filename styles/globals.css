@@ -4,16 +4,14 @@
 
 @font-face {
   font-family: 'Voyage';
-  src: url('/assets/fonts/Voyage/Voyage-Regular.otf')
-  format('opentype');
+  src: url('/assets/fonts/Voyage/Voyage-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Voyage';
-  src: url('/assets/fonts/Voyage/Voyage-Bold.otf')
-  format('opentype');
+  src: url('/assets/fonts/Voyage/Voyage-Bold.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
 }
@@ -223,16 +221,24 @@ a {
   background: conic-gradient(
       from 180deg at 50% 50%,
       rgba(255, 255, 255, 0) -38.96deg,
-      rgba(255, 255, 255, 0.2) 63.31deg,
-      #ffffff 169.87deg,
+      rgba(255, 255, 255, 0.1) 63.31deg,
+      rgba(255, 255, 255, 0.4) 169.87deg,
       rgba(255, 255, 255, 0) 321.04deg,
-      rgba(255, 255, 255, 0.2) 423.31deg
+      rgba(255, 255, 255, 0.1) 423.31deg
     ),
     #a44242;
 }
 
 .road-map-letter-background {
-  background: conic-gradient(from -68.85deg at 57.26% 57.65%, rgba(255, 255, 255, 0) -38.96deg, rgba(255, 255, 255, 0.395276) 63.31deg, rgba(255, 255, 255, 0) 135.19deg, #FFFFFF 170.58deg, rgba(255, 255, 255, 0) 321.04deg, rgba(255, 255, 255, 0.395276) 423.31deg);
+  background: conic-gradient(
+    from -68.85deg at 57.26% 57.65%,
+    rgba(255, 255, 255, 0) -38.96deg,
+    rgba(255, 255, 255, 0.395276) 63.31deg,
+    rgba(255, 255, 255, 0) 135.19deg,
+    #ffffff 170.58deg,
+    rgba(255, 255, 255, 0) 321.04deg,
+    rgba(255, 255, 255, 0.395276) 423.31deg
+  );
   background-repeat: no-repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -282,12 +288,23 @@ a {
 .road-map-period-circle-border {
   border: 1px solid;
   border-image: url('#') 1 round;
-  border-image-source: linear-gradient(270.16deg, rgba(255, 255, 255, 0.4) 1.04%, rgba(255, 255, 255, 0) 48.58%, rgba(255, 255, 255, 0.4) 100.31%);
+  border-image-source: linear-gradient(
+    270.16deg,
+    rgba(255, 255, 255, 0.4) 1.04%,
+    rgba(255, 255, 255, 0) 48.58%,
+    rgba(255, 255, 255, 0.4) 100.31%
+  );
 }
 
 .road-map-period-border {
   border-image: url('#') 1 round;
-  background: linear-gradient(358.07deg, rgba(255, 255, 255, 0) 3.27%, rgba(255, 255, 255, 0.4) 30.25%, rgba(255, 255, 255, 0.4) 72.57%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    358.07deg,
+    rgba(255, 255, 255, 0) 3.27%,
+    rgba(255, 255, 255, 0.4) 30.25%,
+    rgba(255, 255, 255, 0.4) 72.57%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 /* animataion */

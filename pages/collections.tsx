@@ -16,6 +16,7 @@ import Timeline from '../components/collections/timeline';
 import Enhancements from '../components/collections/enhancements';
 import Gallery from '../components/collections/gallery';
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
+import Artist from '../components/collections/artist';
 
 export default function Collections() {
   const [isTop, setIsTop] = useState(true);
@@ -121,7 +122,7 @@ export default function Collections() {
                 <About />
               </section>
               <section className={'text-white transition duration-500 ease-in-out ' + (currentMenuId === CollectionsMenuType.Artist? 'opacity-100' : 'opacity-0 h-0')}>
-                <p>Artist</p>
+                <Artist />
               </section>
               <section className={'light-background-image text-white transition duration-500 ease-in-out ' + (currentMenuId === CollectionsMenuType.PerksAndUtility? 'opacity-100' : 'opacity-0 h-0')}>
                 <PerksAndUtility />

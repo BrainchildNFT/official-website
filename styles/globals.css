@@ -207,6 +207,11 @@ a {
   border-image-source: linear-gradient(225.01deg, rgba(0, 0, 0, 0.4) 2.38%, rgba(0, 0, 0, 0) 47.87%, rgba(0, 0, 0, 0.4) 97.35%);
 }
 
+.gallery-item-border {
+  border: 2px solid;
+  border-image-source: linear-gradient(270.16deg, #AF5F5F 1.04%, rgba(175, 95, 95, 0) 48.58%, #AF5F5F 100.31%);
+}
+
 .dark-background-image {
   @apply bg-secondary;
   background-image: url('/assets/images/dark-background-tile.png');
@@ -256,9 +261,14 @@ a {
   background: radial-gradient(71.11% 71.11% at 39.95% 83.78%, rgba(175, 95, 95, 0) 0%, rgba(175, 95, 95, 0.4) 100%);
 }
 
-.gallery-item-border {
-  border: 2px solid;
-  border-image-source: linear-gradient(270.16deg, #AF5F5F 1.04%, rgba(175, 95, 95, 0) 48.58%, #AF5F5F 100.31%);
+.artists-background {
+  background: center no-repeat url(/assets/images/collections/artists.gif);
+  background-size: cover;
+}
+
+.about-us-members-background {
+  background: top center no-repeat url(/assets/images/about-us/three-faces.png);
+  background-size: cover;
 }
 
 /* swiper */

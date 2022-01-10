@@ -123,7 +123,7 @@ export default function RoadMap() {
                         <p className="text-17 opacity-50">Allowing users upgrade their NFT to unlock designs and improve rarity. Link to enhancement page</p>
                       </div>
                       <div className="w-1/2">
-                        <Image src="/assets/images/about-us/up-arrow-with-stars.png" layout="intrinsic" width={273} height={210} alt="Up Arrow With Stars" />
+                        <Image src="/assets/images/about-us/up-arrow-with-light-stars.png" layout="intrinsic" width={273} height={210} alt="Up Arrow With Stars" />
                       </div>
                     </div>
                   </li>
@@ -142,10 +142,10 @@ export default function RoadMap() {
                       </div>
                       <div className="w-1/2 flex justify-center relative">
                         <div className="z-10">
-                          <Image src="/assets/images/about-us/gift-box.png" layout="intrinsic" width={195} height={259} alt="Gift Box" />
+                          <Image src="/assets/images/about-us/gift-box-dark.png" layout="intrinsic" width={195} height={259} alt="Gift Box" />
                         </div>
                         <div className="absolute bottom-0">
-                          <Image src="/assets/images/about-us/multi-circle.png" layout="intrinsic" width={375} height={135} alt="Multi Circle" />
+                          <Image src="/assets/images/about-us/multi-circle-light.png" layout="intrinsic" width={375} height={135} alt="Multi Circle" />
                         </div>
                       </div>
                     </div>
@@ -192,7 +192,7 @@ export default function RoadMap() {
         </div>
       </div>
       <div className="hidden lg:flex lg:w-1/2 text-white items-end justify-end">
-        {roadMapPeriodNames.map((item, index) => <div className={'absolute transition-all duration-500 ease-in-out ' + (currentRoadMap === index ? 'opacity-100' : 'opacity-0')}>
+        {roadMapPeriodNames.map((item, index) => <div key={index} className={'absolute transition-all duration-500 ease-in-out ' + (currentRoadMap === index ? 'opacity-100' : 'opacity-0')}>
           <span className="text-30 mr-10 opacity-30">{roadMapPeriodNames[index].year}</span>
           <span className="text-300 leading-none font-Voyage road-map-letter-background">{roadMapPeriodNames[index].text}</span>
         </div>)}

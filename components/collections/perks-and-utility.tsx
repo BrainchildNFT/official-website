@@ -13,10 +13,10 @@ export default function PerksAndUtility() {
             </div>
             <div className="pt-40 relative flex justify-center">
               <div className="flex justify-center z-20">
-                <Image src="/assets/images/connections/gift-box-light.png" layout="intrinsic" width={195} height={260} alt="Light Gift Box" />
+                <Image src="/assets/images/collections/gift-box-light.png" layout="intrinsic" width={195} height={260} alt="Light Gift Box" />
               </div>
               <div className="absolute bottom-0 z-10">
-                <Image src="/assets/images/connections/multi-circle-dark.png" layout="intrinsic" width={375} height={135} alt="Dark Multi Circle" />
+                <Image src="/assets/images/collections/multi-circle-dark.png" layout="intrinsic" width={375} height={135} alt="Dark Multi Circle" />
               </div>
             </div>
             <div className="p-30">
@@ -39,7 +39,7 @@ export default function PerksAndUtility() {
             </div>
             <div className="pt-15 relative flex justify-center">
               <div className="flex justify-center z-20">
-                <Image src="/assets/images/connections/up-arrow-with-dark-stars.png" layout="intrinsic" width={240} height={250} alt="Light Gift Box" />
+                <Image src="/assets/images/collections/up-arrow-with-dark-stars.png" layout="intrinsic" width={240} height={250} alt="Light Gift Box" />
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function PerksAndUtility() {
             </div>
             <div className="relative flex justify-center">
               <div className="flex justify-center z-20">
-                <Image src="/assets/images/connections/blue-windows-light.png" layout="intrinsic" width={250} height={280} alt="Light Gift Box" />
+                <Image src="/assets/images/collections/blue-windows-light.png" layout="intrinsic" width={250} height={280} alt="Light Gift Box" />
               </div>
             </div>
             <div className="p-30 pt-40">

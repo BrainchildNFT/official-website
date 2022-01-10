@@ -278,8 +278,8 @@ export default function Home() {
                   />
                 </div>
               </div>
-              {/* <div className="flex flex-col sm:flex-row lg:hidden pt-160 pb-80">
-                <div className="relative flex justify-center pb-195 sm:pb-0 sm:w-1/2 px-20">
+              <div className="flex flex-col sm:flex-row absolute top-1/2 left-1/2 transfrom -translate-x-1/2 -translate-y-1/2">
+                <div className="relative flex justify-center">
                   <Image
                     className="cursor-pointer"
                     src="/assets/images/landing-page/cartain-with-chair.png"
@@ -298,7 +298,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </section>
 
@@ -353,7 +353,6 @@ export default function Home() {
               </Swiper>
             </div>
           </section>
-
         </div>
 
         {/*Collaboration*/}
@@ -361,41 +360,40 @@ export default function Home() {
           <div className="container mx-auto p-30 pt-50 sm:pt-200 text-white sm:text-center font-Voyage">
             <p className="text-45 lg:text-80">exquisite</p>
             <p className="text-justify sm:text-center break-all text-80 lg:text-100 xl:text-150">
-                Collaborations
-              </p>
+              Collaborations
+            </p>
             <p className="text-45 lg:text-80">
-                <span className="text-30 lg:text-60">with</span> wondrous
-                artists
-              </p>
+              <span className="text-30 lg:text-60">with</span> wondrous artists
+            </p>
           </div>
           <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110">
             <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0">
               <Image
-                  src="/assets/images/landing-page/radial-connect.png"
-                  layout="intrinsic"
-                  width={420}
-                  height={420}
-                  alt="Hand Drawing White Hourse"
-                />
+                src="/assets/images/landing-page/radial-connect.png"
+                layout="intrinsic"
+                width={420}
+                height={420}
+                alt="Hand Drawing White Hourse"
+              />
             </div>
             <div className="text-white">
               <p className="sm:max-w-290">
-                  Et faucibus purus, ornare mi aliquam laoreet. Pretium, odio
-                  dis sit ipsum pretium elementum, pharetra vitae. A aliquam
-                  facilisi egestas pharetra iaculis. Pellentesque nisl convallis
-                  ornare augue nisl risus commodo, mi. Purus eget bibendum sit
-                  urna. Enim nunc, neque nunc felis massa magna massa porta.
-                </p>
+                Et faucibus purus, ornare mi aliquam laoreet. Pretium, odio dis
+                sit ipsum pretium elementum, pharetra vitae. A aliquam facilisi
+                egestas pharetra iaculis. Pellentesque nisl convallis ornare
+                augue nisl risus commodo, mi. Purus eget bibendum sit urna. Enim
+                nunc, neque nunc felis massa magna massa porta.
+              </p>
             </div>
           </div>
           <div className="absolute top-0 w-full h-full flex items-center justify-center">
             <Image
-                src="/assets/images/landing-page/white-hand-draw-hourse.png"
-                layout="intrinsic"
-                width={792}
-                height={818}
-                alt="Hand Drawing White Hourse"
-              />
+              src="/assets/images/landing-page/white-hand-draw-hourse.png"
+              layout="intrinsic"
+              width={792}
+              height={818}
+              alt="Hand Drawing White Hourse"
+            />
           </div>
         </section>
 
@@ -403,44 +401,74 @@ export default function Home() {
         <section className="relative dark-background-image">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
             <div className="lg:w-1/3 flex lg:justify-center lg:items-center text-white">
-              <p className="font-Voyage lg:hidden px-30 text-80 lg:vertical-letter font-[Voyage]">FAQ</p>
+              <p className="font-Voyage lg:hidden px-30 text-80 lg:vertical-letter font-[Voyage]">
+                FAQ
+              </p>
               {currentFaqIndex === -1 && (
-                  <p className="font-Voyage hidden lg:block text-130 vertical-letter font-Voyage">
-                    FAQ
-                  </p>
+                <p className="font-Voyage hidden lg:block text-130 vertical-letter font-Voyage">
+                  FAQ
+                </p>
               )}
-                {currentFaqIndex !== -1 && (
-                  <p className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all">
-                    {faqData[currentFaqIndex].content}
-                  </p>
-                )}
+              {currentFaqIndex !== -1 && (
+                <p className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all animate-fadeIn">
+                  {faqData[currentFaqIndex].content}
+                </p>
+              )}
             </div>
             <div className="lg:w-2/3 text-white">
-              {faqData.map((faq, index) =>
-                (index < faq_display_limit || isLoadMoreFaq) && (
-                  <>
-                        <p
-                    onMouseEnter={() => { if(isDesktop ) {setCurrentFaqIndex(index)}
-                          }}
-                    onMouseLeave={() => { if(isDesktop ) {setCurrentFaqIndex(-1)}
-                          }}
-                    onClick={() => { if(!isDesktop ) {setCurrentFaqIndex(currentFaqIndex == index ? -1 : index
-                    )
-                            }
-                          }} className="flex items-center justify-between transition-all border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10"
-                  >{faq.name} {' '}
+              {faqData.map(
+                (faq, index) =>
+                  (index < faq_display_limit || isLoadMoreFaq) && (
+                    <>
+                      <p
+                        onMouseEnter={() => {
+                          if (isDesktop) {
+                            setCurrentFaqIndex(index)
+                          }
+                        }}
+                        onMouseLeave={() => {
+                          if (isDesktop) {
+                            setCurrentFaqIndex(-1)
+                          }
+                        }}
+                        onClick={() => {
+                          if (!isDesktop) {
+                            setCurrentFaqIndex(
+                              currentFaqIndex == index ? -1 : index
+                            )
+                          }
+                        }}
+                        className="p-0 lg:pb-35"
+                      >
+                        <div className="flex items-center justify-between transition-all duration-500 border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10">
+                          {faq.name}{' '}
                           {!isDesktop && (
                             <Icon
                               name={index === currentFaqIndex ? 'down' : 'up'}
                               color="white"
                               size={18}
                             />
-                          )}</p>
-                  <p className={'faq-content-background lg:hidden w-full text-white text-24 font-semibold p-30 transition-all my-5 ' + (index === currentFaqIndex ? 'block' : 'hidden')}>{faq.content}</p></>
-                )
+                          )}
+                        </div>
+                      </p>
+                      <p
+                        className={
+                          'faq-content-background lg:hidden w-full text-white text-24 font-semibold p-30 transition-all my-5 ' +
+                          (index === currentFaqIndex ? 'block' : 'hidden')
+                        }
+                      >
+                        {faq.content}
+                      </p>
+                    </>
+                  )
               )}
               <div className="flex lg:ml-170 justify-center lg:justify-start">
-                <a className="cursor-pointer opacity-40" onClick={() => setIsLoadMoreFaq(!isLoadMoreFaq)}>{isLoadMoreFaq ? 'less show...' : 'load more...'}</a>
+                <a
+                  className="cursor-pointer opacity-40"
+                  onClick={() => setIsLoadMoreFaq(!isLoadMoreFaq)}
+                >
+                  {isLoadMoreFaq ? 'less show...' : 'load more...'}
+                </a>
               </div>
             </div>
           </div>

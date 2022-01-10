@@ -5,8 +5,8 @@ function range(start, end, increment = 1) {
     .map((_, idx) => start + idx * increment)
 }
 
-const minFontSize = 5;
-const maxFontSize = 300;
+const minFontSize = 5
+const maxFontSize = 300
 
 const minSpacingPixel = 0
 const maxSpacingPixel = 1800
@@ -187,6 +187,15 @@ module.exports = {
         {}
       ),
       ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+    },
+    animation: {
+      fadeIn: 'fadeIn 0.5s ease-in-out',
+    },
+    keyframes: {
+      fadeIn: {
+        '0%': { opacity: 0 },
+        '100%': { opacity: 1 },
+      },
     },
     extend: {},
   },

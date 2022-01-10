@@ -366,15 +366,35 @@ export default function Home() {
               <span className="text-30 lg:text-60">with</span> wondrous artists
             </p>
           </div>
+          <div className="absolute top-0 w-full h-full flex items-center justify-center">
+            <Image
+              src="/assets/images/landing-page/white-hand-draw-hourse.png"
+              layout="intrinsic"
+              width={792}
+              height={818}
+              alt="Hand Drawing White Hourse"
+            />
+          </div>
           <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110">
-            <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0">
-              <Image
-                src="/assets/images/landing-page/radial-connect.png"
-                layout="intrinsic"
-                width={420}
-                height={420}
-                alt="Hand Drawing White Hourse"
-              />
+            <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0 group cursor-pointer">
+              <div className="hidden group-hover:block">
+                <Image
+                  src="/assets/images/landing-page/radial-connect-hover.png"
+                  layout="intrinsic"
+                  width={420}
+                  height={420}
+                  alt="Hand Drawing White Hourse"
+                />
+              </div>
+              <div className="block group-hover:hidden">
+                <Image
+                  src="/assets/images/landing-page/radial-connect.png"
+                  layout="intrinsic"
+                  width={420}
+                  height={420}
+                  alt="Hand Drawing White Hourse"
+                />
+              </div>
             </div>
             <div className="text-white">
               <p className="sm:max-w-290">
@@ -385,15 +405,6 @@ export default function Home() {
                 nunc, neque nunc felis massa magna massa porta.
               </p>
             </div>
-          </div>
-          <div className="absolute top-0 w-full h-full flex items-center justify-center">
-            <Image
-              src="/assets/images/landing-page/white-hand-draw-hourse.png"
-              layout="intrinsic"
-              width={792}
-              height={818}
-              alt="Hand Drawing White Hourse"
-            />
           </div>
         </section>
 

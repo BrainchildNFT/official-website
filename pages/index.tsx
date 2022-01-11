@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -62,6 +62,58 @@ export default function Home() {
     }
   }, [raffleState])
 
+  const experiencedNFTRef = useRef<HTMLDivElement>(null)
+  const chairImageRef = useRef<HTMLImageElement>(null)
+
+  const [scrollY, setScrollY] = useState(0)
+  const [prevChairWidth, setPrevChairWidth] = useState(0)
+  const [prevChairHeight, setPrevChairHeight] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    handleScroll()
+    setPrevChairWidth(chairImageRef.current?.clientWidth || 0)
+    setPrevChairHeight(chairImageRef.current?.clientHeight || 0)
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    const experiencedTop =
+      experiencedNFTRef.current?.getBoundingClientRect().top || 0
+    if (experiencedTop < -window.innerHeight) {
+      if (chairImageRef.current) {
+        if (isDesktop) {
+          const progress = Math.min(
+            1,
+            ((experiencedNFTRef.current?.clientHeight || 0) +
+              experiencedTop -
+              window.innerHeight) /
+              ((experiencedNFTRef.current?.clientHeight || 0) -
+                2 * window.innerHeight)
+          )
+          chairImageRef.current.style.width =
+            window.innerWidth -
+            (window.innerWidth - prevChairWidth) * progress +
+            'px'
+          chairImageRef.current.style.height =
+            window.innerHeight -
+            (window.innerHeight - prevChairHeight) * progress +
+            'px'
+        } else {
+          chairImageRef.current.style.width = '100%'
+          chairImageRef.current.style.height = '100%'
+        }
+      }
+    }
+  }, [scrollY])
+
   return (
     <>
       <Head>
@@ -89,7 +141,7 @@ export default function Home() {
                   className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
-                  Level 10
+                  Levels 10
                 </span>{' '}
                 Enhancement
               </p>
@@ -185,9 +237,9 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="light-background-image overflow-hidden">
+        <div className="light-background-image">
           {/*Immerse yourself in the new age of LUXURY*/}
-          <section className="relative pt-130 pb-60">
+          <section className="relative pt-130 pb-60 overflow-x-hidden">
             <div className="border-y border-gradient-dark p-25">
               <p className="text-primary-50 whitespace-nowrap transition eas-in-out transform -translate-y-1">
                 Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
@@ -236,68 +288,26 @@ export default function Home() {
           </section>
 
           {/*Experience NFTs beyond Cryptoverse Section*/}
-          <section className="relative">
-            <div className="container mx-auto flex flex-col pt-95 lg:pt-0 lg:items-center justify-center lg:h-screen">
-              <div className="relative font-Voyage text-108 lg:text-130 text-primary-75 text-right pr-120 pb-120 lg:pr-100 lg:pb-100">
-                <p className="leading-none sm:leading-tight">
-                  <span className="text-45 sm:text-66 lg:text-80">
-                    Experience
-                  </span>{' '}
-                  <span className="text-100 sm:text-120 lg:text-150">NFTs</span>
-                </p>
-                <p className="text-45 sm:text-66 lg:text-80 leading-none sm:leading-tight">
-                  beyond the
-                </p>
-                <div className="absolute bottom-0 flex justify-end w-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 560 500"
-                    width="560"
-                    height="500"
-                  >
-                    <path
-                      fill="none"
-                      id="round"
-                      d="M0, 500L400,500C700,450,400,0,700,0L0"
-                    />
-                    <text
-                      x="25"
-                      className="fill-primary text-140 tracking-wider"
-                    >
-                      <textPath xlinkHref="#round">Crypto verse</textPath>
-                    </text>
-                  </svg>
-                </div>
-                <div className="absolute min-w-1200 top-0 right-0 -mr-400">
-                  <Image
-                    src="/assets/images/landing-page/multi-line-chart.png"
-                    layout="responsive"
-                    width={950}
-                    height={450}
-                    alt="Multi Line Chart"
-                  />
-                </div>
+          <section className="relative" ref={experiencedNFTRef}>
+            <div className="mx-auto" style={{ height: '400vh' }}>
+              <div className="w-full overflow-x-clip h-screen flex items-center justify-center sticky top-0">
+                <img
+                  className="hidden sm:block sm:p-50 xs:p-200"
+                  style={{ maxWidth: '100%' }}
+                  src="/assets/images/landing-page/text-experienced-nft.svg"
+                />
+                <img
+                  className="block sm:hidden w-full"
+                  src="/assets/images/landing-page/text-experienced-nft-mobile.svg"
+                />
               </div>
-              <div className="flex flex-col sm:flex-row absolute top-1/2 left-1/2 transfrom -translate-x-1/2 -translate-y-1/2">
-                <div className="relative flex justify-center">
-                  <Image
-                    className="cursor-pointer"
-                    src="/assets/images/landing-page/cartain-with-chair.png"
-                    layout="intrinsic"
-                    width={337}
-                    height={515}
-                    alt="Cartain With Chair"
-                  />
-                  <div className="absolute w-full bottom-0 left-0 -ml-100 pb-50 block sm:hidden">
-                    <Image
-                      src="/assets/images/landing-page/multi-polygon-dark.svg"
-                      layout="intrinsic"
-                      width={240}
-                      height={240}
-                      alt="Multi Polygon"
-                    />
-                  </div>
-                </div>
+              <div className="w-full h-screen flex items-center justify-center sticky top-0">
+                <img
+                  ref={chairImageRef}
+                  className="object-cover object-center"
+                  src="/assets/images/landing-page/cartain-with-chair.png"
+                  alt="Cartain With Chair"
+                />
               </div>
             </div>
           </section>
@@ -398,11 +408,12 @@ export default function Home() {
             </div>
             <div className="text-white">
               <p className="sm:max-w-290">
-                Et faucibus purus, ornare mi aliquam laoreet. Pretium, odio dis
-                sit ipsum pretium elementum, pharetra vitae. A aliquam facilisi
-                egestas pharetra iaculis. Pellentesque nisl convallis ornare
-                augue nisl risus commodo, mi. Purus eget bibendum sit urna. Enim
-                nunc, neque nunc felis massa magna massa porta.
+                We ensure a rich collaborative experience to bring an
+                uncompromised creative vision to fruition.
+                <br />
+                <br />
+                Connect with our talented artists to build your identities
+                beyond the cryptoverse!
               </p>
             </div>
           </div>
@@ -430,8 +441,8 @@ export default function Home() {
               {faqData.map(
                 (faq, index) =>
                   (index < faq_display_limit || isLoadMoreFaq) && (
-                    <>
-                      <p
+                    <div key={faq.content + index}>
+                      <div
                         onMouseEnter={() => {
                           if (isDesktop) {
                             setCurrentFaqIndex(index)
@@ -461,7 +472,7 @@ export default function Home() {
                             />
                           )}
                         </div>
-                      </p>
+                      </div>
                       <p
                         className={
                           'faq-content-background lg:hidden w-full text-white text-24 font-semibold p-30 transition-all my-5 ' +
@@ -470,17 +481,17 @@ export default function Home() {
                       >
                         {faq.content}
                       </p>
-                    </>
+                    </div>
                   )
               )}
-              <div className="flex lg:ml-170 justify-center lg:justify-start">
+              {/* <div className="flex lg:ml-170 justify-center lg:justify-start">
                 <a
                   className="cursor-pointer opacity-40"
                   onClick={() => setIsLoadMoreFaq(!isLoadMoreFaq)}
                 >
                   {isLoadMoreFaq ? 'less show...' : 'load more...'}
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

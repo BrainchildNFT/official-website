@@ -9,6 +9,7 @@ type BreakpointChecks = {
   isMobile: boolean;
   isTablet: boolean;
   isDesktop: boolean;
+  isHuge: boolean;
 } & State;
 
 type MediaQueries = {
@@ -93,6 +94,7 @@ const useMatchBreakpoints = (): BreakpointChecks => {
     isMobile: state.isXs || state.isSm,
     isTablet: state.isMd || state.isLg,
     isDesktop: state.isXl || state.isXxl,
+    isHuge: state.isXxl || state.isXxxl,
   };
 };
 

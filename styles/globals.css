@@ -218,7 +218,7 @@ a {
 }
 
 .light-background-image {
-  @apply bg-light;
+  background-color: rgb(190, 190, 190);
   background-image: url('/assets/images/light-background-tile.png');
 }
 
@@ -319,7 +319,7 @@ a {
 
 /* animataion */
 .animate-spin-60s {
-  animation: spin 30s steps(20) infinite;
+  animation: spin 60s linear infinite;
 }
 
 @keyframes spin {

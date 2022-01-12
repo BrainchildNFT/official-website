@@ -7,7 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Icon from '../ui-kit/icon'
 import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import { faDiscord, faInstagram, faRedditAlien, faTelegramPlane, faTwitter, } from '@fortawesome/free-brands-svg-icons'
+import {
+  faDiscord,
+  faInstagram,
+  faRedditAlien,
+  faTelegramPlane,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons'
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -17,7 +23,9 @@ export function Navbar() {
   return (
     <div
       className={
-        navbarOpen ? 'dark-background-image' : 'dark-background-image pt-40'
+        navbarOpen
+          ? 'dark-background-image'
+          : 'dark-background-image z-[700] sticky top-40'
       }
     >
       <nav className="h-65 z-[100] flex px-15 sticky text-white border-y border-gradient-light overflow-x-clip">
@@ -78,15 +86,19 @@ export function Navbar() {
                 </button>
               </div>
             </div>
-            <ul className="flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18 xl:text-14 text-primary xl:text-white">
+            <ul className="flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18 text-primary xl:text-white">
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/collections">
-                  <a className="relative xl:px-25 xl:py-10">Collections</a>
+                  <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                    Collections
+                  </a>
                 </Link>
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/about-us">
-                  <a className="relative xl:px-25 xl:py-10">About Us</a>
+                  <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                    About Us
+                  </a>
                 </Link>
               </li>
               <li className="pt-20 pb-10 px-20 xl:px-0 nav-link hidden xl:block">
@@ -98,11 +110,15 @@ export function Navbar() {
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/opensea">
-                  <a className="relative xl:px-25 xl:py-10">Opensea</a>
+                  <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                    Opensea
+                  </a>
                 </Link>
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 relative group">
-                <a className="relative xl:px-25 xl:py-10">Other</a>
+                <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                  Other
+                </a>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2">
                   <div
                     className="mt-20 p-30 back-drop rounded-[30px] border-[1px] hidden xl:group-hover:block"
@@ -171,20 +187,6 @@ export function Navbar() {
                       }}
                     />
                     <div className="flex mt-20">
-                      <a href="https://t.me/joinchat/KxQp5cc1K35lM2Jl">
-                        <FontAwesomeIcon
-                          icon={faTelegramPlane}
-                          size="1x"
-                          className="transform scale-150"
-                        />
-                      </a>
-                      <a href="https://www.reddit.com/r/brainchildNFT/">
-                        <FontAwesomeIcon
-                          icon={faRedditAlien}
-                          size="1x"
-                          className="transform scale-150 ml-40"
-                        />
-                      </a>
                       <a href="https://www.instagram.com/brainchildnft/">
                         <FontAwesomeIcon
                           icon={faInstagram}

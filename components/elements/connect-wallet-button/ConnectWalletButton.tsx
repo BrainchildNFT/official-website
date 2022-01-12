@@ -79,7 +79,12 @@ const ConnectWalletButton = () => {
           strokeWidth="0.75"
         />
       </svg>
-      <button className="px-5 text-18 font-bold">Connect Wallet</button>
+      <button className="hidden group-hover:block px-5 text-18 font-bold w-150">
+        Coming soon
+      </button>
+      <button className="block group-hover:hidden px-5 text-18 font-bold w-150">
+        Connect Wallet
+      </button>
     </div>
   )
 }

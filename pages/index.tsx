@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -118,7 +119,10 @@ export default function Home() {
     <>
       <Head>
         <title>Brainchild: HomePage</title>
-        <meta name="description" content="Unlocking innovative ownership experiences by connecting to web3. Redeem, upgrade, enhance NFTs that traverse both digital and real world." />
+        <meta
+          name="description"
+          content="Unlocking innovative ownership experiences by connecting to web3. Redeem, upgrade, enhance NFTs that traverse both digital and real world."
+        />
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
@@ -181,7 +185,7 @@ export default function Home() {
               <div>
                 <Image
                   className="animate-spin-60s"
-                  src="/assets/images/landing-page/eth-clock-letter.png"
+                  src="/assets/images/landing-page/eth-clock-letter.svg"
                   layout="intrinsic"
                   width={1063}
                   height={1063}
@@ -199,42 +203,44 @@ export default function Home() {
           </div>
 
           {/*state bar*/}
-          <div
-            className={
-              'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 ' +
-              stateBarBackground
-            }
-          >
-            {raffleState === RaffleState.Waiting && (
-              <p className="font-medium text-center">
-                Raffle begins on 15 Jan, 2022 at 1:03 PM GMT
-              </p>
-            )}
-            {raffleState === RaffleState.Live && (
-              <p className="font-medium text-center">
-                Raffle Results{' '}
-                <span className="text-30 font-bold">LIVE NOW!</span> end on 15
-                Jan, 2022 at 1:03 PM GMT
-              </p>
-            )}
-            {raffleState === RaffleState.Ended && (
-              <p className="font-medium text-center">
-                Raffle Results{' '}
-                <span className="text-30 font-bold">LIVE NOW!</span>
-              </p>
-            )}
+          {scrollY < 1 && (
+            <div
+              className={
+                'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 ' +
+                stateBarBackground
+              }
+            >
+              {raffleState === RaffleState.Waiting && (
+                <p className="font-medium text-center">
+                  Raffle begins on 15 Jan, 2022 at 1:03 PM GMT
+                </p>
+              )}
+              {raffleState === RaffleState.Live && (
+                <p className="font-medium text-center">
+                  Raffle Results{' '}
+                  <span className="text-30 font-bold">LIVE NOW!</span> end on 15
+                  Jan, 2022 at 1:03 PM GMT
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  Raffle Results{' '}
+                  <span className="text-30 font-bold">LIVE NOW!</span>
+                </p>
+              )}
 
-            {raffleState !== RaffleState.Ended && (
-              <p className="font-medium text-center">
-                <span className="text-30 font-bold">01:23:45:12</span> Left
-              </p>
-            )}
-            {raffleState === RaffleState.Ended && (
-              <p className="font-medium text-center">
-                Connect wallet to check if you’re whitelisted
-              </p>
-            )}
-          </div>
+              {raffleState !== RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  <span className="text-30 font-bold">01:23:45:12</span> Left
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  Connect wallet to check if you’re whitelisted
+                </p>
+              )}
+            </div>
+          )}
         </section>
 
         <div className="light-background-image">
@@ -388,13 +394,15 @@ export default function Home() {
           <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110">
             <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0 group cursor-pointer">
               <div className="hidden group-hover:block">
-                <Image
-                  src="/assets/images/landing-page/radial-connect-hover.png"
-                  layout="intrinsic"
-                  width={420}
-                  height={420}
-                  alt="Hand Drawing White Hourse"
-                />
+                <Link href="mailto:BrainchildNFT@gmail.com">
+                  <Image
+                    src="/assets/images/landing-page/radial-connect-hover.png"
+                    layout="intrinsic"
+                    width={420}
+                    height={420}
+                    alt="Hand Drawing White Hourse"
+                  />
+                </Link>
               </div>
               <div className="block group-hover:hidden">
                 <Image
@@ -432,8 +440,10 @@ export default function Home() {
                 </p>
               )}
               {currentFaqIndex !== -1 && (
-                <p className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all animate-fadeIn">
-                  {faqData[currentFaqIndex].content}
+                <p className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all">
+                  <span className="animate-fadeIn">
+                    {faqData[currentFaqIndex].content}
+                  </span>
                 </p>
               )}
             </div>
@@ -460,7 +470,6 @@ export default function Home() {
                             )
                           }
                         }}
-                        className="p-0 lg:pb-35"
                       >
                         <div className="flex items-center justify-between transition-all duration-500 border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10">
                           {faq.name}{' '}
@@ -479,7 +488,7 @@ export default function Home() {
                           (index === currentFaqIndex ? 'block' : 'hidden')
                         }
                       >
-                        {faq.content}
+                        <span className="animate-fadeIn">{faq.content}</span>
                       </p>
                     </div>
                   )

@@ -14,11 +14,13 @@ import {
   faTelegramPlane,
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons'
+import { useRouter } from 'next/router'
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
 
   const { isMobile } = useMatchBreakpoints()
+  const router = useRouter()
 
   return (
     <div
@@ -89,14 +91,28 @@ export function Navbar() {
             <ul className="flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18 text-primary xl:text-white">
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/collections">
-                  <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                  <a
+                    className={
+                      'relative xl:px-25 xl:py-10 ' +
+                      (router.pathname == '/collections'
+                        ? 'text-[#AF5F5F]'
+                        : '')
+                    }
+                    style={{ fontFamily: 'Subjectivity Serif' }}
+                  >
                     Collections
                   </a>
                 </Link>
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/about-us">
-                  <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                  <a
+                    className={
+                      'relative xl:px-25 xl:py-10 ' +
+                      (router.pathname == '/about-us' ? 'text-[#AF5F5F]' : '')
+                    }
+                    style={{ fontFamily: 'Subjectivity Serif' }}
+                  >
                     About Us
                   </a>
                 </Link>
@@ -110,13 +126,25 @@ export function Navbar() {
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/opensea">
-                  <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                  <a
+                    className={
+                      'relative xl:px-25 xl:py-10 ' +
+                      (router.pathname == '/opensea' ? 'text-[#AF5F5F]' : '')
+                    }
+                    style={{ fontFamily: 'Subjectivity Serif' }}
+                  >
                     Opensea
                   </a>
                 </Link>
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 relative group">
-                <a className="relative xl:px-25 xl:py-10 font-Subjectivity">
+                <a
+                  className={
+                    'relative xl:px-25 xl:py-10 ' +
+                    (router.pathname == '/other' ? 'text-[#AF5F5F]' : '')
+                  }
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
                   Other
                 </a>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2">
@@ -186,30 +214,48 @@ export function Navbar() {
                           'linear-gradient(270.16deg, rgba(255, 255, 255, 0) 1.04%, rgba(255, 255, 255, 0.4) 48.58%, rgba(255, 255, 255, 0) 100.31%)',
                       }}
                     />
-                    <div className="flex mt-20">
-                      <a href="https://www.instagram.com/brainchildnft/">
-                        <FontAwesomeIcon
-                          icon={faInstagram}
-                          size="1x"
-                          className="transform scale-150 ml-40"
-                        />
-                      </a>
-                      <a href="https://twitter.com/BrainchildNFT">
-                        <FontAwesomeIcon
-                          icon={faTwitter}
-                          size="1x"
-                          className="transform scale-150 ml-40"
-                        />
-                      </a>
+                    <div className="flex mt-20 items-center tracking-wider">
+                      <FontAwesomeIcon
+                        icon={faInstagram}
+                        size="1x"
+                        className="transform scale-150"
+                      />
+                      <span
+                        className="text-[18px] ml-10"
+                        style={{
+                          fontFamily: 'Subjectivity Serif',
+                          fontWeight: 400,
+                        }}
+                      >
+                        <Link href="https://www.instagram.com/brainchildnft/">
+                          Instagram
+                        </Link>
+                      </span>
                     </div>
                     <div
-                      className="text-[12px] tracking-wider mt-10"
+                      className="w-full h-[2px] mt-20"
                       style={{
-                        fontFamily: 'Subjectivity Serif',
-                        fontWeight: 400,
+                        background:
+                          'linear-gradient(270.16deg, rgba(255, 255, 255, 0) 1.04%, rgba(255, 255, 255, 0.4) 48.58%, rgba(255, 255, 255, 0) 100.31%)',
                       }}
-                    >
-                      Keep yourself updated with our announcement channels
+                    />
+                    <div className="flex mt-20 items-center tracking-wider">
+                      <FontAwesomeIcon
+                        icon={faTwitter}
+                        size="1x"
+                        className="transform scale-150"
+                      />
+                      <span
+                        className="text-[18px] ml-10"
+                        style={{
+                          fontFamily: 'Subjectivity Serif',
+                          fontWeight: 400,
+                        }}
+                      >
+                        <Link href="https://twitter.com/BrainchildNFT">
+                          Twitter
+                        </Link>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -252,48 +298,6 @@ export function Navbar() {
                   >
                     <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
                       Whitepaper
-                    </Link>
-                  </span>
-                </div>
-                <div className="flex items-center mt-10">
-                  <div className="w-50">
-                    <FontAwesomeIcon
-                      icon={faTelegramPlane}
-                      size="1x"
-                      className="transform scale-75"
-                    />
-                  </div>
-                  <span
-                    className="ml-10 text-[18px] tracking-wider"
-                    style={{
-                      fontFamily: 'Subjectivity Serif',
-                      fontWeight: 400,
-                      verticalAlign: 'middle',
-                    }}
-                  >
-                    <Link href="https://t.me/joinchat/KxQp5cc1K35lM2Jl">
-                      Telegram
-                    </Link>
-                  </span>
-                </div>
-                <div className="flex items-center mt-10">
-                  <div className="w-50">
-                    <FontAwesomeIcon
-                      icon={faRedditAlien}
-                      size="1x"
-                      className="transform scale-75"
-                    />
-                  </div>
-                  <span
-                    className="ml-10 text-[18px] tracking-wider"
-                    style={{
-                      fontFamily: 'Subjectivity Serif',
-                      fontWeight: 400,
-                      verticalAlign: 'middle',
-                    }}
-                  >
-                    <Link href="https://www.reddit.com/r/brainchildNFT/">
-                      Reddit
                     </Link>
                   </span>
                 </div>

@@ -18,6 +18,8 @@ import { shimmerUrl } from '../components/ui-kit/common/blur-image'
 import useGAService from '../core/app-services/ga-service'
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
 import Icon from '../components/ui-kit/icon'
+import { faWindows } from '@fortawesome/free-brands-svg-icons'
+import { useRouter } from 'next/router'
 
 const swiperBreakPoints = {
   640: {
@@ -65,6 +67,7 @@ export default function Home() {
 
   const experiencedNFTRef = useRef<HTMLDivElement>(null)
   const chairImageRef = useRef<HTMLImageElement>(null)
+  const exploreImageRef = useRef<HTMLDivElement>(null)
 
   const [scrollY, setScrollY] = useState(0)
   const [prevChairWidth, setPrevChairWidth] = useState(0)
@@ -115,6 +118,8 @@ export default function Home() {
     }
   }, [scrollY])
 
+  const router = useRouter()
+
   return (
     <>
       <Head>
@@ -127,7 +132,28 @@ export default function Home() {
       <Layout>
         {/*Ether clock landing page*/}
         <section className="relative dark-background-image h-screen-without-navbar overflow-hidden">
-          <div className="relative h-screen-without-navbar">
+          <div
+            className="relative h-screen-without-navbar"
+            onMouseMove={(event) => {
+              if (exploreImageRef.current) {
+                exploreImageRef.current.style.top =
+                  event.clientY - 105 + scrollY + 'px'
+                exploreImageRef.current.style.left = event.clientX + 'px'
+              }
+            }}
+            onClick={() => router.push('/collections')}
+            style={{ cursor: 'none' }}
+          >
+            <div
+              className="absolute w-120 h-120 sm:w-150 sm:h-150 xl:w-175 xl:h-175 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[400]"
+              ref={exploreImageRef}
+            >
+              <Image
+                src="/assets/images/landing-page/radial-explore.png"
+                layout="fill"
+                alt="Explore"
+              />
+            </div>
             <div className="px-30 flex flex-col xl:flex-row items-end xl:items-center justify-center text-white text-20 sm:text-28 text-right xl:text-center font-light pt-35 xl:pt-125">
               <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
                 <span
@@ -192,13 +218,6 @@ export default function Home() {
                   alt="Ethereum Clock Letter"
                 />
               </div>
-              <div className="absolute w-120 h-120 sm:w-150 sm:h-150 xl:w-175 xl:h-175 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto">
-                <Image
-                  src="/assets/images/landing-page/radial-explore.png"
-                  layout="fill"
-                  alt="Explore"
-                />
-              </div>
             </div>
           </div>
 
@@ -211,31 +230,46 @@ export default function Home() {
               }
             >
               {raffleState === RaffleState.Waiting && (
-                <p className="font-medium text-center">
+                <p
+                  className="text-center"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
                   Raffle begins on 15 Jan, 2022 at 1:03 PM GMT
                 </p>
               )}
               {raffleState === RaffleState.Live && (
-                <p className="font-medium text-center">
+                <p
+                  className="font-medium text-center"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
                   Raffle Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> end on 15
                   Jan, 2022 at 1:03 PM GMT
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p className="font-medium text-center">
+                <p
+                  className="font-medium text-center"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
                   Raffle Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span>
                 </p>
               )}
 
               {raffleState !== RaffleState.Ended && (
-                <p className="font-medium text-center">
+                <p
+                  className="font-medium text-center"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
                   <span className="text-30 font-bold">01:23:45:12</span> Left
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p className="font-medium text-center">
+                <p
+                  className="font-medium text-center"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
                   Connect wallet to check if you’re whitelisted
                 </p>
               )}
@@ -334,8 +368,85 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="mt-100 px-20 sm:px-80 lg:pr-0 xl:pl-200">
-              <Swiper
+            <div className="mt-100 px-20 sm:px-80 lg:pr-0 xl:pl-200 flex">
+              <div className="background-gray-blur p-40 w-600 pb-0">
+                <p className="text-80 text-[#232425]">Enhance</p>
+                <div className="text-20 text-[#343536]">
+                  Play with our mysterious dice to test your luck and evolve
+                  your NFTs to higher levels.Roll the dice for 5 possible
+                  outcomes of enhancement!
+                </div>
+                <div className="flex w-full flex-wrap mt-10">
+                  <img
+                    className="p-10"
+                    src="/assets/images/landing-page/tag-enhanced.svg"
+                    height={40}
+                  />
+                  <img
+                    className="p-10"
+                    src="/assets/images/landing-page/tag-god-teir.svg"
+                    height={40}
+                  />
+                  <img
+                    className="p-10"
+                    src="/assets/images/landing-page/tag-frozen.svg"
+                    height={40}
+                  />
+                  <img
+                    className="p-10"
+                    src="/assets/images/landing-page/tag-failed.svg"
+                    height={40}
+                  />
+                  <img
+                    className="p-10"
+                    src="/assets/images/landing-page/tag-charred.svg"
+                    height={40}
+                  />
+                </div>
+                <img
+                  className="w-full"
+                  src="/assets/images/landing-page/bg-enhance-item.svg"
+                />
+              </div>
+              <div className="background-gray-blur p-40 w-600 pb-0 ml-50 relative">
+                <p className="text-80 text-[#232425]">Redeem</p>
+                <div className="text-20 text-[#343536]">
+                  Get the physical manifestation of your NFT delivered right to
+                  your front door.Touch it. Feel it. Lick it. Get weird with it.
+                  Throw it and redeem again.It’s yours, FOREVER.Our NFTs are
+                  perpetually redeemable.
+                </div>
+                <img
+                  className="w-full h-full absolute top-0 left-0"
+                  src="/assets/images/landing-page/bg-redeem-item.svg"
+                />
+              </div>
+              <div className="background-gray-blur p-40 w-600 pb-0 ml-50 relative">
+                <p className="text-80 text-[#232425]">Participate</p>
+                <div className="text-20 text-[#343536]">
+                  You will be given digital tickets and gain entry to our
+                  private community events and receive exclusive benefits
+                  including premium NFT drops, lavish collaborations, gamified
+                  experiences and a whole lot more...
+                </div>
+                <img
+                  className="w-full mt-20 absolute left-0 bottom-0"
+                  src="/assets/images/landing-page/bg-coming-soon.svg"
+                />
+              </div>
+              <div className="background-gray-blur p-40 w-600 pb-0 ml-50 relative">
+                <p className="text-80 text-[#232425]">Vote</p>
+                <div className="text-20 text-[#343536]">
+                  Have your say in how things will turn out, from launches,
+                  collaborations to designs and features. Be one of the many
+                  potter hands to mold future brainchild projects!
+                </div>
+                <img
+                  className="w-full mt-20 absolute left-0 bottom-0"
+                  src="/assets/images/landing-page/bg-coming-soon.svg"
+                />
+              </div>
+              {/* <Swiper
                 className="w-full"
                 spaceBetween={80}
                 breakpoints={swiperBreakPoints}
@@ -366,7 +477,7 @@ export default function Home() {
                     </div>
                   </SwiperSlide>
                 ))}
-              </Swiper>
+              </Swiper> */}
             </div>
           </section>
         </div>

@@ -1,4 +1,4 @@
-export enum CollectionsMenuType {
+export enum NftsMenuType {
   About,
   Artist,
   PerksAndUtility,
@@ -7,6 +7,16 @@ export enum CollectionsMenuType {
   Gallery,
   WhitePaper
 }
+
+export const NftsMenuTypeArr: NftsMenuType[] = [
+  NftsMenuType.About,
+  NftsMenuType.Artist,
+  NftsMenuType.PerksAndUtility,
+  NftsMenuType.TimeLine,
+  NftsMenuType.Enhancements,
+  NftsMenuType.Gallery,
+  NftsMenuType.WhitePaper
+]
 
 export const timelineData = [
   {
@@ -94,12 +104,12 @@ export const galleryData = [
     height: 700,
   },
   {
-    src: '/assets/images/common/roles-royce.png',
+    src: '/assets/images/common/ether-clock.png',
     width: 560,
     height: 700,
   },
   {
-    src: '/assets/images/common/bottles.png',
+    src: '/assets/images/common/ether-clock.png',
     width: 560,
     height: 700,
   },

@@ -7,3 +7,8 @@ export const breakpointMap: { [key: string]: number } = {
   xxl: 1536,
   xxxl: 3000,
 };
+
+export enum ThemeType {
+  LightMode,
+  DarkMode,
+}

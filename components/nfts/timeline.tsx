@@ -1,4 +1,4 @@
-import { timelineData, timelineStepData } from '../../core/data/collections';
+import { timelineData, timelineStepData } from '../../core/data/nfts';
 import Icon from '../ui-kit/icon';
 
 export default function Timeline() {

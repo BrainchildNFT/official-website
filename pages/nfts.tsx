@@ -4,6 +4,7 @@ import Image from 'next/image'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Layout } from '../components/layout/layout';
 import { RaffleState } from '../core/data/landing';
@@ -17,12 +18,18 @@ import Enhancements from '../components/nfts/enhancements';
 import Gallery from '../components/nfts/gallery';
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
 import Artist from '../components/nfts/artist';
+import { themeUpdate } from '../core/actions';
+import { ThemeType } from '../core/data/base';
 
 export default function Nfts() {
   const [isTop, setIsTop] = useState(true);
   const [raffleState, setRaffleState] = useState(RaffleState.Waiting);
   const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
   const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About);
+  const [textColor, setTextColor] = useState('text-white');
+
+  const themeStatus = useSelector((state)  => state.ThemeStatus);
+  const dispatch = useDispatch();
 
   const { isHuge } = useMatchBreakpoints()
   const nftContentRef = useRef<HTMLDivElement>(null);
@@ -90,6 +97,14 @@ export default function Nfts() {
   }
 
   useEffect(() => {
+    if (currentMenuId === NftsMenuType.About) {
+      dispatch(themeUpdate(ThemeType.DarkMode));
+    } else {
+      dispatch(themeUpdate(ThemeType.LightMode));
+    }
+  }, [currentMenuId])
+
+  useEffect(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
         setStateBarBackground('bg-danger text-white');
@@ -106,6 +121,10 @@ export default function Nfts() {
   }, [raffleState]);
 
   useEffect(() => {
+    setTextColor(themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary');
+  }, [themeStatus]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll)
@@ -120,12 +139,12 @@ export default function Nfts() {
       </Head>
       <Layout>
         <div className="relative flex flex-col xl:flex-row">
-          <div className="min-w-400 bg-white-10 overflow-auto sticky top-0 flex flex-col">
-            <div className="text-white grow py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap">
-              <Link className="flex" href="/"><a className="text-18 text-white font-bold no-underline flex items-center"><Icon className="rotate-180 mr-25" name='arrow_right' color='white' size={21} /><span className="hidden xl:block">COLLECTIONS</span></a></Link>
+          <div className={"min-w-400 overflow-x-auto sticky top-0 flex flex-col " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-10')}>
+            <div className={"grow py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
+              <Link className="flex" href="/"><a className={"text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="hidden xl:block">COLLECTIONS</span></a></Link>
               <div className="mr-40 xl:mr-0 xl:mt-50 flex items-center">
                 <div className="pr-5 flex items-center min-w-40">
-                  <Image src="/assets/images/about-us/star-in-rhombus.png" layout="intrinsic" width={36} height={40} alt="Star In Square" />
+                  <Image src={themeStatus === ThemeType.DarkMode ? '/assets/images/about-us/light-star-in-rhombus.png' : '/assets/images/about-us/dark-star-in-rhombus.png'} layout="intrinsic" width={36} height={40} alt="Star In Square" />
                 </div>
                 <div>
                   <p className="text-30 font-bold">ethereum clock</p>
@@ -134,17 +153,17 @@ export default function Nfts() {
               <div className="xl:mt-50 flex flex-row xl:flex-col">
                 {menuList.map((menu, index) => (<div key={index} className="flex items-center mr-40 xl:mr-0 xl:mb-30 cursor-pointer" onClick={() => menuClicked(menu.id)}>
                   <div className={'hidden xl:block text-danger transition-all ease-in-out duration-500 ' + (index === currentMenuId ? 'w-50 mr-10 border border-1' : 'w-0 border-0')} style={{ height: '1px'}} />
-                  <p className={'font-medium text-16 transition-all ease-in-out duration-500 ' + (index === currentMenuId ? 'text-danger': '')}>{menu.name}<Icon className={'ml-5 ' + (index === menuList.length - 1 ? 'block' : 'hidden')} name='external_link' color={index === currentMenuId ? 'danger' : 'white'} size={16} /></p>
+                  <p className={'font-medium text-16 transition-all ease-in-out duration-500 ' + (index === currentMenuId ? 'text-danger': '')}>{menu.name}<Icon className={'ml-5 ' + (index === menuList.length - 1 ? 'block' : 'hidden')} name='external_link' color={index === currentMenuId ? 'danger' : (themeStatus === ThemeType.DarkMode ? 'white' : 'primary')} size={16} /></p>
                 </div>))}
               </div>
               <div className="flex">
-                <div className="bg-white rounded-full px-30 py-15 cursor-pointer">
-                  <span className="font-Subjectivity text-primary text-18 font-bold">OPENSEA <Icon className="ml-10" name='opensea' color='primary' size={16} /></span>
+                <div className={"rounded-full px-30 py-15 cursor-pointer " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
+                  <span className={"font-Subjectivity text-18 font-bold " + (themeStatus === ThemeType.DarkMode ? "text-primary" : "text-white")}>OPENSEA <Icon className="ml-10" name='opensea' color={themeStatus === ThemeType.DarkMode ? "primary" : "white"} size={16} /></span>
                 </div>
               </div>
             </div>
-            <div className="bg-primary px-30 py-15 hidden xl:block">
-              <p className="text-center text-white text-16">RAFFLE BEGINS ON JAN 24, 2022</p>
+            <div className={"px-30 py-15 hidden xl:block " + (themeStatus === ThemeType.DarkMode ? "bg-primary" : "bg-white-50")}>
+              <p className={"text-center text-16 " + textColor}>RAFFLE BEGINS ON JAN 24, 2022</p>
             </div>
             <div className="bg-danger py-20 px-30 hidden xl:block">
               <p className="text-center text-white text-40 font-Subjectivity font-bold">01:23:45:12</p>

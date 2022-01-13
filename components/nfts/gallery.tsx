@@ -27,7 +27,7 @@ export default function Gallery() {
   const { isHuge } = useMatchBreakpoints()
 
   return (<>
-    <div className={"p-40 md:p-100 pr-0 overflow-hidden light-background-image " + (isHuge ? "collection-body-width" : " w-screen")}>
+    <div className={"p-40 md:p-100 pr-0 overflow-hidden " + (isHuge ? "collection-body-width" : " w-screen")}>
       <Swiper
         className="w-full"
         spaceBetween={10}

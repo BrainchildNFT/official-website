@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { enhancementsData } from '../../core/data/collections';
+import { enhancementsData } from '../../core/data/nfts';
 import Icon from '../ui-kit/icon';
 
 export default function Enhancements() {

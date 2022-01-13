@@ -4,7 +4,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { shimmerUrl } from '../ui-kit/common/blur-image';
-import { galleryData } from '../../core/data/collections';
+import { galleryData } from '../../core/data/nfts';
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints';
 
 const swiperBreakPoints = {

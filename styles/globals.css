@@ -101,6 +101,10 @@ html {
   font-family: Inter, Voyage, sans-serif;
 }
 
+.font-Future {
+  font-family:Future, sans-serif;
+}
+
 .font-Subjectivity {
   font-family: Subjectivity, sans-serif;
 }
@@ -288,6 +292,13 @@ a {
 .collection-body-width {
   width: calc(100vw - 400px);
 }
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent; /* make scrollbar transparent */
+}
+
 
 /* background */
 .eth-clock-back {

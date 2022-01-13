@@ -4,74 +4,79 @@ export enum RaffleState {
   Ended = 2,
 }
 
-export const faq_display_limit = 5;
+export const faq_display_limit = 6
 
 export const faqs = {
   data: [
     {
-      name: 'Mattis urna eget mi augue malesuada scelerisque sed consequat, non?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'What is BrainchildNFT?',
+      content:
+        'NFTs that embody a gamified experience of potential enhancements combined with perpetual redemption.',
     },
     {
-      name: 'Ultricies aliquam nunc urna, lacus, dui pharetra tellus pharetra. Est sit enim lacus amet viverra?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'What does “Perpetually Redeemable” mean?',
+      content:
+        'BrainchildNFT is eternal, the owner can always receive it in real life, infinitely.',
     },
     {
-      name: 'Quam quis mi nec vestibulum gravida tellus dolor. Fringilla lectus maecenas auctor velit id iaculis malesuada?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'What is Ethclock?',
+      content:
+        'Ethclock (aka Ethereum-clock) is our first brainchildNFT consisting of 5,000 luxurious clocks! ',
     },
     {
-      name: 'Cursus magnis pulvinar etiam dictum orci fames euismod ornare. Maecenas quam id mauris nullam lacinia donec at nulla fringilla?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'When do Ethclocks go on sale?',
+      content: 'Est Late January 2022.',
     },
     {
-      name: 'Tellus diam nunc proin nunc porttitor est praesent arcu. Faucibus donec nullam vitae nullam auctor?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'How many Ethclocks are available?',
+      content:
+        'Out of 5,000 Ethclock NFTs, 4207 of them will be available for public sale!',
     },
     {
-      name: 'Faucibus donec nullam vitae nullam auctor?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'How do I buy Ethclock?',
+      content:
+        'The raffle goes live on 15 Jan 2022 at 1:03 AM. Be ready with your wallets to submit your signature.',
     },
     {
-      name: 'Faucibus donec nullam vitae nullam auctor?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
+      name: 'What is the answer to life?',
+      content: '42',
     },
-    {
-      name: 'Faucibus donec nullam vitae nullam auctor?',
-      content: 'Arcu orci feugiat eget at convallis in sed amet non. Tristique congue diam eu sed potenti volutpat scelerisque. Ultricies elementum dui libero rutrum ut convallis facilisis lorem fusce. Et mauris, phasellus accumsan donec massa volutpat blandit scelerisque. Pellentesque commodo ullamcorper parturient mauris in. Eu egestas lorem sit turpis nisi orci consectetur. Volutpat egestas massa nulla ut sed augue malesuada. Ornare donec quam massa ipsum. Mi ipsum sem vivamus amet eu cras id venenatis.',
-    },
-  ]
+  ],
 }
 
 export const nftList = {
   images: [
     {
-      name: `Enhance \n ments`,
+      name: `Enhance\nments`,
       image: '/assets/images/nfts/nft-floor-with-fountain.png',
-      content: 'Quis augue non elementum dolor consectetur. Aliquam posuere eleifend facilisi semper. Augue congue viverra maecenas elementum aliquet ultricies. Malesuada volutpat, imperdiet mauris nullam elementum dui, nisl sit hac. Et venenatis est, lorem potenti id lectus pellentesque. In non id eget purus. Nec volutpat tristique at curabitur sed enim sed nunc, sapien.',
-      width: 876,
-      height: 700
+      content:
+        'Play with our mysterious dice to test your luck and evolve your NFTs to higher levels.\nRoll the dice for 5 possible outcomes of enhancement!\nFROZEN\nCHARRED\nFAILED\nGOD-TIER\nENHANCED',
+      width: 370,
+      height: 400,
     },
     {
       name: `Redeem`,
-      image: '/assets/images/nfts/nft-floor-with-fountain.png',
-      content: 'Arcu, malesuada at iaculis ipsum bibendum. Eu sit sed posuere nulla iaculis lacus sodales nulla vestibulum. Enim consequat mi tempus at. Risus egestas nunc ut viverra mattis porttitor mauris enim. Interdum etiam neque pharetra ut in netus dictum vel tempus. Enim duis sapien viverra justo, ut. Volutpat ultricies etiam amet, tristique est aliquet. Massa at dignissim dignissim risus dictum convallis.',
-      width: 876,
-      height: 700
+      image: '/assets/images/nfts/nft-redeem.jpg',
+      content:
+        'Get the physical manifestation of your NFT delivered right to your front door.Touch it. Feel it. Lick it. Get weird with it. Throw it and redeem again.It’s yours, FOREVER.Our NFTs are perpetually redeemable.',
+      width: 370,
+      height: 400,
     },
     {
       name: `Participate`,
-      image: '/assets/images/nfts/nft-floor-with-fountain.png',
-      content: 'Arcu, malesuada at iaculis ipsum bibendum. Eu sit sed posuere nulla iaculis lacus sodales nulla vestibulum. Enim consequat mi tempus at. Risus egestas nunc ut viverra mattis porttitor mauris enim. Interdum etiam neque pharetra ut in netus dictum vel tempus. Enim duis sapien viverra justo, ut. Volutpat ultricies etiam amet, tristique est aliquet. Massa at dignissim dignissim risus dictum convallis.',
-      width: 876,
-      height: 700
+      image: '/assets/images/nfts/nft-coming-soon.jpg',
+      content:
+        'You will be given digital tickets and gain entry to our private community events and receive exclusive benefits including premium NFT drops, lavish collaborations, gamified experiences and a whole lot more...',
+      width: 370,
+      height: 400,
     },
     {
       name: `Vote`,
-      image: '/assets/images/nfts/nft-floor-with-fountain.png',
-      content: 'Quis augue non elementum dolor consectetur. Aliquam posuere eleifend facilisi semper. Augue congue viverra maecenas elementum aliquet ultricies. Malesuada volutpat, imperdiet mauris nullam elementum dui, nisl sit hac. Et venenatis est, lorem potenti id lectus pellentesque. In non id eget purus. Nec volutpat tristique at curabitur sed enim sed nunc, sapien.',
-      width: 876,
-      height: 700
+      image: '/assets/images/nfts/nft-coming-soon.jpg',
+      content:
+        'Have your say in how things will turn out, from launches, collaborations  to designs and features. Be one of the many potter hands to mold future brainchild projects!',
+      width: 370,
+      height: 400,
     },
-  ]
-};
+  ],
+}

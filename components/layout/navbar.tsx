@@ -25,7 +25,7 @@ export function Navbar() {
   const [borderColor, setBorderColor] = useState('border-gradient-light');
 
   const themeStatus = useSelector((state: any)  => state.ThemeStatus);
-  const { isMobile } = useMatchBreakpoints()
+  const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export function Navbar() {
                 </button>
               </div>
             </div>
-            <ul className={"flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18 text-primary xl:" + textColor}>
+            <ul className={"flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18" + (isMobile || isTablet ? " text-primary" : "") +" xl:" + textColor}>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/collections">
                   <a

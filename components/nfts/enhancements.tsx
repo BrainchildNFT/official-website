@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { enhancementsData } from '../../core/data/collections';
+import { enhancementsData } from '../../core/data/nfts';
 import Icon from '../ui-kit/icon';
 
 export default function Enhancements() {
   return (<>
-    <div className="p-40 md:p-100 light-background-image">
+    <div className="p-40 md:p-100">
       <p className="p-10 text-danger text-16 font-medium">ENHANCEMENTS</p>
       <div className="flex flex-col md:flex-row mt-10">
         <div className="md:w-1/2">

@@ -353,7 +353,7 @@ export default function Home() {
           </section>
 
           {/*And more NFTs*/}
-          <section className="relative py-200">
+          <section className="relative py-200 overflow-x-hidden">
             <div className="flex justify-between items-center px-20 sm:px-80 xl:px-200">
               <p className="font-Voyage text-30 sm:text-50 text-primary-75">
                 and more...

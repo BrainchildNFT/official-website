@@ -30,7 +30,7 @@ export default function Collections() {
             <div>
               <div className="flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light">
                 <div className="pr-5 flex items-center">
-                  <Image src="/assets/images/about-us/star-in-rhombus.png" layout="intrinsic" width={36} height={40} alt="Star In Square" />
+                  <Image src="/assets/images/about-us/light-star-in-rhombus.png" layout="intrinsic" width={36} height={40} alt="Star In Square" />
                 </div>
                 <div>
                   <p className="text-white text-30 font-bold">ethereum clock</p>

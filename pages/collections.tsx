@@ -37,8 +37,8 @@ export default function Collections() {
                 </div>
               </div>
 
-              <div className="mt-30 mx-40">
-                <p className="text-white opacity-30 text-18 font-semibold"><span className="mr-20">+</span>...more coming soon!</p>
+              <div className="mt-20 mx-40">
+                <p className="text-white py-10 opacity-30 text-18 font-semibold"><span className="mr-20">+</span>...more coming soon!</p>
               </div>
             </div>
           </div>

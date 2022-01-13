@@ -43,6 +43,9 @@ export default function AboutUs() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, []);
 
   return (
@@ -117,8 +120,9 @@ export default function AboutUs() {
               <p className="flex items-center font-Subjectivity text-white opacity-90"><Icon className="mr-10" name='twitterOutline' color='white' size={20} />@kensan42069</p>
 
               <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">PIGUBAOZA</p>
-              <div className="flex justify-end">
-                <p className="text-white text-right opacity-60 max-w-550">Phasellus egestas nisl eget aenean ullamcorper bibendum mattis sit. Tincidunt sollicitudin cursus non sagittis, neque sem.</p>
+              <div className="flex flex-col items-end">
+                <p className="text-white text-right opacity-60 max-w-550">Stringing up the brainchildren</p>
+                <p className="flex items-center font-Subjectivity text-white tet-right opacity-90"><Icon className="mr-10" name='twitterOutline' color='white' size={20} />@pigubaoza</p>
               </div>
 
               <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300">GARDEBO</p>

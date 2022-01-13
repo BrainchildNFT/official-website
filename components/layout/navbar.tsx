@@ -24,7 +24,7 @@ export function Navbar() {
   const [textColor, setTextColor] = useState('text-white');
   const [borderColor, setBorderColor] = useState('border-gradient-light');
 
-  const themeStatus = useSelector((state)  => state.ThemeStatus);
+  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
   const { isMobile } = useMatchBreakpoints()
   const router = useRouter()
 

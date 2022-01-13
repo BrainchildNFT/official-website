@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const store = createStore(
     reducers,
-    (typeof window === 'undefined' ? false : (window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()))
+    (typeof window === 'undefined' ? false : ((window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()))
   );
 
   const gaService = useGAService()

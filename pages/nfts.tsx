@@ -28,7 +28,7 @@ export default function Nfts() {
   const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About);
   const [textColor, setTextColor] = useState('text-white');
 
-  const themeStatus = useSelector((state)  => state.ThemeStatus);
+  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
   const dispatch = useDispatch();
 
   const { isHuge } = useMatchBreakpoints()

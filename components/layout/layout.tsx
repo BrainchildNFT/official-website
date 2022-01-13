@@ -7,7 +7,7 @@ import { ThemeType } from '../../core/data/base';
 export function Layout(props: any) {
   const [backgroundColor, setBackgroundColor] = useState('dark-background-image');
 
-  const themeStatus = useSelector((state)  => state.ThemeStatus);
+  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
 
   useEffect(() => {
     setBackgroundColor(themeStatus === ThemeType.DarkMode ? 'dark-background-image' : 'light-background-image');

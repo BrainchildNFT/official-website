@@ -1,4 +1,6 @@
 import type { AppProps } from 'next/app'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 import '../styles/globals.css'
 import '../styles/layout.css'
@@ -6,8 +8,15 @@ import '../styles/layout.css'
 import ErrorPage from '../components/error-page'
 import GoogleAds from '../components/3rd-party/google-ads'
 import useGAService from '../core/app-services/ga-service'
+import reducers from '../core/reducers';
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const store = createStore(
+    reducers,
+    (typeof window === 'undefined' ? false : ((window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()))
+  );
+
   const gaService = useGAService()
   gaService.initialize()
   if (pageProps.error) {
@@ -21,8 +30,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Component {...pageProps} />
-      <GoogleAds />
+      <Provider store={store}>
+        <Component {...pageProps} />
+        <GoogleAds />
+      </Provider>
     </>
   )
 }

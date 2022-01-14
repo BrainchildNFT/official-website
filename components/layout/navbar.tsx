@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
@@ -15,28 +15,40 @@ import {
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux';
+import { ThemeType } from '../../core/data/base';
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
+  const [backgroundColor, setBackgroundColor] = useState('dark-background-image');
+  const [textColor, setTextColor] = useState('text-white');
+  const [borderColor, setBorderColor] = useState('border-gradient-light');
 
-  const { isMobile } = useMatchBreakpoints()
+  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
+  const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
+
+  useEffect(() => {
+    setBackgroundColor(themeStatus === ThemeType.DarkMode ? 'dark-background-image' : 'light-background-image');
+    setTextColor(themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary');
+    setBorderColor(themeStatus === ThemeType.DarkMode ? 'border-gradient-light' : 'border-gradient-dark');
+  }, [themeStatus]);
 
   return (
     <div
       className={
         navbarOpen
-          ? 'dark-background-image'
-          : 'dark-background-image z-[700] sticky top-40'
+          ? backgroundColor + ' transition duration-500'
+          : backgroundColor + ' z-[700] sticky top-40 transition duration-500'
       }
     >
-      <nav className="h-65 z-[100] flex px-15 sticky text-white border-y border-gradient-light overflow-x-clip">
+      <nav className={"h-65 z-[100] flex px-15 sticky border-y overflow-x-clip transition duration-500 " + textColor + " " + borderColor}>
         <div className="container px-0 mx-auto flex justify-between xl:justify-left">
           <Link href="/">
             <a className="flex items-center">
               <Image
                 className="cursor-pointer"
-                src="/assets/images/logo/logo-light-large.svg"
+                src={themeStatus === ThemeType.DarkMode ? '/assets/images/logo/logo-light-large.svg' : '/assets/images/logo/logo-dark-large.svg'}
                 width={isMobile ? 180 : 201}
                 height={isMobile ? 55 : 63}
                 alt="Brainchild logo"
@@ -47,7 +59,7 @@ export function Navbar() {
             className="xl:hidden outline-none px-10"
             onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <Icon name="menu" color="white" size={27} />
+            <Icon name="menu" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={27} />
           </button>
           <div
             className={
@@ -57,7 +69,7 @@ export function Navbar() {
                 : ' -left-800 xl:left-0 ease-in-out')
             }
           >
-            <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0 ">
+            <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0">
               <Link href="/">
                 <a className="flex xl:hidden items-center">
                   <Image
@@ -88,7 +100,7 @@ export function Navbar() {
                 </button>
               </div>
             </div>
-            <ul className="flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18 text-primary xl:text-white">
+            <ul className={"flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18" + (isMobile || isTablet ? " text-primary" : "") +" xl:" + textColor}>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/collections">
                   <a
@@ -120,7 +132,7 @@ export function Navbar() {
               <li className="pt-20 pb-10 px-20 xl:px-0 nav-link hidden xl:block">
                 <Link href="/search">
                   <a className="relative xl:px-25 xl:py-10">
-                    <Icon name="search" color="white" size={18} />
+                    <Icon name="search" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={18} />
                   </a>
                 </Link>
               </li>

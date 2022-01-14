@@ -132,6 +132,56 @@ export default function Home() {
 
   const router = useRouter()
 
+  interface TimeLeft {
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+  }
+
+  const calculateTimeLeft = (flag: number): TimeLeft => {
+    let difference =
+      +new Date(Date.UTC(2022, 0, 24 + flag, 0, 0, 0)) - +new Date()
+    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 }
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      }
+    }
+
+    return timeLeft
+  }
+
+  const updateRaffleState = () => {
+    let differenceFromRaffleStart =
+      +new Date(Date.UTC(2022, 0, 24, 0, 0, 0)) - +new Date()
+    let differenceFromRaffleEnd =
+      +new Date(Date.UTC(2022, 0, 25, 0, 0, 0)) - +new Date()
+
+    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
+    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
+    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
+  }
+
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
+    calculateTimeLeft(0)
+  )
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
+    calculateTimeLeft(1)
+  )
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRaffleStartTimeLeft(calculateTimeLeft(0))
+      setRaffleEndTimeLeft(calculateTimeLeft(1))
+      updateRaffleState()
+    }, 1000)
+  })
+
   return (
     <>
       <Head>
@@ -242,46 +292,39 @@ export default function Home() {
               }
             >
               {raffleState === RaffleState.Waiting && (
-                <p
-                  className="text-center"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
-                  Raffle begins on 15 Jan, 2022 at 1:03 PM GMT
+                <p className="font-medium text-center">
+                  Raffle begins on 24 Jan, 2022 at 00:00 AM GMT
                 </p>
               )}
               {raffleState === RaffleState.Live && (
-                <p
-                  className="font-medium text-center"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
+                <p className="font-medium text-center">
                   Raffle Results{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span> end on 15
-                  Jan, 2022 at 1:03 PM GMT
+                  <span className="text-30 font-bold">LIVE NOW!</span> end on 25
+                  Jan, 2022 at 00:00 AM GMT
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p
-                  className="font-medium text-center"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
+                <p className="font-medium text-center">
                   Raffle Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span>
                 </p>
               )}
 
-              {raffleState !== RaffleState.Ended && (
-                <p
-                  className="font-medium text-center"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
-                  <span className="text-30 font-bold">01:23:45:12</span> Left
+              {raffleState === RaffleState.Waiting && (
+                <p className="font-medium text-center">
+                  <span className="text-30 font-bold">{`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}</span>{' '}
+                  Left
+                </p>
+              )}
+
+              {raffleState === RaffleState.Live && (
+                <p className="font-medium text-center">
+                  <span className="text-30 font-bold">{`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}</span>{' '}
+                  Left
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p
-                  className="font-medium text-center"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
+                <p className="font-medium text-center">
                   Connect wallet to check if you’re whitelisted
                 </p>
               )}

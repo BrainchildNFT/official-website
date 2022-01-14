@@ -15,24 +15,36 @@ import {
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux';
-import { ThemeType } from '../../core/data/base';
+import { useSelector } from 'react-redux'
+import { ThemeType } from '../../core/data/base'
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const [backgroundColor, setBackgroundColor] = useState('dark-background-image');
-  const [textColor, setTextColor] = useState('text-white');
-  const [borderColor, setBorderColor] = useState('border-gradient-light');
+  const [backgroundColor, setBackgroundColor] = useState(
+    'dark-background-image'
+  )
+  const [textColor, setTextColor] = useState('text-white')
+  const [borderColor, setBorderColor] = useState('border-gradient-light')
 
-  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
+  const themeStatus = useSelector((state: any) => state.ThemeStatus)
   const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
 
   useEffect(() => {
-    setBackgroundColor(themeStatus === ThemeType.DarkMode ? 'dark-background-image' : 'light-background-image');
-    setTextColor(themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary');
-    setBorderColor(themeStatus === ThemeType.DarkMode ? 'border-gradient-light' : 'border-gradient-dark');
-  }, [themeStatus]);
+    setBackgroundColor(
+      themeStatus === ThemeType.DarkMode
+        ? 'dark-background-image'
+        : 'light-background-image'
+    )
+    setTextColor(
+      themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary'
+    )
+    setBorderColor(
+      themeStatus === ThemeType.DarkMode
+        ? 'border-gradient-light'
+        : 'border-gradient-dark'
+    )
+  }, [themeStatus])
 
   return (
     <div
@@ -42,13 +54,24 @@ export function Navbar() {
           : backgroundColor + ' z-[700] sticky top-40 transition duration-500'
       }
     >
-      <nav className={"h-65 z-[100] flex px-15 sticky border-y overflow-x-clip transition duration-500 " + textColor + " " + borderColor}>
+      <nav
+        className={
+          'h-65 z-[100] flex px-15 sticky border-y overflow-x-clip transition duration-500 ' +
+          textColor +
+          ' ' +
+          borderColor
+        }
+      >
         <div className="container px-0 mx-auto flex justify-between xl:justify-left">
           <Link href="/">
             <a className="flex items-center">
               <Image
                 className="cursor-pointer"
-                src={themeStatus === ThemeType.DarkMode ? '/assets/images/logo/logo-light-large.svg' : '/assets/images/logo/logo-dark-large.svg'}
+                src={
+                  themeStatus === ThemeType.DarkMode
+                    ? '/assets/images/logo/logo-light-large.svg'
+                    : '/assets/images/logo/logo-dark-large.svg'
+                }
                 width={isMobile ? 180 : 201}
                 height={isMobile ? 55 : 63}
                 alt="Brainchild logo"
@@ -59,7 +82,11 @@ export function Navbar() {
             className="xl:hidden outline-none px-10"
             onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <Icon name="menu" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={27} />
+            <Icon
+              name="menu"
+              color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'}
+              size={27}
+            />
           </button>
           <div
             className={
@@ -88,7 +115,7 @@ export function Navbar() {
                 <Icon name="close" color="white" size={25} />
               </button>
             </div>
-            <div className="w-full xl:hidden px-10 py-20">
+            {/* <div className="w-full xl:hidden px-10 py-20">
               <div className="flex justify-between border border-gradient-dark rounded-md p-15">
                 <input
                   type="search"
@@ -99,8 +126,15 @@ export function Navbar() {
                   <Icon name="search" color="primary" size={18} />
                 </button>
               </div>
-            </div>
-            <ul className={"flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18" + (isMobile || isTablet ? " text-primary" : "") +" xl:" + textColor}>
+            </div> */}
+            <ul
+              className={
+                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18' +
+                (isMobile || isTablet ? ' text-primary' : '') +
+                ' xl:' +
+                textColor
+              }
+            >
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/collections">
                   <a
@@ -129,13 +163,13 @@ export function Navbar() {
                   </a>
                 </Link>
               </li>
-              <li className="pt-20 pb-10 px-20 xl:px-0 nav-link hidden xl:block">
+              {/* <li className="pt-20 pb-10 px-20 xl:px-0 nav-link hidden xl:block">
                 <Link href="/search">
                   <a className="relative xl:px-25 xl:py-10">
                     <Icon name="search" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={18} />
                   </a>
                 </Link>
-              </li>
+              </li> */}
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/opensea">
                   <a

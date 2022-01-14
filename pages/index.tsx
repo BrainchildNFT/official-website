@@ -175,12 +175,12 @@ export default function Home() {
   )
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setInterval(() => {
       setRaffleStartTimeLeft(calculateTimeLeft(0))
       setRaffleEndTimeLeft(calculateTimeLeft(1))
       updateRaffleState()
     }, 1000)
-  })
+  }, [])
 
   return (
     <>
@@ -207,7 +207,7 @@ export default function Home() {
             style={{ cursor: 'none' }}
           >
             <div
-              className="absolute w-120 h-120 sm:w-150 sm:h-150 xl:w-175 xl:h-175 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[400]"
+              className="absolute w-120 h-120 sm:w-75 sm:h-75 xl:w-90 xl:h-90 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[400]"
               ref={exploreImageRef}
             >
               <Image
@@ -233,7 +233,7 @@ export default function Home() {
                   className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
-                  Levels 10
+                  Level 10
                 </span>{' '}
                 Enhancement
               </p>
@@ -293,14 +293,14 @@ export default function Home() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  Raffle begins on 24 Jan, 2022 at 00:00 AM GMT
+                  Raffle begins on 24 Jan, 2022 at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
                   Raffle Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> end on 25
-                  Jan, 2022 at 00:00 AM GMT
+                  Jan, 2022 at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
@@ -416,7 +416,7 @@ export default function Home() {
           </section>
 
           {/*And more NFTs*/}
-          <section className="relative py-200 overflow-x-hidden">
+          <section className="relative py-200 overflow-x-hidden" id="and-more">
             <div className="flex justify-between items-center px-20 sm:px-80 xl:px-200">
               <p className="font-Voyage text-30 sm:text-50 text-primary-75">
                 and more...
@@ -593,7 +593,7 @@ export default function Home() {
         </div>
 
         {/*Collaboration*/}
-        <section className="relative dark-background-image">
+        <section className="relative dark-background-image" id="collaborations">
           <div className="container mx-auto p-30 pt-50 sm:pt-200 text-white sm:text-center font-Voyage">
             <p className="text-45 lg:text-80">exquisite</p>
             <p className="text-justify sm:text-center break-all text-80 lg:text-100 xl:text-150">
@@ -661,38 +661,44 @@ export default function Home() {
                 </p>
               )}
               {currentFaqIndex !== -1 && (
-                <p className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all">
-                  <span className="animate-fadeIn">
+                <div className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all relative">
+                  <div
+                    className="animate-fadeIn absolute"
+                    style={{
+                      top: `${135 * currentFaqIndex + 40}px`,
+                      width: 'calc(100% - 120px)',
+                    }}
+                  >
                     {faqData[currentFaqIndex].content}
-                  </span>
-                </p>
+                  </div>
+                </div>
               )}
             </div>
-            <div className="lg:w-2/3 text-white">
+            <div className="lg:w-2/3 text-white lg:ml-100 mb-100">
               {faqData.map(
                 (faq, index) =>
                   (index < faq_display_limit || isLoadMoreFaq) && (
                     <div key={faq.content + index}>
                       <div
                         onMouseEnter={() => {
-                          if (!isMobile) {
-                            setCurrentFaqIndex(index)
-                          }
+                          // if (!isMobile) {
+                          //   setCurrentFaqIndex(index)
+                          // }
                         }}
                         onMouseLeave={() => {
-                          if (!isMobile) {
-                            setCurrentFaqIndex(-1)
-                          }
+                          // if (!isMobile) {
+                          //   setCurrentFaqIndex(-1)
+                          // }
                         }}
                         onClick={() => {
-                          if (isMobile) {
-                            setCurrentFaqIndex(
-                              currentFaqIndex == index ? -1 : index
-                            )
-                          }
+                          // if (isMobile) {
+                          setCurrentFaqIndex(
+                            currentFaqIndex == index ? -1 : index
+                          )
+                          // }
                         }}
                       >
-                        <div className="flex items-center justify-between transition-all duration-500 border border-r-0 border-gradient-light p-35 lg:mb-35 lg:ml-100 lg:hover:ml-50 lg:hover:pr-85 lg:hover:bg-white-10">
+                        <div className="flex items-center justify-between transition-all duration-500 border border-r-0 border-gradient-light p-35 lg:mb-35 lg:hover:-ml-50 lg:hover:pr-85 lg:hover:bg-white-10">
                           {faq.name}{' '}
                           {isMobile && (
                             <Icon

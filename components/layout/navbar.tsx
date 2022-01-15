@@ -51,7 +51,7 @@ export function Navbar() {
       className={
         navbarOpen
           ? backgroundColor + ' transition duration-500'
-          : backgroundColor + ' z-[700] sticky top-40 transition duration-500'
+          : backgroundColor + ' z-[700] sticky top-0 pt-40 transition duration-500'
       }
     >
       <nav

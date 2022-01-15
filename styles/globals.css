@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @font-face {
+  font-family: 'Future Classic';
+  src: url('/assets/fonts/Future Classic/FutureClassicRegular.ttf')
+    format('truetype');
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Voyage';
   src: url('/assets/fonts/Voyage/Voyage-Regular.otf') format('opentype');
   font-weight: 400;
@@ -102,7 +109,7 @@ html {
 }
 
 .font-Future {
-  font-family:Future, sans-serif;
+  font-family:Future Classic, sans-serif;
 }
 
 .font-Subjectivity {

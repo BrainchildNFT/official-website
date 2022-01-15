@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import disableScroll from 'disable-scroll';
+import { useEffect, useRef, useState } from 'react';
 
 export default function RoadMap() {
   const [currentRoadMap, setCurrentRoadMap] = useState(0);
-  const [marginTop, setMarginTop] = useState(0);
+  const [scrollY, setScrollY] = useState(0)
   const [childrenHeights, setChildrenHeights] = useState<number[]>([]);
 
-  const roadMapContentRef: MutableRefObject<any> = useRef();
+  const roadMapContentRef = useRef<HTMLDivElement>(null);
+  const roadMapRef = useRef<HTMLDivElement>(null);
   const roadMapPeriodNames = [
     {
       year: 2021,
@@ -31,26 +31,34 @@ export default function RoadMap() {
     },
   ];
 
-  const onMouseWheel = ($event: any) => {
-    const newMarginTop = marginTop + $event.deltaY;
-    if (newMarginTop >= 0 && newMarginTop <= (roadMapContentRef.current.clientHeight - 400)) {
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    handleScroll()
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    const roadMapTop =
+      roadMapRef.current?.getBoundingClientRect().top || 0
+
+    if (roadMapTop < 0) {
+      const newRoadMapTop = Math.abs(roadMapTop);
       let heightSum = 0;
       for (let index = 0; index < childrenHeights.length; index ++) {
-        if (newMarginTop > heightSum) {
+        if (newRoadMapTop > heightSum) {
           setCurrentRoadMap(index);
         }
         heightSum += childrenHeights[index];
       }
-      disableScroll.on();
-      setMarginTop(newMarginTop);
-    } else {
-      disableScroll.off();
     }
-  }
-
-  const onMouseLeave = () => {
-    disableScroll.off()
-  }
+  }, [scrollY])
 
   const roadMapPeriodClicked = (index: number) => {
     setCurrentRoadMap(index);
@@ -58,24 +66,32 @@ export default function RoadMap() {
     for (let i = 0; i < index; i ++) {
       heightSum += childrenHeights[i];
     }
-    setMarginTop(heightSum);
+  console.log('roadMapRef = ', roadMapRef);
+    window.scrollTo(
+      {
+        left: 0,
+        top: heightSum + (roadMapRef?.current?.offsetTop || 0) + 200,
+        behavior: 'smooth'
+      }
+    );
   }
 
   useEffect(() => {
-    const tmpChildrenHeight: any[] = Array.from(roadMapContentRef.current.children).map((item: any) => item.clientHeight);
+    const tmpChildrenHeight: any[] = Array.from(roadMapContentRef?.current?.children || []).map((item: any) => item.clientHeight);
     setChildrenHeights(tmpChildrenHeight);
   }, [])
 
   return (<>
-    <div className="flex flex-row" onWheel={onMouseWheel} onMouseLeave={onMouseLeave}>
-      <div className="relative lg:w-1/2 flex flex-col">
-        <div className="grow pr-50">
-          <div className="text-white h-200 relative">
-            <p className="text-22 opacity-30 mb-10">ROADMAP</p>
+    <div className="flex flex-row" ref={roadMapRef}>
+      <div className="relative lg:w-1/2">
+        <div className="pr-50">
+          <div className="text-white h-200 sticky top-100 z-20 dark-background-image">
+            <p className="text-22 opacity-30 mb-10 pt-20">ROADMAP</p>
             {roadMapPeriodNames.map((item, index) => <p key={index} className={'absolute text-60 lg:text-80 opacity-90 font-Voyage tracking-tighter break-all mb-60 transition-all duration-500 ease-in-out ' + (index === currentRoadMap ? 'opacity-100' : 'opacity-0')}>{item.name}</p>)}
           </div>
-          <div className="h-500 overflow-hidden">
-            <div className="text-white transition-all duration-500" ref={roadMapContentRef} style={{ marginTop: '-' + marginTop + 'px' }}>
+          {/*<div className="h-500 overflow-hidden">*/}
+          <div>
+            <div className="text-white transition-all duration-500" ref={roadMapContentRef}>
               <div>
                 <ul className="list-disc pl-30">
                   <li>
@@ -97,7 +113,7 @@ export default function RoadMap() {
                     <div className="flex">
                       <div className="flex items-center mt-10 p-25 bg-white-10">
                         <div className="pr-10">
-                          <Image src="/assets/images/about-us/star-in-rhombus.png" layout="intrinsic" width={27} height={30} alt="Star In Square" />
+                          <Image src="/assets/images/about-us/light-star-in-rhombus.png" layout="intrinsic" width={27} height={30} alt="Star In Square" />
                         </div>
                         <div>
                           <p className="text-14 opacity-60">COLLECTION</p>
@@ -182,7 +198,9 @@ export default function RoadMap() {
             </div>
           </div>
         </div>
-        <div className="absolute top-0 right-40 lg:right-0 h-full">
+      </div>
+      <div className="lg:flex lg:w-1/2 text-white justify-between h-screen sticky top-100">
+        <div className="left-40 lg:left-0 h-screen pb-100">
           <div className="road-map-period-border text-white h-full flex flex-col justify-between py-100" style={{ width: '1px'}}>
             {roadMapPeriodNames.map((item, index) => <div key={index} onClick={() => roadMapPeriodClicked(index)} className={'flex flex-col cursor-pointer items-center justify-center border rounded-full ' + (index == currentRoadMap ? '-ml-40 lg:-ml-10 bg-white w-80 h-80 lg:w-20 lg:h-20' : '-ml-5 opacity-40 w-10 h-10')}>
               {index == currentRoadMap && <span className="lg:hidden text-30 text-primary leading-none font-Voyage">{roadMapPeriodNames[currentRoadMap].text}</span>}
@@ -190,12 +208,12 @@ export default function RoadMap() {
             </div>)}
           </div>
         </div>
-      </div>
-      <div className="hidden lg:flex lg:w-1/2 text-white items-end justify-end">
-        {roadMapPeriodNames.map((item, index) => <div key={index} className={'absolute transition-all duration-500 ease-in-out ' + (currentRoadMap === index ? 'opacity-100' : 'opacity-0')}>
-          <span className="text-30 mr-10 opacity-30">{roadMapPeriodNames[index].year}</span>
-          <span className="text-300 leading-none font-Voyage road-map-letter-background">{roadMapPeriodNames[index].text}</span>
-        </div>)}
+        <div className="hidden lg:flex items-end justify-end pb-100">
+          {roadMapPeriodNames.map((item, index) => <div key={index} className={'absolute transition-all duration-500 ease-in-out ' + (currentRoadMap === index ? 'opacity-100' : 'opacity-0')}>
+            <span className="text-30 mr-10 opacity-30">{roadMapPeriodNames[index].year}</span>
+            <span className="text-300 leading-none font-Voyage road-map-letter-background">{roadMapPeriodNames[index].text}</span>
+          </div>)}
+        </div>
       </div>
     </div>
   </>);

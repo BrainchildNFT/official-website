@@ -4,9 +4,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 import { Layout } from '../components/layout/layout';
-import React from 'react';
 
 export default function Collections() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function Collections() {
         <meta name="description" content="EthClock: a tribute to Ethereum, is a collection of 5000 perpetually redeemable NFTs— Upgradeable, Physical, Digital, Tradable & Unique."/>
       </Head>
       <Layout>
-        <div className="flex flex-col xl:flex-row">
+        <div className="flex flex-col xl:flex-row" onClick={() => goToNfts}>
           <div className="min-w-400 bg-white-10">
             <div className="px-30 py-20 bg-primary">
               <p className="text-white text-18 font-semibold">COLLECTIONS</p>
@@ -69,13 +69,14 @@ export default function Collections() {
                 alt="Ethereum Clock Design"
               />
             </div>
-            <div onClick={() => goToNfts()} className="cursor-pointer absolute w-120 h-120 sm:w-150 sm:h-150 xl:w-175 xl:h-175 -top-[50px] hidden lg:block lg:inset-x-1/2 lg:inset-y-1/2 z-30">
-              <Image
-                src="/assets/images/landing-page/radial-explore.png"
-                layout="fill"
-                alt="Explore"
-              />
-            </div>
+          </div>
+
+          <div onClick={() => goToNfts()} className="cursor-pointer absolute w-60 h-60 sm:w-100 sm:h-100 xl:w-120 xl:h-120 hidden lg:block lg:inset-x-2/3 lg:inset-y-1/2 -mr-200 z-30">
+            <Image
+              src="/assets/images/landing-page/radial-explore.png"
+              layout="fill"
+              alt="Explore"
+            />
           </div>
         </div>
       </Layout>

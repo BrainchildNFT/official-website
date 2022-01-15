@@ -18,12 +18,12 @@ export function Footer() {
                 </Link>
               </li>
               <li className="py-10">
-                <Link href="/collections">
-                  <a>We&apos;re Hiring</a>
+                <Link href="https://discord.gg/7S55rjvxm3">
+                  <a target="_blank">We&apos;re Hiring</a>
                 </Link>
               </li>
               <li className="py-10">
-                <Link href="/about-us">
+                <Link href="/#and-more">
                   <a>How It Works</a>
                 </Link>
               </li>
@@ -35,13 +35,8 @@ export function Footer() {
             </p>
             <ul className="flex flex-col font-['Inter']">
               <li className="py-10">
-                <Link href="/about-us">
+                <Link href="/#collaborations">
                   <a>Collaborate</a>
-                </Link>
-              </li>
-              <li className="py-10">
-                <Link href="/collections">
-                  <a>How It Works</a>
                 </Link>
               </li>
             </ul>
@@ -53,25 +48,34 @@ export function Footer() {
             <ul className="flex flex-col items-center lg:items-start font-['Inter']">
               <li className="py-10">
                 <Link href="https://discord.gg/7S55rjvxm3" passHref>
-                  <a className="flex items-center justify-center sm:justify-start">
+                  <a
+                    className="flex items-center justify-center sm:justify-start"
+                    target="_blank"
+                  >
                     <Icon name="discord" color="white" size={18} />
                     <span className="ml-10">Discord</span>
                   </a>
                 </Link>
               </li>
               <li className="py-10">
-                <Link href="https://www.instagram.com/brainchildnft/" passHref>
-                  <a className="flex items-center justify-center sm:justify-start">
-                    <Icon name="instagram" color="white" size={18} />
-                    <span className="ml-10">Instagram</span>
+                <Link href="https://twitter.com/BrainchildNFT" passHref>
+                  <a
+                    className="flex items-center justify-center sm:justify-start"
+                    target="_blank"
+                  >
+                    <Icon name="twitter" color="white" size={18} />
+                    <span className="ml-10">Twitter</span>
                   </a>
                 </Link>
               </li>
               <li className="py-10">
-                <Link href="https://twitter.com/BrainchildNFT" passHref>
-                  <a className="flex items-center justify-center sm:justify-start">
-                    <Icon name="twitter" color="white" size={18} />
-                    <span className="ml-10">Twitter</span>
+                <Link href="https://www.instagram.com/brainchildnft/" passHref>
+                  <a
+                    className="flex items-center justify-center sm:justify-start"
+                    target="_blank"
+                  >
+                    <Icon name="instagram" color="white" size={18} />
+                    <span className="ml-10">Instagram</span>
                   </a>
                 </Link>
               </li>
@@ -83,18 +87,17 @@ export function Footer() {
             </p>
             <ul className="flex flex-col font-['Inter']">
               <li className="py-10">
-                <Link href="/about-us">
-                  <a>Opensea</a>
+                <Link href="https://opensea.io">
+                  <a target="_blank" rel="noreferrer">
+                    Opensea
+                  </a>
                 </Link>
               </li>
               <li className="py-10">
                 <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
-                  <a>Whitepapaer</a>
-                </Link>
-              </li>
-              <li className="py-10">
-                <Link href="/collections">
-                  <a>Docs</a>
+                  <a target="_blank" rel="noreferrer">
+                    Whitepapaer
+                  </a>
                 </Link>
               </li>
             </ul>

@@ -1,6 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { ThemeType } from '../../../core/data/base';
 
 const ConnectWalletButton = () => {
+  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
+
   return (
     <div className="group relative flex items-center">
       <div className="absolute h-full w-full overflow-y-clip">
@@ -42,9 +46,9 @@ const ConnectWalletButton = () => {
               y2="39.9995"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="white" stopOpacity="0.4" />
-              <stop offset="0.478947" stopColor="white" stopOpacity="0" />
-              <stop offset="1" stopColor="white" stopOpacity="0.4" />
+              <stop stopColor={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} stopOpacity="0.4" />
+              <stop offset="0.478947" stopColor={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} stopOpacity="0" />
+              <stop offset="1" stopColor={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} stopOpacity="0.4" />
             </linearGradient>
           </defs>
         </svg>

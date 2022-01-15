@@ -13,7 +13,7 @@ export function Layout(props: any) {
     setBackgroundColor(themeStatus === ThemeType.DarkMode ? 'dark-background-image' : 'light-background-image');
   }, [themeStatus]);
   return (
-    <div className={"pt-40 transition duration-500 " + backgroundColor}>
+    <div className={"transition duration-500 " + backgroundColor}>
       <Navbar />
       <section id="root" className="main-content-wrapper z-0 pt-80">
         {props.children}

@@ -12,17 +12,17 @@ export function Footer() {
               COMPANY
             </p>
             <ul className="flex flex-col font-['Inter']">
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="/about-us">
                   <a>About Us</a>
                 </Link>
               </li>
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="https://discord.gg/7S55rjvxm3">
                   <a target="_blank">We&apos;re Hiring</a>
                 </Link>
               </li>
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="/#and-more">
                   <a>How It Works</a>
                 </Link>
@@ -34,7 +34,7 @@ export function Footer() {
               ARTIST
             </p>
             <ul className="flex flex-col font-['Inter']">
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="/#collaborations">
                   <a>Collaborate</a>
                 </Link>
@@ -46,7 +46,7 @@ export function Footer() {
               COMMUNITY
             </p>
             <ul className="flex flex-col items-center lg:items-start font-['Inter']">
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="https://discord.gg/7S55rjvxm3" passHref>
                   <a
                     className="flex items-center justify-center sm:justify-start"
@@ -57,7 +57,7 @@ export function Footer() {
                   </a>
                 </Link>
               </li>
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="https://twitter.com/BrainchildNFT" passHref>
                   <a
                     className="flex items-center justify-center sm:justify-start"
@@ -68,7 +68,7 @@ export function Footer() {
                   </a>
                 </Link>
               </li>
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="https://www.instagram.com/brainchildnft/" passHref>
                   <a
                     className="flex items-center justify-center sm:justify-start"
@@ -86,14 +86,14 @@ export function Footer() {
               RELEVENT LINKS
             </p>
             <ul className="flex flex-col font-['Inter']">
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="https://opensea.io">
                   <a target="_blank" rel="noreferrer">
                     Opensea
                   </a>
                 </Link>
               </li>
-              <li className="py-10">
+              <li className="py-5">
                 <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
                   <a target="_blank" rel="noreferrer">
                     Whitepapaer

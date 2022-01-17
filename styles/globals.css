@@ -109,7 +109,7 @@ html {
 }
 
 .font-Future {
-  font-family:Future Classic, sans-serif;
+  font-family: Future, sans-serif;
 }
 
 .font-Subjectivity {
@@ -233,7 +233,8 @@ a {
   );
 }
 
-.dark-background-image {
+.dark-background-image,
+html {
   @apply bg-secondary;
   background-image: url('/assets/images/dark-background-tile.png');
 }
@@ -328,7 +329,6 @@ a {
   width: 0;
   background: transparent; /* make scrollbar transparent */
 }
-
 
 /* background */
 .eth-clock-back {

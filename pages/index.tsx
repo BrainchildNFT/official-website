@@ -197,17 +197,17 @@ export default function Home() {
           <div
             className="relative h-screen-without-navbar"
             onMouseMove={(event) => {
-              if (exploreImageRef.current) {
+              if (exploreImageRef.current && isDesktop) {
                 exploreImageRef.current.style.top =
                   event.clientY - 105 + scrollY + 'px'
                 exploreImageRef.current.style.left = event.clientX + 'px'
               }
             }}
-            onClick={() => router.push('/collections')}
+            onClick={() => router.push('/nfts')}
             style={{ cursor: 'none' }}
           >
             <div
-              className="absolute w-120 h-120 sm:w-75 sm:h-75 xl:w-90 xl:h-90 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[400]"
+              className="absolute w-120 h-120 sm:w-120 sm:h-120 xl:w-150 xl:h-150 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[0] sm:z-[400]"
               ref={exploreImageRef}
             >
               <Image
@@ -260,17 +260,17 @@ export default function Home() {
             </div>
 
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
-              <div className="absolute w-1/2 flex items-center justify-center">
+              <div className="absolute w-full sm:w-3/5 flex items-center justify-center -mt-50 sm:-mt-250">
                 <Image
                   className=""
                   src="/assets/images/landing-page/eth-clock-design.png"
                   layout="intrinsic"
-                  width={547}
-                  height={547}
+                  width={1400}
+                  height={1400}
                   alt="Ethereum Clock Design"
                 />
               </div>
-              <div>
+              <div style={{ fontFamily: 'Future Classic' }}>
                 <Image
                   className="animate-spin-60s"
                   src="/assets/images/landing-page/eth-clock-letter.svg"
@@ -334,8 +334,8 @@ export default function Home() {
 
         <div className="light-background-image">
           {/*Immerse yourself in the new age of LUXURY*/}
-          <section className="relative pt-130 pb-60 overflow-x-hidden">
-            <div className="border-y border-gradient-dark p-25">
+          <section className="relative pt-130 overflow-x-hidden">
+            {/* <div className="border-y border-gradient-dark p-25">
               <p className="text-primary-50 whitespace-nowrap transition eas-in-out transform -translate-y-1">
                 Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
                 eget mi augue malesuada scelerisque sed consequat, non. Sagittis
@@ -343,19 +343,22 @@ export default function Home() {
                 euismod sed pretium amet viverra odio ut. Mattis urna eget mi
                 augue malesuada scelerisque sed consequat, non.
               </p>
-            </div>
-            <div className="container mx-auto relative z-50">
-              <div className="text-60 sm:text-95 lg:text-130 font-Voyage opacity-90 sm:opacity-75 lg:opacity-90 leading-tight text-primary-75 pt-60 lg:pb-195 text-left lg:text-center">
+            </div> */}
+            <div className="p-30 sm:p-100 mx-auto relative z-50">
+              <div
+                className="text-45 sm:text-95 lg:text-120 text-center leading-tight text-primary-75 pt-60 lg:text-center"
+                style={{ fontFamily: 'Future Classic' }}
+              >
                 <p>
-                  Immerse
-                  <br className="block lg:hidden" /> yourself
+                  <span>Immerse</span>
+                  <br className="block sm:hidden" /> <span>yourself</span>
                   <br className="hidden lg:block" />{' '}
                   <span className="text-45 sm:text-71 lg:text-80">in the</span>{' '}
                   <br className="block lg:hidden" />
-                  new age{' '}
+                  NEW AGE{' '}
                   <span className="text-45 sm:text-71 lg:text-80">of</span>
                 </p>
-                <p className="mt-10 text-100 sm:text-160 lg:text-180">LUXURY</p>
+                <p className="mt-10 text-70 sm:text-140 lg:text-160">LUXURY</p>
               </div>
             </div>
 
@@ -418,7 +421,10 @@ export default function Home() {
           {/*And more NFTs*/}
           <section className="relative py-200 overflow-x-hidden" id="and-more">
             <div className="flex justify-between items-center px-20 sm:px-80 xl:px-200">
-              <p className="font-Voyage text-30 sm:text-50 text-primary-75">
+              <p
+                className="text-30 sm:text-50 text-primary-75"
+                style={{ fontFamily: 'Future Classic' }}
+              >
                 and more...
               </p>
             </div>
@@ -439,7 +445,7 @@ export default function Home() {
                 }}
               >
                 <SwiperSlide className="flex-grow" style={{ height: 'auto' }}>
-                  <div className="background-gray-blur p-30 sm:p-40 pb-0 w-full">
+                  <div className="background-gray-blur p-30 sm:p-40 pb-0 sm:pb-0 w-full">
                     <p
                       className="text-50 sm:text-80 text-[#232425]"
                       style={{ fontFamily: 'Future Classic' }}
@@ -594,9 +600,15 @@ export default function Home() {
 
         {/*Collaboration*/}
         <section className="relative dark-background-image" id="collaborations">
-          <div className="container mx-auto p-30 pt-50 sm:pt-200 text-white sm:text-center font-Voyage">
+          <div
+            className="container mx-auto p-30 pt-50 sm:pt-200 text-white text-center"
+            style={{ fontFamily: 'Future Classic' }}
+          >
             <p className="text-45 lg:text-80">exquisite</p>
-            <p className="text-justify sm:text-center break-all text-80 lg:text-100 xl:text-150">
+            <p
+              className="text-justify indent-2 sm:indent-0 sm:ml-0 sm:text-center break-all text-80 lg:text-100 xl:text-150"
+              style={{ textIndent: `${isMobile ? '4rem' : '0'}` }}
+            >
               Collaborations
             </p>
             <p className="text-45 lg:text-80">
@@ -652,11 +664,17 @@ export default function Home() {
         <section className="relative dark-background-image">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
             <div className="lg:w-1/3 flex lg:justify-center lg:items-center text-white">
-              <p className="font-Voyage lg:hidden px-30 text-80 lg:vertical-letter font-[Voyage]">
+              <p
+                className="lg:hidden px-30 text-80 lg:vertical-letter"
+                style={{ fontFamily: 'Future Classic' }}
+              >
                 FAQ
               </p>
               {currentFaqIndex === -1 && (
-                <p className="font-Voyage hidden lg:block text-130 vertical-letter font-Voyage">
+                <p
+                  className="hidden lg:block text-130 vertical-letter"
+                  style={{ fontFamily: 'Future Classic' }}
+                >
                   FAQ
                 </p>
               )}
@@ -698,11 +716,18 @@ export default function Home() {
                           // }
                         }}
                       >
-                        <div className="flex items-center justify-between transition-all duration-500 border border-r-0 border-gradient-light p-35 lg:mb-35 lg:hover:-ml-50 lg:hover:pr-85 lg:hover:bg-white-10">
+                        <div
+                          className={
+                            'flex items-center justify-between transition-all duration-500 border border-r-0 border-gradient-light p-35 lg:mb-35 lg:hover:-ml-50 lg:hover:pr-85 lg:hover:bg-white-10 ' +
+                            (index === currentFaqIndex
+                              ? 'lg:-ml-50 bg-white-10'
+                              : '')
+                          }
+                        >
                           {faq.name}{' '}
                           {isMobile && (
                             <Icon
-                              name={index === currentFaqIndex ? 'down' : 'up'}
+                              name={index === currentFaqIndex ? 'up' : 'down'}
                               color="white"
                               size={18}
                             />

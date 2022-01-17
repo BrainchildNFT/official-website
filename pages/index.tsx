@@ -290,7 +290,7 @@ export default function Home() {
           {scrollY < 1 && (
             <div
               className={
-                'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 ' +
+                'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 text-18 sm:text-20 ' +
                 stateBarBackground
               }
             >
@@ -431,7 +431,7 @@ export default function Home() {
                 and more...
               </p>
             </div>
-            <div className="mt-100 px-20 sm:px-80 lg:pr-0 xl:pl-200">
+            <div className="mt-100 px-0 sm:px-80 lg:pr-0 xl:pl-200">
               <Swiper
                 className="w-full"
                 spaceBetween={80}
@@ -739,7 +739,7 @@ export default function Home() {
                       </div>
                       <p
                         className={
-                          'faq-content-background lg:hidden w-full text-white text-24 font-semibold p-30 transition-all my-5 ' +
+                          'faq-content-background lg:hidden w-full text-white text-24 font-semibold p-30 transition-all my-5 leading-tight ' +
                           (index === currentFaqIndex ? 'block' : 'hidden')
                         }
                       >

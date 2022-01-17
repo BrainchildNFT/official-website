@@ -50,7 +50,7 @@ export function Navbar() {
     <div
       className={
         navbarOpen
-          ? backgroundColor + ' transition duration-500'
+          ? backgroundColor + ' transition duration-500 z-[1000] sticky top-0'
           : backgroundColor +
             ' z-[1000] sticky top-0 transition duration-500 mt-40'
       }
@@ -83,24 +83,25 @@ export function Navbar() {
             className="xl:hidden outline-none px-10"
             onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <Icon
-              name="menu"
-              color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'}
-              size={27}
-            />
+            {!navbarOpen && (
+              <Icon
+                name="menu"
+                color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'}
+                size={27}
+              />
+            )}
+            {navbarOpen && <Icon name="close" color="white" size={25} />}
           </button>
           <div
             className={
-              'fixed xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
+              'absolute xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
               (navbarOpen
-                ? ' left-0 ease-out-in light-background-image overflow-y-scroll'
-                : ' -left-800 xl:left-0 ease-in-out')
+                ? ' left-0 top-[64px] ease-out-in light-background-image overflow-y-scroll'
+                : ' top-[100vh] left-0 xl:top-0 ease-in-out')
             }
-            onScroll={(event) => {
-              event.stopPropagation()
-            }}
+            style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
           >
-            <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0 sticky top-0 z-[100]">
+            {/* <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0 sticky top-0 z-[100]">
               <Link href="/">
                 <a className="flex xl:hidden items-center">
                   <Image
@@ -118,7 +119,7 @@ export function Navbar() {
               >
                 <Icon name="close" color="white" size={25} />
               </button>
-            </div>
+            </div> */}
             {/* <div className="w-full xl:hidden px-10 py-20">
               <div className="flex justify-between border border-gradient-dark rounded-md p-15">
                 <input

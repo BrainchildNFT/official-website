@@ -260,7 +260,7 @@ export default function Home() {
             </div>
 
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
-              <div className="absolute w-full sm:w-3/5 flex items-center justify-center">
+              <div className="absolute w-full sm:w-3/5 flex items-center justify-center -mt-50 sm:-mt-100">
                 <Image
                   className=""
                   src="/assets/images/landing-page/eth-clock-design.png"
@@ -278,8 +278,8 @@ export default function Home() {
                   className="animate-spin-60s"
                   src="/assets/images/landing-page/eth-clock-letter.svg"
                   layout="intrinsic"
-                  width={1063}
-                  height={1063}
+                  width={1300}
+                  height={1300}
                   alt="Ethereum Clock Letter"
                 />
               </div>

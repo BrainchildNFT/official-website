@@ -197,7 +197,7 @@ export default function Home() {
           <div
             className="relative h-screen-without-navbar"
             onMouseMove={(event) => {
-              if (exploreImageRef.current && isDesktop) {
+              if (exploreImageRef.current) {
                 exploreImageRef.current.style.top =
                   event.clientY - 105 + scrollY + 'px'
                 exploreImageRef.current.style.left = event.clientX + 'px'
@@ -260,7 +260,7 @@ export default function Home() {
             </div>
 
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
-              <div className="absolute w-full sm:w-3/5 flex items-center justify-center -mt-50 sm:-mt-250">
+              <div className="absolute w-full sm:w-3/5 flex items-center justify-center">
                 <Image
                   className=""
                   src="/assets/images/landing-page/eth-clock-design.png"
@@ -270,7 +270,10 @@ export default function Home() {
                   alt="Ethereum Clock Design"
                 />
               </div>
-              <div style={{ fontFamily: 'Future Classic' }}>
+              <div
+                className="w-full sm:w-2/3 mx-auto"
+                style={{ fontFamily: 'Future Classic' }}
+              >
                 <Image
                   className="animate-spin-60s"
                   src="/assets/images/landing-page/eth-clock-letter.svg"

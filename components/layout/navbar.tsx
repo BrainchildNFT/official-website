@@ -51,12 +51,13 @@ export function Navbar() {
       className={
         navbarOpen
           ? backgroundColor + ' transition duration-500'
-          : backgroundColor + ' z-[700] sticky top-40 transition duration-500'
+          : backgroundColor +
+            ' z-[1000] sticky top-0 transition duration-500 mt-40'
       }
     >
       <nav
         className={
-          'h-65 z-[100] flex px-15 sticky border-y overflow-x-clip transition duration-500 ' +
+          'h-65 z-[1000] flex px-15 sticky border-y overflow-x-clip transition duration-500 ' +
           textColor +
           ' ' +
           borderColor
@@ -64,7 +65,7 @@ export function Navbar() {
       >
         <div className="container px-0 mx-auto flex justify-between xl:justify-left">
           <Link href="/">
-            <a className="flex items-center">
+            <a className="flex items-center ml-20">
               <Image
                 className="cursor-pointer"
                 src={
@@ -90,13 +91,16 @@ export function Navbar() {
           </button>
           <div
             className={
-              'fixed xl:relative duration-300 transition-all xl:transition-none min-h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
+              'fixed xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
               (navbarOpen
-                ? ' left-0 ease-out-in light-background-image'
+                ? ' left-0 ease-out-in light-background-image overflow-y-scroll'
                 : ' -left-800 xl:left-0 ease-in-out')
             }
+            onScroll={(event) => {
+              event.stopPropagation()
+            }}
           >
-            <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0">
+            <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0 sticky top-0 z-[100]">
               <Link href="/">
                 <a className="flex xl:hidden items-center">
                   <Image
@@ -129,7 +133,7 @@ export function Navbar() {
             </div> */}
             <ul
               className={
-                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18' +
+                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 text-[#373839] sm:text-white' +
                 (isMobile || isTablet ? ' text-primary' : '') +
                 ' xl:' +
                 textColor
@@ -195,19 +199,19 @@ export function Navbar() {
                 </a>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2">
                   <div
-                    className="mt-20 p-30 back-drop rounded-[30px] border-[1px] hidden xl:group-hover:block"
+                    className="mt-20 p-25 back-drop rounded-[30px] border-[1px] hidden xl:group-hover:block"
                     style={{
                       borderColor: '#FFFFFF66',
                     }}
                   >
-                    <div className="flex w-260 items-center">
+                    <div className="flex w-200 items-center">
                       <FontAwesomeIcon
                         icon={faDiscord}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="ml-10 text-[18px] tracking-wider"
+                        className="ml-10 text-[14px] tracking-wider"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -220,7 +224,7 @@ export function Navbar() {
                       </span>
                     </div>
                     <div
-                      className="text-[12px] mt-5 tracking-wider"
+                      className="text-[10px] mt-5 tracking-wider"
                       style={{
                         fontFamily: 'Subjectivity Serif',
                         fontWeight: 400,
@@ -239,10 +243,10 @@ export function Navbar() {
                       <FontAwesomeIcon
                         icon={faFileAlt}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="text-[18px] ml-10"
+                        className="text-[14px] ml-10"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -264,10 +268,10 @@ export function Navbar() {
                       <FontAwesomeIcon
                         icon={faInstagram}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="text-[18px] ml-10"
+                        className="text-[14px] ml-10"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -289,10 +293,10 @@ export function Navbar() {
                       <FontAwesomeIcon
                         icon={faTwitter}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="text-[18px] ml-10"
+                        className="text-[14px] ml-10"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,

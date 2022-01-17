@@ -260,13 +260,13 @@ export default function Home() {
             </div>
 
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
-              <div className="absolute w-1/2 flex items-center justify-center">
+              <div className="absolute w-full sm:w-3/5 flex items-center justify-center -mt-50 sm:-mt-250">
                 <Image
                   className=""
                   src="/assets/images/landing-page/eth-clock-design.png"
                   layout="intrinsic"
-                  width={547}
-                  height={547}
+                  width={1400}
+                  height={1400}
                   alt="Ethereum Clock Design"
                 />
               </div>
@@ -335,7 +335,7 @@ export default function Home() {
         <div className="light-background-image">
           {/*Immerse yourself in the new age of LUXURY*/}
           <section className="relative pt-130 overflow-x-hidden">
-            <div className="border-y border-gradient-dark p-25">
+            {/* <div className="border-y border-gradient-dark p-25">
               <p className="text-primary-50 whitespace-nowrap transition eas-in-out transform -translate-y-1">
                 Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
                 eget mi augue malesuada scelerisque sed consequat, non. Sagittis
@@ -343,7 +343,7 @@ export default function Home() {
                 euismod sed pretium amet viverra odio ut. Mattis urna eget mi
                 augue malesuada scelerisque sed consequat, non.
               </p>
-            </div>
+            </div> */}
             <div className="p-30 sm:p-100 mx-auto relative z-50">
               <div
                 className="text-45 sm:text-95 lg:text-120 text-center leading-tight text-primary-75 pt-60 lg:text-center"

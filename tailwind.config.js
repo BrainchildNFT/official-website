@@ -141,6 +141,9 @@ module.exports = {
         xl: '6rem',
       },
     },
+    translate: {
+      '1/6': '16%',
+    },
     fontSize: {
       ...range(minFontSize, maxFontSize).reduce(
         (merged, f) => ({ ...merged, [f]: `${f}px` }),

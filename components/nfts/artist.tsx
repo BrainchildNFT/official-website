@@ -2,12 +2,17 @@ import Icon from '../ui-kit/icon';
 
 export default function Artist() {
   return (<>
-    <div className="w-full artists-background text-white">
-      <div className="container mx-auto">
-        <p className="text-16 font-light pt-300 sm:pt-400 lg:pt-520">THE ARTIST</p>
+    <div className="w-full text-white relative">
+      <div className="relative z-0">
+        <video className="w-full" id="background-video" autoPlay loop muted>
+          <source src="/assets/images/nfts/artists.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div className="absolute top-0 h-full container mx-auto pb-100 z-10 flex flex-col justify-end">
+        <p className="text-16 font-light">THE ARTIST</p>
         <p className="text-60 font-Future pt-10">Qvarta Studio</p>
-        <p className="font-light pt-100">Ullamcorper nisi euismod congue posuere vitae pretium hendrerit. Eget id dictum nibh quis fermentum, amet. Semper mattis eget venenatis, vitae, viverra cras suspendisse. Elementum egestas morbi feugiat morbi ultrices nulla pellentesque.</p>
-        <p className="font-light pt-10 pb-100 text-right">Learn more <Icon name='external_link' color="white" size={18} /></p>
+        <p className="font-light pt-40">Qvarta has a unique Balto-Slavic aesthetic that is clean and luxurious. With the end-user in mind, they have achieved a delicate balance between the user&apos;s emotional experience, aesthetics and functionality. Their love for industrial design means that they will either make a product that is cool in all aspects, or they won’t make it at all.</p>
+        <p className="font-light pt-10 text-right cursor-pointer">Learn more <Icon name='external_link' color="white" size={18} /></p>
       </div>
     </div>
   </>);

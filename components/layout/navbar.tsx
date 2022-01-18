@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
@@ -7,13 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Icon from '../ui-kit/icon'
 import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import {
-  faDiscord,
-  faInstagram,
-  faRedditAlien,
-  faTelegramPlane,
-  faTwitter,
-} from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { ThemeType } from '../../core/data/base'
@@ -25,10 +19,20 @@ export function Navbar() {
   )
   const [textColor, setTextColor] = useState('text-white')
   const [borderColor, setBorderColor] = useState('border-gradient-light')
+  const [collectionSidebarOpen, setCollectionSideBarOpen] = useState(false);
 
   const themeStatus = useSelector((state: any) => state.ThemeStatus)
   const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
+
+  const collectionsClicked = () => {
+    setCollectionSideBarOpen(!collectionSidebarOpen);
+  };
+
+  const goToNfts = () => {
+    setCollectionSideBarOpen(false);
+    router.push('/nfts');
+  }
 
   useEffect(() => {
     setBackgroundColor(
@@ -50,13 +54,14 @@ export function Navbar() {
     <div
       className={
         navbarOpen
-          ? backgroundColor + ' transition duration-500'
-          : backgroundColor + ' z-[700] sticky top-0 pt-40 transition duration-500'
+          ? backgroundColor + ' transition duration-500 z-[1000] sticky top-0'
+          : backgroundColor +
+            ' z-[1000] sticky top-0 transition duration-500 mt-40 relative'
       }
     >
       <nav
         className={
-          'h-65 z-[100] flex px-15 sticky border-y overflow-x-clip transition duration-500 ' +
+          'h-65 z-[1000] flex px-15 sticky border-y overflow-x-clip transition duration-500 ' +
           textColor +
           ' ' +
           borderColor
@@ -64,7 +69,7 @@ export function Navbar() {
       >
         <div className="container px-0 mx-auto flex justify-between xl:justify-left">
           <Link href="/">
-            <a className="flex items-center">
+            <a className="flex items-center ml-20">
               <Image
                 className="cursor-pointer"
                 src={
@@ -82,21 +87,25 @@ export function Navbar() {
             className="xl:hidden outline-none px-10"
             onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <Icon
-              name="menu"
-              color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'}
-              size={27}
-            />
+            {!navbarOpen && (
+              <Icon
+                name="menu"
+                color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'}
+                size={27}
+              />
+            )}
+            {navbarOpen && <Icon name="close" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={25} />}
           </button>
           <div
             className={
-              'fixed xl:relative duration-300 transition-all xl:transition-none min-h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
+              'absolute xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
               (navbarOpen
-                ? ' left-0 ease-out-in light-background-image'
-                : ' -left-800 xl:left-0 ease-in-out')
+                ? ' left-0 top-[64px] ease-out-in light-background-image overflow-y-scroll'
+                : ' top-[100vh] left-0 xl:top-0 ease-in-out')
             }
+            style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
           >
-            <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0">
+            {/* <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0 sticky top-0 z-[100]">
               <Link href="/">
                 <a className="flex xl:hidden items-center">
                   <Image
@@ -114,7 +123,7 @@ export function Navbar() {
               >
                 <Icon name="close" color="white" size={25} />
               </button>
-            </div>
+            </div> */}
             {/* <div className="w-full xl:hidden px-10 py-20">
               <div className="flex justify-between border border-gradient-dark rounded-md p-15">
                 <input
@@ -129,26 +138,25 @@ export function Navbar() {
             </div> */}
             <ul
               className={
-                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-18' +
+                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 ' +
                 (isMobile || isTablet ? ' text-primary' : '') +
                 ' xl:' +
                 textColor
               }
             >
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
-                <Link href="/collections">
-                  <a
-                    className={
-                      'relative xl:px-25 xl:py-10 ' +
-                      (router.pathname == '/collections'
-                        ? 'text-[#AF5F5F]'
-                        : '')
-                    }
-                    style={{ fontFamily: 'Subjectivity Serif' }}
-                  >
-                    Collections
-                  </a>
-                </Link>
+                <a
+                  onClick={() => collectionsClicked()}
+                  className={
+                    'cursor-pointer relative xl:px-25 xl:py-10 ' +
+                    (router.pathname == '/collections'
+                      ? 'text-[#AF5F5F]'
+                      : '')
+                  }
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
+                  Collections
+                </a>
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/about-us">
@@ -195,19 +203,19 @@ export function Navbar() {
                 </a>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2">
                   <div
-                    className="mt-20 p-30 back-drop rounded-[30px] border-[1px] hidden xl:group-hover:block"
+                    className="mt-20 p-25 back-drop rounded-[30px] border-[1px] hidden xl:group-hover:block"
                     style={{
                       borderColor: '#FFFFFF66',
                     }}
                   >
-                    <div className="flex w-260 items-center">
+                    <div className="flex w-200 items-center">
                       <FontAwesomeIcon
                         icon={faDiscord}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="ml-10 text-[18px] tracking-wider"
+                        className="ml-10 text-[14px] tracking-wider"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -220,7 +228,7 @@ export function Navbar() {
                       </span>
                     </div>
                     <div
-                      className="text-[12px] mt-5 tracking-wider"
+                      className="text-[10px] mt-5 tracking-wider"
                       style={{
                         fontFamily: 'Subjectivity Serif',
                         fontWeight: 400,
@@ -239,10 +247,10 @@ export function Navbar() {
                       <FontAwesomeIcon
                         icon={faFileAlt}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="text-[18px] ml-10"
+                        className="text-[14px] ml-10"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -264,10 +272,10 @@ export function Navbar() {
                       <FontAwesomeIcon
                         icon={faInstagram}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="text-[18px] ml-10"
+                        className="text-[14px] ml-10"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -289,10 +297,10 @@ export function Navbar() {
                       <FontAwesomeIcon
                         icon={faTwitter}
                         size="1x"
-                        className="transform scale-150"
+                        // className="transform scale-150"
                       />
                       <span
-                        className="text-[18px] ml-10"
+                        className="text-[14px] ml-10"
                         style={{
                           fontFamily: 'Subjectivity Serif',
                           fontWeight: 400,
@@ -397,6 +405,33 @@ export function Navbar() {
           </div>
         </div>
       </nav>
+      <div className="relative">
+        <div
+          className={ 'absolute top-0 h-screen w-full sm:w-400 z-[1000] transition-all duration-500 dark-background-image' +
+            (!collectionSidebarOpen
+              ? ' ease-in-out -left-800 sm:-left-400'
+              : ' ease-out-in left-0')
+          }
+        >
+          <div className="bg-white-10 h-full">
+            <div className="bg-primary">
+              <div className="px-30 py-20 bg-white-10">
+                <p className="text-white text-18 font-semibold">COLLECTIONS</p>
+              </div>
+            </div>
+            <div>
+              <div onClick={() => goToNfts()} className="cursor-pointer flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light">
+                <Icon className="pr-5" name="starWithRhombus" size={40} color="white" />
+                <p className="text-white text-30 font-bold font-Subjectivity">ethereum clock</p>
+              </div>
+
+              <div className="mt-20 mx-40">
+                <p className="text-white py-10 opacity-30 text-18 font-semibold"><span className="mr-20">+</span>...more coming soon!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

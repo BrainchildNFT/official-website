@@ -35,7 +35,7 @@ export const faqs = {
     {
       name: 'How do I buy Ethclock?',
       content:
-        'The raffle goes live on 15 Jan 2022 at 1:03 AM. Be ready with your wallets to submit your signature.',
+        'The raffle goes live on 24th Jan 2022 at 1:03 AM. Be ready with your wallets to submit your signature.',
     },
     {
       name: 'What is the answer to life?',

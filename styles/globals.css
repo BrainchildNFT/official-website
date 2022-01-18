@@ -109,7 +109,7 @@ html {
 }
 
 .font-Future {
-  font-family: Future, sans-serif;
+  font-family: Future Classic, sans-serif;
 }
 
 .font-Subjectivity {
@@ -126,7 +126,7 @@ html {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .fill-opacity-0 {
@@ -295,7 +295,6 @@ html {
     rgba(175, 95, 95, 0.4) 100%
   );
 }
-
 .enhancement-item-background {
   background: radial-gradient(
     71.11% 71.11% at 39.95% 83.78%,
@@ -354,7 +353,6 @@ html {
 .artists-background {
   background: center no-repeat url(/assets/images/collections/artists.gif);
   background-size: cover;
-}
 
 .about-us-members-background {
   background: top center no-repeat url(/assets/images/about-us/three-faces.png);

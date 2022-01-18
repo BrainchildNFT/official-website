@@ -350,6 +350,38 @@ html {
   );
 }
 
+.artists-background {
+  background: center no-repeat url(/assets/images/collections/artists.gif);
+  background-size: cover;
+}
+
+.expanded-item {
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    225.01deg,
+    rgba(0, 0, 0, 0.4) 2.38%,
+    rgba(0, 0, 0, 0) 47.87%,
+    rgba(0, 0, 0, 0.4) 97.35%
+  );
+
+  background: radial-gradient(
+    71.11% 71.11% at 39.95% 83.78%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.0790551) 51.63%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.expanded-item.active {
+  border: 1px solid #af5f5f;
+  background: radial-gradient(
+    67.75% 67.75% at 30.16% 77.78%,
+    rgba(175, 95, 95, 0.012) 0%,
+    rgba(175, 95, 95, 0.6) 100%
+  );
+}
+
 /* swiper */
 .swiper-pagination-bullet {
   @apply bg-white bg-opacity-60 w-10 h-10 rounded-full mx-5;

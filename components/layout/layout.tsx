@@ -20,7 +20,7 @@ export function Layout(props: any) {
   }, [themeStatus])
   return (
     <div
-      className={'transition duration-500 overflow-x-hidden ' + backgroundColor}
+      className={'transition duration-500 overflow-x-clip ' + backgroundColor}
     >
       <Navbar />
       <section id="root" className="main-content-wrapper z-0 pt-80">

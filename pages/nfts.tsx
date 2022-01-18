@@ -15,7 +15,6 @@ import About from '../components/nfts/about';
 import PerksAndUtility from '../components/nfts/perks-and-utility';
 import Timeline from '../components/nfts/timeline';
 import Enhancements from '../components/nfts/enhancements';
-import Gallery from '../components/nfts/gallery';
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
 import Artist from '../components/nfts/artist';
 import { themeUpdate } from '../core/actions';
@@ -92,7 +91,7 @@ export default function Nfts() {
       setRaffleEndTimeLeft(calculateTimeLeft(1))
       updateRaffleState()
     }, 1000)
-  }, [])
+  },[])
 
   const handleScroll = () => {
     if (typeof window !== "undefined") {

@@ -9,8 +9,10 @@ import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWallet
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
 import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThemeType } from '../../core/data/base'
+import { themeUpdate } from '../../core/actions/theme-update';
+import { sidebarUpdate } from '../../core/actions/sidebar-update';
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -19,18 +21,19 @@ export function Navbar() {
   )
   const [textColor, setTextColor] = useState('text-white')
   const [borderColor, setBorderColor] = useState('border-gradient-light')
-  const [collectionSidebarOpen, setCollectionSideBarOpen] = useState(false);
 
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
+  const themeStatus = useSelector((state: any) => state.ThemeStatus);
+  const sidebarStatus = useSelector((state: any) => state.SidebarStatus);
   const { isMobile, isTablet } = useMatchBreakpoints()
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const collectionsClicked = () => {
-    setCollectionSideBarOpen(!collectionSidebarOpen);
+    dispatch(sidebarUpdate());
   };
 
   const goToNfts = () => {
-    setCollectionSideBarOpen(false);
+    dispatch(sidebarUpdate());
     router.push('/nfts');
   }
 
@@ -100,8 +103,8 @@ export function Navbar() {
             className={
               'absolute xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
               (navbarOpen
-                ? ' left-0 top-[64px] ease-out-in light-background-image overflow-y-scroll'
-                : ' top-[100vh] left-0 xl:top-0 ease-in-out')
+                ? ' left-0 top-[64px] block ease-out-in light-background-image overflow-y-scroll'
+                : ' top-[100vh] hidden left-0 xl:top-0 ease-in-out')
             }
             style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
           >
@@ -408,7 +411,7 @@ export function Navbar() {
       <div className="relative">
         <div
           className={ 'absolute top-0 h-screen w-full sm:w-400 z-[1000] transition-all duration-500 dark-background-image' +
-            (!collectionSidebarOpen
+            (!sidebarStatus
               ? ' ease-in-out -left-800 sm:-left-400'
               : ' ease-out-in left-0')
           }

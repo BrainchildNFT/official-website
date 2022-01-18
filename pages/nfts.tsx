@@ -17,8 +17,9 @@ import Timeline from '../components/nfts/timeline';
 import Enhancements from '../components/nfts/enhancements';
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
 import Artist from '../components/nfts/artist';
-import { themeUpdate } from '../core/actions';
+import { themeUpdate } from '../core/actions/theme-update';
 import { ThemeType } from '../core/data/base';
+import { sidebarUpdate } from '../core/actions/sidebar-update';
 
 export default function Nfts() {
   const [isTop, setIsTop] = useState(true);
@@ -190,7 +191,7 @@ export default function Nfts() {
         <div className="relative flex flex-col xl:flex-row">
           <div className={"min-w-400 overflow-x-auto sticky top-0 flex flex-col " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5')}>
             <div className={"grow py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
-              <Link className="flex" href="/collections"><a className={"text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="no-underline hidden xl:block">COLLECTIONS</span></a></Link>
+              <a onClick={() => dispatch(sidebarUpdate())} className={"cursor-pointer text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="no-underline hidden xl:block">COLLECTIONS</span></a>
               <div className="mr-40 xl:mr-0 xl:mt-50 flex items-center">
                 <div className="pr-5 flex items-center min-w-40">
                   <Image src={themeStatus === ThemeType.DarkMode ? '/assets/images/about-us/light-star-in-rhombus.png' : '/assets/images/about-us/dark-star-in-rhombus.png'} layout="intrinsic" width={36} height={40} alt="Star In Square" />

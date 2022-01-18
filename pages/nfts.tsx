@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Head from 'next/head'
 import Image from 'next/image'
 import 'swiper/css';
@@ -40,9 +40,59 @@ export default function Nfts() {
     {id:NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY'},
     {id:NftsMenuType.TimeLine, name: 'TIMELINE'},
     {id:NftsMenuType.Enhancements, name: 'ENHANCEMENTS'},
-    {id:NftsMenuType.Gallery, name: 'GALLERY'},
+    // {id:NftsMenuType.Gallery, name: 'GALLERY'},
     {id:NftsMenuType.WhitePaper, name: 'WHITEPAPER'},
   ];
+
+  interface TimeLeft {
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+  }
+
+  const calculateTimeLeft = (flag: number): TimeLeft => {
+    let difference =
+      +new Date(Date.UTC(2022, 0, 24 + flag, 0, 0, 0)) - +new Date()
+    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 }
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      }
+    }
+
+    return timeLeft
+  }
+
+  const updateRaffleState = () => {
+    let differenceFromRaffleStart =
+      +new Date(Date.UTC(2022, 0, 24, 0, 0, 0)) - +new Date()
+    let differenceFromRaffleEnd =
+      +new Date(Date.UTC(2022, 0, 25, 0, 0, 0)) - +new Date()
+
+    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
+    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
+    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
+  }
+
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
+    calculateTimeLeft(0)
+  )
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
+    calculateTimeLeft(1)
+  )
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRaffleStartTimeLeft(calculateTimeLeft(0))
+      setRaffleEndTimeLeft(calculateTimeLeft(1))
+      updateRaffleState()
+    }, 1000)
+  }, [])
 
   const handleScroll = () => {
     if (typeof window !== "undefined") {
@@ -139,9 +189,9 @@ export default function Nfts() {
       </Head>
       <Layout>
         <div className="relative flex flex-col xl:flex-row">
-          <div className={"min-w-400 overflow-x-auto sticky top-0 flex flex-col " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-10')}>
+          <div className={"min-w-400 overflow-x-auto sticky top-0 flex flex-col " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5')}>
             <div className={"grow py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
-              <Link className="flex" href="/collections"><a className={"text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="hidden xl:block">COLLECTIONS</span></a></Link>
+              <Link className="flex" href="/collections"><a className={"text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="no-underline hidden xl:block">COLLECTIONS</span></a></Link>
               <div className="mr-40 xl:mr-0 xl:mt-50 flex items-center">
                 <div className="pr-5 flex items-center min-w-40">
                   <Image src={themeStatus === ThemeType.DarkMode ? '/assets/images/about-us/light-star-in-rhombus.png' : '/assets/images/about-us/dark-star-in-rhombus.png'} layout="intrinsic" width={36} height={40} alt="Star In Square" />
@@ -151,22 +201,54 @@ export default function Nfts() {
                 </div>
               </div>
               <div className="xl:mt-50 flex flex-row xl:flex-col">
-                {menuList.map((menu, index) => (<div key={index} className="flex items-center mr-40 xl:mr-0 xl:mb-30 cursor-pointer" onClick={() => menuClicked(menu.id)}>
+                {menuList.map((menu, index) => (<div key={index} className="flex items-center mr-40 xl:mr-0 xl:mb-25 cursor-pointer" onClick={() => menuClicked(menu.id)}>
                   <div className={'hidden xl:block text-danger transition-all ease-in-out duration-500 ' + (index === currentMenuId ? 'w-50 mr-10 border border-1' : 'w-0 border-0')} style={{ height: '1px'}} />
-                  <p className={'font-medium text-16 transition-all ease-in-out duration-500 ' + (index === currentMenuId ? 'text-danger': '')}>{menu.name}<Icon className={'ml-5 ' + (index === menuList.length - 1 ? 'block' : 'hidden')} name='external_link' color={index === currentMenuId ? 'danger' : (themeStatus === ThemeType.DarkMode ? 'white' : 'primary')} size={16} /></p>
+                  <p className={'font-medium text-15 transition-all ease-in-out duration-500 ' + (index === currentMenuId ? 'text-danger': '')}>{menu.name}<Icon className={'ml-5 ' + (index === menuList.length - 1 ? 'block' : 'hidden')} name='external_link' color={index === currentMenuId ? 'danger' : (themeStatus === ThemeType.DarkMode ? 'white' : 'primary')} size={16} /></p>
                 </div>))}
               </div>
               <div className="flex">
-                <div className={"rounded-full px-30 py-15 cursor-pointer " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
+                <div className={"rounded-full px-20 py-10 cursor-pointer " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
                   <span className={"font-Subjectivity text-18 font-bold " + (themeStatus === ThemeType.DarkMode ? "text-primary" : "text-white")}>OPENSEA <Icon className="ml-10" name='opensea' color={themeStatus === ThemeType.DarkMode ? "primary" : "white"} size={16} /></span>
                 </div>
               </div>
             </div>
             <div className={"px-30 py-15 hidden xl:block " + (themeStatus === ThemeType.DarkMode ? "bg-primary" : "bg-white-50")}>
-              <p className={"text-center text-16 " + textColor}>RAFFLE BEGINS ON JAN 24, 2022</p>
+              {raffleState === RaffleState.Waiting && (
+                <p className={"text-center text-16 " + textColor}>
+                  PRESALE RAFFLE BEGINS ON JAN 24, 2022
+                </p>
+              )}
+              {raffleState === RaffleState.Live && (
+                <p className={"text-center text-16 " + textColor}>
+                  RAFFLE RESULTS{' '}
+                  <span className="text-30 font-bold">LIVE NOW!</span> END ON 25
+                  JAN, 2022
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className={"text-center text-16 " + textColor}>
+                  RAFFLE RESULTS{' '}
+                  <span className="text-30 font-bold">LIVE NOW!</span>
+                </p>
+              )}
             </div>
             <div className="bg-danger py-20 px-30 hidden xl:block">
-              <p className="text-center text-white text-40 font-Subjectivity font-bold">01:23:45:12</p>
+              {raffleState === RaffleState.Waiting && (
+                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                  {`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}
+                </p>
+              )}
+
+              {raffleState === RaffleState.Live && (
+                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                  {`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}{' '}Left
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                  Connect wallet to check if you’re whitelisted
+                </p>
+              )}
               <p className="text-16 text-white flex items-center justify-center">
                 <span className="pr-25 opacity-40">Stay connected</span>
                 <Icon className="pr-25" name="discord" color="white" size={16} />
@@ -177,13 +259,17 @@ export default function Nfts() {
             </div>
           </div>
 
-          <div onScroll={() => nftContentScrolled()} ref={nftContentRef} className={"h-screen text-white overflow-y-auto overflow-x-hidden" + (isHuge ? " collection-body-width" : " w-screen")}>
+          <div onScroll={() => nftContentScrolled()} ref={nftContentRef} className={"h-screen-without-navbar text-white overflow-y-auto overflow-x-hidden" + (isHuge ? " collection-body-width" : " w-screen")}>
             <About />
             <Artist />
             <PerksAndUtility />
-            <Timeline />
+            <Timeline time={
+              raffleState === RaffleState.Waiting ?
+                `${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}` :
+                `${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`
+            } />
             <Enhancements />
-            <Gallery />
+            {/*<Gallery />*/}
           </div>
         </div>
 
@@ -197,14 +283,14 @@ export default function Nfts() {
           >
             {raffleState === RaffleState.Waiting && (
               <p className="font-medium text-center">
-                Raffle begins on 15 Jan, 2022 at 1:03 PM GMT
+                Raffle begins on 24 Jan, 2022 at 00:00 AM UTC
               </p>
             )}
             {raffleState === RaffleState.Live && (
               <p className="font-medium text-center">
                 Raffle Results{' '}
-                <span className="text-30 font-bold">LIVE NOW!</span> end on 15
-                Jan, 2022 at 1:03 PM GMT
+                <span className="text-30 font-bold">LIVE NOW!</span> end on 25
+                Jan, 2022 at 00:00 AM UTC
               </p>
             )}
             {raffleState === RaffleState.Ended && (
@@ -214,9 +300,17 @@ export default function Nfts() {
               </p>
             )}
 
-            {raffleState !== RaffleState.Ended && (
+            {raffleState === RaffleState.Waiting && (
               <p className="font-medium text-center">
-                <span className="text-30 font-bold">01:23:45:12</span> Left
+                <span className="text-30 font-bold">{`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}</span>{' '}
+                Left
+              </p>
+            )}
+
+            {raffleState === RaffleState.Live && (
+              <p className="font-medium text-center">
+                <span className="text-30 font-bold">{`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}</span>{' '}
+                Left
               </p>
             )}
             {raffleState === RaffleState.Ended && (

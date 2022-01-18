@@ -20,11 +20,11 @@ export default function PerksAndUtility() {
               </div>
             </div>
             <div className="p-30">
-              <p className="text-40 text-primary font-Voyage text-center">Perpetually Redeemable</p>
+              <p className="text-40 text-primary font-Future text-center">Perpetually Redeemable</p>
             </div>
           </div>
           <div className="p-10 m-20 mt-10 md:w-1/2 xl:w-auto">
-            <p className="text-primary-50">Receive the physical version of your Ethclock at your doorstep. Three months later, redeem it again! Redeem, receive, repeat, forever!</p>
+            <p className="text-primary-50 leading-tight">Receive the physical version of your Ethclock at your doorstep. Three months later, redeem it again! Redeem, receive, repeat, forever!</p>
             <p className="mt-30 text-primary font-bold font-Subjectivity">COMING SOON!</p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function PerksAndUtility() {
               <p className="text-40 text-primary font-Voyage">02</p>
             </div>
             <div className="pt-80">
-              <p className="text-40 text-primary font-Voyage text-center">Gamified Enhancements</p>
+              <p className="text-40 text-primary font-Future text-center">Gamified Enhancements</p>
             </div>
             <div className="pt-15 relative flex justify-center">
               <div className="flex justify-center z-20">
@@ -44,7 +44,7 @@ export default function PerksAndUtility() {
             </div>
           </div>
           <div className="p-10 m-20 mt-10 md:w-1/2 xl:w-auto">
-            <p className="text-primary-50">Level up to unlock new designs and improve the rarity of your Ethclock... at your own risk! Look out for the frost giant and fiery dragon, or you may be blessed by a godsent angel. Who knows?</p>
+            <p className="text-primary-50 leading-tight">Level up to unlock new designs and improve the rarity of your Ethclock... at your own risk! Look out for the frost giant and fiery dragon, or you may be blessed by a godsent angel. Who knows?</p>
           </div>
         </div>
 
@@ -59,11 +59,11 @@ export default function PerksAndUtility() {
               </div>
             </div>
             <div className="p-30 pt-40">
-              <p className="text-40 text-primary font-Voyage text-center">Teleportable into crypto worlds</p>
+              <p className="text-40 text-primary font-Future text-center">Teleportable into crypto worlds</p>
             </div>
           </div>
           <div className="p-10 m-20 mt-10 md:w-1/2 xl:w-auto">
-            <p className="text-primary-50">Explore the metaverse and never lose track of time with an Ethclock on your back... its party time!</p>
+            <p className="text-primary-50 leading-tight">Explore the metaverse and never lose track of time with an Ethclock on your back... its party time!</p>
           </div>
         </div>
       </div>

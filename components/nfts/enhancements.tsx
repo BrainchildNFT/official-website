@@ -76,7 +76,7 @@ export default function Enhancements() {
           <div className="relative enhancement-item-background min-h-270 p-20 text-[#373839] flex-1 m-10">
             <p className="text-20 font-Subjectivity font-semibold">FROZEN</p>
             <p className="font-16 mt-10 mb-30">
-              Frost giants came knocking and you weren't prepared. Forever stuck
+              Frost giants came knocking and you weren`&apos;t prepared. Forever stuck
               at current level.
             </p>
             <div className="absolute bottom-0 right-0 -mb-10">
@@ -107,10 +107,10 @@ export default function Enhancements() {
         <div className="p-10 mt-20 text-[#353637]">
           <div className=" w-full lg:w-1/2">
             <p className="text-[24px] font-semibold">
-              But there's a chance?...
+              But there&apos;s a chance?...
             </p>
             <p className="text-[18px]">
-              Here's the probability of each of these outcomes at different
+              Here`&apos;s the probability of each of these outcomes at different
               levels.
             </p>
           </div>

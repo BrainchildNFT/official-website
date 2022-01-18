@@ -9,8 +9,10 @@ import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWallet
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
 import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThemeType } from '../../core/data/base'
+import { themeUpdate } from '../../core/actions/theme-update';
+import { sidebarUpdate } from '../../core/actions/sidebar-update';
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -19,18 +21,19 @@ export function Navbar() {
   )
   const [textColor, setTextColor] = useState('text-white')
   const [borderColor, setBorderColor] = useState('border-gradient-light')
-  const [collectionSidebarOpen, setCollectionSideBarOpen] = useState(false);
 
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
+  const themeStatus = useSelector((state: any) => state.ThemeStatus);
+  const sidebarStatus = useSelector((state: any) => state.SidebarStatus);
   const { isMobile, isTablet } = useMatchBreakpoints()
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const collectionsClicked = () => {
-    setCollectionSideBarOpen(!collectionSidebarOpen);
+    dispatch(sidebarUpdate());
   };
 
   const goToNfts = () => {
-    setCollectionSideBarOpen(false);
+    dispatch(sidebarUpdate());
     router.push('/nfts');
   }
 
@@ -408,7 +411,7 @@ export function Navbar() {
       <div className="relative">
         <div
           className={ 'absolute top-0 h-screen w-full sm:w-400 z-[1000] transition-all duration-500 dark-background-image' +
-            (!collectionSidebarOpen
+            (!sidebarStatus
               ? ' ease-in-out -left-800 sm:-left-400'
               : ' ease-out-in left-0')
           }

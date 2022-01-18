@@ -72,7 +72,7 @@ export const timelineStepData = [
   {
     no: '02',
     name: 'Raffle',
-    content: 'Using Chainlink VRF, we will randomly whitelist 4207 wallets; these whitelisted wallets will be able to mint Ethclock by sending 0.12 ETH for each NFT during the next phase. The mint will be FCFS for the whitelisted wallet, which means if everyone is minting the maximum 3 Ethclocks, only the first 1402 wallets will be successful.',
+    content: 'Using Chainlink VRF, we will randomly whitelist 420 wallets; these whitelisted wallets will be able to mint Ethclock by sending 0.06 ETH for each NFT during the next phase. The mint will be FCFS for the whitelisted wallet.',
   },
   {
     no: '03',

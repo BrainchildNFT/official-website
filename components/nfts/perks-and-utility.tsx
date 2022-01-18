@@ -45,6 +45,7 @@ export default function PerksAndUtility() {
           </div>
           <div className="p-10 m-20 mt-10 md:w-1/2 xl:w-auto">
             <p className="text-primary-50 leading-tight">Level up to unlock new designs and improve the rarity of your Ethclock... at your own risk! Look out for the frost giant and fiery dragon, or you may be blessed by a godsent angel. Who knows?</p>
+            <p className="mt-30 text-primary font-bold font-Subjectivity">COMING SOON!</p>
           </div>
         </div>
 
@@ -64,6 +65,7 @@ export default function PerksAndUtility() {
           </div>
           <div className="p-10 m-20 mt-10 md:w-1/2 xl:w-auto">
             <p className="text-primary-50 leading-tight">Explore the metaverse and never lose track of time with an Ethclock on your back... its party time!</p>
+            <p className="mt-30 text-primary font-bold font-Subjectivity">COMING SOON!</p>
           </div>
         </div>
       </div>

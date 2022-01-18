@@ -295,6 +295,22 @@ html {
     rgba(175, 95, 95, 0.4) 100%
   );
 }
+.enhancement-item-background {
+  background: radial-gradient(
+    71.11% 71.11% at 39.95% 83.78%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.0790551) 51.63%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border: 1px solid;
+  border-image: url('#') 1 round;
+  border-image-source: linear-gradient(
+    270.16deg,
+    rgba(0, 0, 0, 0.4) 1.04%,
+    rgba(0, 0, 0, 0) 48.58%,
+    rgba(0, 0, 0, 0.4) 100.31%
+  );
+}
 
 .enhancement-item-background {
   background: radial-gradient(

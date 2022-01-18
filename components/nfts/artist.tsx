@@ -2,9 +2,9 @@ import Icon from '../ui-kit/icon';
 
 export default function Artist() {
   return (<>
-    <div className="w-full artists-background text-white relative">
+    <div className="w-full text-white relative">
       <div className="relative z-0">
-        <video id="background-video" autoPlay loop muted poster="https://assets.codepen.io/6093409/river.jpg">
+        <video className="w-full" id="background-video" autoPlay loop muted>
           <source src="/assets/images/nfts/artists.mp4" type="video/mp4" />
         </video>
       </div>

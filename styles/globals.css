@@ -296,11 +296,6 @@ html {
   );
 }
 
-.artists-background {
-  background: center no-repeat url(/assets/images/nfts/artists.mp4);
-  background-size: cover;
-}
-
 .about-us-members-background {
   background: top center no-repeat url(/assets/images/about-us/three-faces.png);
   background-size: cover;

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { Layout } from '../components/layout/layout';
+import Icon from '../components/ui-kit/icon';
 
 export default function Collections() {
   const router = useRouter();
@@ -24,17 +25,15 @@ export default function Collections() {
       <Layout>
         <div className="flex flex-col xl:flex-row" onClick={() => goToNfts}>
           <div className="min-w-400 bg-white-10">
-            <div className="px-30 py-20 bg-primary">
-              <p className="text-white text-18 font-semibold">COLLECTIONS</p>
+            <div className="bg-primary">
+              <div className="px-30 py-20 text-white bg-white-10">
+                <p className="text-white text-18 font-semibold">COLLECTIONS</p>
+              </div>
             </div>
             <div>
-              <div className="flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light">
-                <div className="pr-5 flex items-center">
-                  <Image src="/assets/images/about-us/light-star-in-rhombus.png" layout="intrinsic" width={36} height={40} alt="Star In Square" />
-                </div>
-                <div>
-                  <p className="text-white text-30 font-bold">ethereum clock</p>
-                </div>
+              <div onClick={() => goToNfts()} className="cursor-pointer flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light">
+                <Icon className="pr-5" name="starWithRhombus" size={40} color="white" />
+                <p className="text-white text-30 font-bold font-Subjectivity">ethereum clock</p>
               </div>
 
               <div className="mt-20 mx-40">
@@ -45,8 +44,8 @@ export default function Collections() {
 
           <div onClick={() => goToNfts()} className="grow p-100 flex text-white relative overflow-hidden min-h-600 xl:min-h-full">
             <div className="hidden lg:block lg:w-1/2 xl:pr-45 pb-50 z-10">
-              <p className="text-60 font-Voyage">Eleifend sed enim vulputate nec, scelerisque. </p>
-              <p className="mt-40 font-light">An NFT collection of 5000 Ethereum Clocks with enhancements available upto level 10. Penatibus egestas arcu eget eget ultrices eget et. Vitae, interdum nunc duis justo. Integer tincidunt feugiat sit diam.</p>
+              <p className="text-60 font-Voyage leading-tight">Eleifend sed enim vulputate nec, scelerisque. </p>
+              <p className="mt-40 font-light leading-tight">An NFT collection of 5000 Ethereum Clocks with enhancements available upto level 10. Penatibus egestas arcu eget eget ultrices eget et. Vitae, interdum nunc duis justo. Integer tincidunt feugiat sit diam.</p>
               <p className="mt-40 p-20 font-medium border-0 border-b border-gradient-light">500 Mints</p>
               <p className="mt-10 p-20 font-medium border-0 border-b border-gradient-light">Level 1-10 Enhancements available</p>
               <p className="mt-10 p-20 font-medium border-0 border-b border-gradient-light">Perpetually Redeemable</p>

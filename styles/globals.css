@@ -109,7 +109,7 @@ html {
 }
 
 .font-Future {
-  font-family:Future Classic, sans-serif;
+  font-family: Future Classic, sans-serif;
 }
 
 .font-Subjectivity {
@@ -126,7 +126,7 @@ html {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .fill-opacity-0 {
@@ -233,7 +233,8 @@ a {
   );
 }
 
-.dark-background-image {
+.dark-background-image,
+html {
   @apply bg-secondary;
   background-image: url('/assets/images/dark-background-tile.png');
 }
@@ -296,7 +297,7 @@ a {
 }
 
 .artists-background {
-  background: center no-repeat url(/assets/images/collections/artists.gif);
+  background: center no-repeat url(/assets/images/nfts/artists.mp4);
   background-size: cover;
 }
 
@@ -328,7 +329,6 @@ a {
   width: 0;
   background: transparent; /* make scrollbar transparent */
 }
-
 
 /* background */
 .eth-clock-back {

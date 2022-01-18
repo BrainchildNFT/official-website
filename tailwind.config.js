@@ -44,6 +44,7 @@ module.exports = {
       inherit: 'inherit',
       white: {
         DEFAULT: 'rgba(255,255,255,1)',
+        5: 'rgba(255,255,255,0.05)',
         10: 'rgba(255,255,255,0.1)',
         20: 'rgba(255,255,255,0.2)',
         30: 'rgba(255,255,255,0.3)',
@@ -56,6 +57,7 @@ module.exports = {
       },
       black: {
         DEFAULT: 'rgba(0,0,0,1)',
+        5: 'rgba(0,0,0,0.05)',
         10: 'rgba(0,0,0,0.1)',
         20: 'rgba(0,0,0,0.2)',
         30: 'rgba(0,0,0,0.3)',
@@ -141,6 +143,9 @@ module.exports = {
         xl: '6rem',
       },
     },
+    // translate: {
+    //   '1/6': '16%',
+    // },
     fontSize: {
       ...range(minFontSize, maxFontSize).reduce(
         (merged, f) => ({ ...merged, [f]: `${f}px` }),

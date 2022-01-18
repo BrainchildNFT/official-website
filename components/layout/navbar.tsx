@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
@@ -7,13 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Icon from '../ui-kit/icon'
 import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import {
-  faDiscord,
-  faInstagram,
-  faRedditAlien,
-  faTelegramPlane,
-  faTwitter,
-} from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { ThemeType } from '../../core/data/base'
@@ -25,10 +19,20 @@ export function Navbar() {
   )
   const [textColor, setTextColor] = useState('text-white')
   const [borderColor, setBorderColor] = useState('border-gradient-light')
+  const [collectionSidebarOpen, setCollectionSideBarOpen] = useState(false);
 
   const themeStatus = useSelector((state: any) => state.ThemeStatus)
   const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
+
+  const collectionsClicked = () => {
+    setCollectionSideBarOpen(!collectionSidebarOpen);
+  };
+
+  const goToNfts = () => {
+    setCollectionSideBarOpen(false);
+    router.push('/nfts');
+  }
 
   useEffect(() => {
     setBackgroundColor(
@@ -52,7 +56,7 @@ export function Navbar() {
         navbarOpen
           ? backgroundColor + ' transition duration-500 z-[1000] sticky top-0'
           : backgroundColor +
-            ' z-[1000] sticky top-0 transition duration-500 mt-40'
+            ' z-[1000] sticky top-0 transition duration-500 mt-40 relative'
       }
     >
       <nav
@@ -90,7 +94,7 @@ export function Navbar() {
                 size={27}
               />
             )}
-            {navbarOpen && <Icon name="close" color="white" size={25} />}
+            {navbarOpen && <Icon name="close" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={25} />}
           </button>
           <div
             className={
@@ -134,26 +138,25 @@ export function Navbar() {
             </div> */}
             <ul
               className={
-                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 text-[#373839] sm:text-white' +
+                'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 ' +
                 (isMobile || isTablet ? ' text-primary' : '') +
                 ' xl:' +
                 textColor
               }
             >
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
-                <Link href="/collections">
-                  <a
-                    className={
-                      'relative xl:px-25 xl:py-10 ' +
-                      (router.pathname == '/collections'
-                        ? 'text-[#AF5F5F]'
-                        : '')
-                    }
-                    style={{ fontFamily: 'Subjectivity Serif' }}
-                  >
-                    Collections
-                  </a>
-                </Link>
+                <a
+                  onClick={() => collectionsClicked()}
+                  className={
+                    'cursor-pointer relative xl:px-25 xl:py-10 ' +
+                    (router.pathname == '/collections'
+                      ? 'text-[#AF5F5F]'
+                      : '')
+                  }
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
+                  Collections
+                </a>
               </li>
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
                 <Link href="/about-us">
@@ -402,6 +405,33 @@ export function Navbar() {
           </div>
         </div>
       </nav>
+      <div className="relative">
+        <div
+          className={ 'absolute top-0 h-screen w-full sm:w-400 z-[1000] transition-all duration-500 dark-background-image' +
+            (!collectionSidebarOpen
+              ? ' ease-in-out -left-800 sm:-left-400'
+              : ' ease-out-in left-0')
+          }
+        >
+          <div className="bg-white-10 h-full">
+            <div className="bg-primary">
+              <div className="px-30 py-20 bg-white-10">
+                <p className="text-white text-18 font-semibold">COLLECTIONS</p>
+              </div>
+            </div>
+            <div>
+              <div onClick={() => goToNfts()} className="cursor-pointer flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light">
+                <Icon className="pr-5" name="starWithRhombus" size={40} color="white" />
+                <p className="text-white text-30 font-bold font-Subjectivity">ethereum clock</p>
+              </div>
+
+              <div className="mt-20 mx-40">
+                <p className="text-white py-10 opacity-30 text-18 font-semibold"><span className="mr-20">+</span>...more coming soon!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

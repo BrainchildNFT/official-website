@@ -9,21 +9,14 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import SwiperCore, { Scrollbar } from 'swiper'
-
-SwiperCore.use([Scrollbar])
-
 import { Layout } from '../components/layout/layout'
-import {
-  nftList,
-  RaffleState,
-  faqs,
-  faq_display_limit,
-} from '../core/data/landing'
-import { shimmerUrl } from '../components/ui-kit/common/blur-image'
+import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing'
 import useGAService from '../core/app-services/ga-service'
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
 import Icon from '../components/ui-kit/icon'
 import { useRouter } from 'next/router'
+
+SwiperCore.use([Scrollbar])
 
 const swiperBreakPoints = {
   640: {

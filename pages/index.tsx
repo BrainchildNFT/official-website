@@ -10,7 +10,12 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import SwiperCore, { Scrollbar } from 'swiper'
 import { Layout } from '../components/layout/layout'
-import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing'
+import {
+  faq_display_limit,
+  faqs,
+  nftList,
+  RaffleState,
+} from '../core/data/landing'
 import useGAService from '../core/app-services/ga-service'
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
 import Icon from '../components/ui-kit/icon'
@@ -221,7 +226,7 @@ export default function Home() {
               </p>
               <div className="hidden xl:block bg-white w-10 h-10 mx-30 rounded-full" />
               <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
-                Upto{' '}
+                Up to{' '}
                 <span
                   className="font-bold italic"
                   style={{ fontFamily: 'Subjectivity Serif' }}
@@ -289,12 +294,12 @@ export default function Home() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  Raffle begins on 24 Jan, 2022 at 00:00 AM UTC
+                  Presale raffle begins on 24 Jan, 2022 at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
-                  Raffle Results{' '}
+                  Presale raffle Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> end on 25
                   Jan, 2022 at 00:00 AM UTC
                 </p>
@@ -659,7 +664,7 @@ export default function Home() {
         {/*FAQs*/}
         <section className="relative dark-background-image">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
-            <div className="lg:w-1/3 flex lg:justify-center lg:items-center text-white">
+            <div className="lg:w-1/3 flex lg:justify-center text-white">
               <p
                 className="lg:hidden px-30 text-80 lg:vertical-letter"
                 style={{ fontFamily: 'Future Classic' }}
@@ -675,14 +680,13 @@ export default function Home() {
                 </p>
               )}
               {currentFaqIndex !== -1 && (
-                <div className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all relative">
-                  <div
-                    className="animate-fadeIn absolute"
-                    style={{
-                      top: `${135 * currentFaqIndex + 40}px`,
-                      width: 'calc(100% - 120px)',
-                    }}
-                  >
+                <div
+                  className="hidden lg:block faq-content-background w-full h-max text-white text-24 font-semibold p-30 sm:p-50 transition-all"
+                  style={{
+                    marginTop: `${137 * currentFaqIndex}px`,
+                  }}
+                >
+                  <div className="animate-fadeIn">
                     {faqData[currentFaqIndex].content}
                   </div>
                 </div>

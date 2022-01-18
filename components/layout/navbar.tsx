@@ -100,8 +100,8 @@ export function Navbar() {
             className={
               'absolute xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
               (navbarOpen
-                ? ' left-0 top-[64px] block ease-out-in light-background-image overflow-y-scroll'
-                : ' top-[100vh] hidden left-0 xl:top-0 ease-in-out')
+                ? ' left-0 top-[64px] ease-out-in light-background-image overflow-y-scroll'
+                : ' top-[100vh] left-0 xl:top-0 ease-in-out')
             }
             style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
           >

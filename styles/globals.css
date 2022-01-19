@@ -399,6 +399,10 @@ html {
   );
 }
 
+.transy20 {
+  --tw-translate-y: -10%;
+}
+
 /* swiper */
 .swiper-pagination-bullet {
   @apply bg-white bg-opacity-60 w-10 h-10 rounded-full mx-5;

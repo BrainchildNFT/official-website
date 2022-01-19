@@ -19,21 +19,21 @@ export const faqs = {
         'BrainchildNFT is eternal, the owner can always receive it in real life, infinitely.',
     },
     {
-      name: 'What is Ethclock?',
+      name: 'What is EthClock?',
       content:
-        'Ethclock (aka Ethereum-clock) is our first brainchildNFT consisting of 5,000 luxurious clocks! ',
+        'EthClock (aka Ethereum-Clock) is our first brainchildNFT consisting of 5,000 luxurious clocks! ',
     },
     {
-      name: 'When do Ethclocks go on sale?',
+      name: 'When do EthClocks go on sale?',
       content: 'Presale 24th Jan 2022. Fairmint Raffle TBD.',
     },
     {
-      name: 'How many Ethclocks are available?',
+      name: 'How many EthClocks are available?',
       content:
-        'Out of 5,000 Ethclock NFTs, 4207 of them will be available for public sale!',
+        'Out of 5,000 EthClock NFTs, 4207 of them will be available for public sale!',
     },
     {
-      name: 'How do I buy Ethclock?',
+      name: 'How do I buy EthClock?',
       content:
         'Presale goes live on 24th Jan 2022 at 00:00 AM UTC. Be ready with your wallets to submit your signature.',
     },

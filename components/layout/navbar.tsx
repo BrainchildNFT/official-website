@@ -190,7 +190,7 @@ export function Navbar() {
                     }
                     style={{ fontFamily: 'Subjectivity Serif' }}
                   >
-                    Opensea
+                    OpenSea
                   </a>
                 </Link>
               </li>
@@ -319,7 +319,7 @@ export function Navbar() {
               </li>
               <div className="block xl:hidden p-20">
                 <div className="flex items-center mt-10">
-                  <div className="w-50">
+                  <div className="w-50 -ml-5">
                     <FontAwesomeIcon
                       icon={faDiscord}
                       size="1x"

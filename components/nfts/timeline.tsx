@@ -7,7 +7,13 @@ interface Props {
 }
 
 export default function Timeline({ time } : Props) {
-  const [opendUnholdIndex, setOpenedUnholdIndex] = useState(0);
+  const [opendUnholdIndex, setOpenedUnholdIndex] = useState([false, false, false]);
+
+  const openUnhold = (index: any) => {
+    const arr = opendUnholdIndex;
+    arr[index] = !arr[index];
+    setOpenedUnholdIndex(arr);
+  }
 
   return (<>
     <div className="p-40 md:p-100">
@@ -43,11 +49,11 @@ export default function Timeline({ time } : Props) {
                     {timelineStepData.map((item, index) => (<div className="flex items-start text-primary text-40 px-50" key={index}>
                       <span className="mr-50 font-Future py-20">{item.no}</span>
                       <div className="grow border-b border-gradient-dark py-20">
-                        <div className="flex items-center cursor-pointer" onClick={() => setOpenedUnholdIndex(index)}>
+                        <div className="flex items-center cursor-pointer" onClick={() => openUnhold(index)}>
                           <p className="grow font-Future">{item.name}</p>
-                          <span><Icon className={index === opendUnholdIndex ? 'transition-all duration-200 rotate-180' : 'transition-all duration-200 '} name="down" color="primary" size={12} /></span>
+                          <span><Icon className={opendUnholdIndex[index] ? 'transition-all duration-200 rotate-180' : 'transition-all duration-200 '} name="down" color="primary" size={12} /></span>
                         </div>
-                        <p className={"mt-20 text-20 leading-tight transition-all duration-200 " + (index === opendUnholdIndex ? 'block' : 'hidden')}>{item.content}</p>
+                        <p className={"mt-20 text-20 leading-tight transition-all duration-200 " + (opendUnholdIndex[index] ? 'block' : 'hidden')}>{item.content}</p>
                       </div>
                     </div>))}
                   </div>

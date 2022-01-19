@@ -58,7 +58,7 @@ export default function AboutUs() {
         <div className="dark-background-image">
           {/*Pushing the boundaries of NFTs*/}
           <section className="container mx-auto pt-35 sm:pt-105 lg:pt-145 pb-110 sm:pb-195 lg:pb-305 flex flex-col items-center">
-            <p className="font-Voyage text-white text-center opacity-90 text-60 sm:text-100 lg:text-130">Pushing the<br className="sm:hidden"/> boundaries<br className="sm:hidden"/> of NFTs</p>
+            <p className="font-Future text-white text-center opacity-90 text-60 sm:text-100 lg:text-130">Pushing the<br className="sm:hidden"/> boundaries<br className="sm:hidden"/> of NFTs</p>
             <div className="-mt-150 -mb-100">
               <Image src="/assets/images/landing-page/multi-polygon-light.png" layout="intrinsic" width={450} height={450} alt="Multi Polygon" />
             </div>
@@ -112,24 +112,24 @@ export default function AboutUs() {
 
           <section className="relative about-us-members-background">
             <div className="px-40 lg:px-100 xl:px-300 pb-100 lg:pb-120 xl:pb-150">
-              <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300 text-center">Meet <span className="text-60">the</span> Team</p>
+              <p className="font-Future text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300 text-center">Meet <span className="text-60">the</span> Team</p>
 
-              <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-150 xl:mt-300">KENSAN</p>
+              <p className="font-Future text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-150 xl:mt-300">KENSAN</p>
               <p className="text-white opacity-60">Confused kid in a confusing world</p>
               <p className="flex items-center font-Subjectivity text-white opacity-90"><Icon className="mr-10" name='mail' color='white' size={20} />kensan42069@gmail.com</p>
               <p className="flex items-center font-Subjectivity text-white opacity-90"><Icon className="mr-10" name='twitterOutline' color='white' size={20} />@kensan42069</p>
 
-              <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">PIGUBAOZA</p>
+              <p className="font-Future text-60 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">PIGUBAOZA</p>
               <div className="flex flex-col items-end">
                 <p className="text-white text-right opacity-60 max-w-550">Stringing up the brainchildren</p>
                 <p className="flex items-center font-Subjectivity text-white tet-right opacity-90"><Icon className="mr-10" name='twitterOutline' color='white' size={20} />@pigubaoza</p>
               </div>
 
-              <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300">GARDEBO</p>
+              <p className="font-Future text-60 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300">GARDEBO</p>
               <p className="text-white opacity-60">Dwelling in the chaos, Addicted to complexity.</p>
               <p className="text-white opacity-60">Also, pushing p i  x   e    l     s</p>
 
-              <p className="font-Voyage text-60 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">and more...</p>
+              <p className="font-Future text-60 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">and more...</p>
               <div className="flex justify-end">
                 <p className="text-white text-right opacity-60 max-w-550">Team of developer with experience spanning across 12 projects. Marketing aficionados who flips pancakes and sushi. Selfless contributors. Owners. You.</p>
               </div>

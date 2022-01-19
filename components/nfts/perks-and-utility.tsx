@@ -9,7 +9,7 @@ export default function PerksAndUtility() {
         <div className="flex flex-col md:flex-row xl:flex-col xl:w-1/3">
           <div className="perk-and-utility-item-background border perk-and-utility-item-border relative h-500 m-20 overflow-hidden md:w-1/2 xl:w-auto">
             <div className="absolute top-30 right-30 z-30">
-              <p className="text-40 text-primary font-Voyage">01</p>
+              <p className="text-40 text-primary font-Future">01</p>
             </div>
             <div className="pt-40 relative flex justify-center">
               <div className="flex justify-center z-20">
@@ -19,7 +19,7 @@ export default function PerksAndUtility() {
                 <Image src="/assets/images/collections/multi-circle-dark.png" layout="intrinsic" width={375} height={135} alt="Dark Multi Circle" />
               </div>
             </div>
-            <div className="p-30">
+            <div className="px-10 pt-30">
               <p className="text-40 text-primary font-Future text-center break-all">Perpetually Redeemable</p>
             </div>
           </div>
@@ -32,9 +32,9 @@ export default function PerksAndUtility() {
         <div className="flex flex-col md:flex-row xl:flex-col xl:w-1/3">
           <div className="perk-and-utility-item-background border perk-and-utility-item-border relative h-500 m-20 flex flex-col justify-between overflow-hidden md:w-1/2 xl:w-auto">
             <div className="absolute top-30 right-30 z-30">
-              <p className="text-40 text-primary font-Voyage">02</p>
+              <p className="text-40 text-primary font-Future">02</p>
             </div>
-            <div className="pt-80">
+            <div className="pt-80 px-10">
               <p className="text-40 text-primary font-Future text-center break-all">Gamified Enhancements</p>
             </div>
             <div className="pt-15 relative flex justify-center">
@@ -52,14 +52,14 @@ export default function PerksAndUtility() {
         <div className="flex flex-col md:flex-row xl:flex-col xl:w-1/3">
           <div className="perk-and-utility-item-background border perk-and-utility-item-border relative h-500 m-20 overflow-hidden md:w-1/2 xl:w-auto">
             <div className="absolute top-30 right-30 z-30">
-              <p className="text-40 text-primary font-Voyage">03</p>
+              <p className="text-40 text-primary font-Future">03</p>
             </div>
             <div className="relative flex justify-center">
               <div className="flex justify-center px-10 z-20">
                 <Image src="/assets/images/collections/blue-windows-light.png" layout="intrinsic" width={250} height={280} alt="Light Gift Box" />
               </div>
             </div>
-            <div className="p-30 pt-40">
+            <div className="px-10 pt-40">
               <p className="text-40 text-primary font-Future text-center break-all">Teleportable into crypto worlds</p>
             </div>
           </div>

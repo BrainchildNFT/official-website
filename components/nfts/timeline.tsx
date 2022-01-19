@@ -25,7 +25,7 @@ export default function Timeline({ time } : Props) {
             <div className="py-20 grow">
               <div className="sm:mr-40 pb-10 sm:pb-0 flex flex-col-reverse sm:flex-row w-full justify-between items-center">
                 {!item.isFairmint && <p className="text-primary font-Subjectivity font-bold">{item.title}</p>}
-                {item.isFairmint && <p className="text-primary font-bold grow"><span className="text-25 text-danger font-Subjectivity font-bold mr-10">Presale Raffle</span><span className="text-18 font-medium">Starts</span> 24 January 2021 <br/><span className="text-18 font-medium">at</span> 01:15 AM</p>}
+                {item.isFairmint && <p className="text-primary font-bold grow"><span className="text-25 text-danger font-Subjectivity font-bold mr-10">Presale Raffle</span><span className="text-18 font-medium">Starts</span> 24 January 2022 <br/><span className="text-18 font-medium">at</span> 00:00 AM UTC</p>}
                 <p className="text-16 text-primary">{item.date}</p>
               </div>
             </div>

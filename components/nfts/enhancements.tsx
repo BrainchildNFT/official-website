@@ -2,8 +2,14 @@ import Image from 'next/image'
 import { enhancementsData } from '../../core/data/nfts'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import Icon from '../ui-kit/icon'
+import { useState } from 'react';
 
 export default function Enhancements() {
+  const [openLevel, setOpenLevel] = useState(false);
+  const [openEnvironment, setOpenEnvironment] = useState(false);
+  const [openShine, setOpenShine] = useState(false);
+  const [openEfficiency, setOpenEfficiency] = useState(false);
+
   return (
     <>
       <div className="p-40 md:p-100">
@@ -42,6 +48,7 @@ export default function Enhancements() {
                 layout="intrinsic"
                 width="100"
                 height="100"
+                alt="God Tier"
               />
             </div>
           </div>
@@ -56,6 +63,7 @@ export default function Enhancements() {
                 layout="intrinsic"
                 width="100"
                 height="100"
+                alt="Enhanced Item"
               />
             </div>
           </div>
@@ -70,6 +78,7 @@ export default function Enhancements() {
                 layout="intrinsic"
                 width="100"
                 height="100"
+                alt="Failed Item"
               />
             </div>
           </div>
@@ -85,6 +94,7 @@ export default function Enhancements() {
                 layout="intrinsic"
                 width="100"
                 height="100"
+                alt="Frozen Item"
               />
             </div>
           </div>
@@ -100,6 +110,7 @@ export default function Enhancements() {
                 layout="intrinsic"
                 width="100"
                 height="100"
+                alt="Charred Item"
               />
             </div>
           </div>
@@ -110,29 +121,31 @@ export default function Enhancements() {
               But there&apos;s a chance?...
             </p>
             <p className="text-[18px]">
-              Here`&apos;s the probability of each of these outcomes at different
+              Here&apos;s the probability of each of these outcomes at different
               levels.
             </p>
           </div>
         </div>
         <ScrollContainer vertical={false} horizontal={true} className="w-full">
-          <div className="w-full min-w-1000">
+          <div className="w-full">
             <Image
               src="/assets/images/landing-page/outcome-table.svg"
-              layout="responsive"
+              layout="intrinsic"
               width="1080"
               height="560"
+              alt="Outcome Table"
             />
           </div>
         </ScrollContainer>
         <div className="mt-100 block sm:flex">
-          <div className="w-full sm:w-500">
+          <div className="w-full sm:w-500 sticky top-100 self-start">
             <Image
               src="/assets/images/nfts/ethclock01.png"
               layout="intrinsic"
               width="440"
               height="650"
               className="rounded-[30px]"
+              alt="Eth Clock"
             />
           </div>
           <div className="w-full ml-0 sm:ml-50 mt-50 sm:mt-0">
@@ -144,6 +157,7 @@ export default function Enhancements() {
                     layout="intrinsic"
                     width="20"
                     height="20"
+                    alt="Icon Level"
                   />
                 </div>
                 <div className="font-Subjectivity font-semibold text-[18px] ml-10">
@@ -156,45 +170,47 @@ export default function Enhancements() {
                       'linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%)',
                   }}
                 />
-                <Icon name="plus_round" color="#363738" size={18} />
+                <span onClick={() => setOpenLevel(!openLevel)} className="flex items-center cursor-pointer"><Icon name={openLevel ? 'minus_round' : 'plus_round'} color="#363738" size={18} /></span>
               </div>
-              <div className="text-[#353637] p-10 text-16">
-                Upgrade your Ethclock to unlock new designs, environment
-                animations and increase rarity. Beware of the risk with
-                different enhancement outcomes! Improved designs at every level.
-                Unlock environment animation at level 4. Significant upgrade at
-                level 7 & 10.
-              </div>
-              <div className="flex mt-10 flex-wrap text-[#353637] text-16 font-medium">
-                <div className="level-item w-50 h-40 justify-center items-center flex m-5">
-                  1
+              <div className={"border-gradient-dark-linner mr-10 " + (openLevel ? "border-r" : "")}>
+                <div className={"text-[#353637] p-10 text-16 " + (openLevel ? "block" : "hidden")}>
+                  Upgrade your Ethclock to unlock new designs, environment
+                  animations and increase rarity. Beware of the risk with
+                  different enhancement outcomes! Improved designs at every level.
+                  Unlock environment animation at level 4. Significant upgrade at
+                  level 7 & 10.
                 </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  2
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  3
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  4
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  5
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  6
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  7
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  8
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  9
-                </div>
-                <div className="w-50 h-40 justify-center items-center flex m-5">
-                  10
+                <div className="flex mt-10 flex-wrap text-[#353637] text-16 font-medium">
+                  <div className="level-item w-50 h-40 justify-center items-center flex m-5">
+                    1
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    2
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    3
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    4
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    5
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    6
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    7
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    8
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    9
+                  </div>
+                  <div className="w-50 h-40 justify-center items-center flex m-5">
+                    10
+                  </div>
                 </div>
               </div>
             </div>
@@ -207,6 +223,7 @@ export default function Enhancements() {
                     layout="intrinsic"
                     width="20"
                     height="20"
+                    alt="Icon Environment"
                   />
                 </div>
                 <div className="font-Subjectivity font-semibold text-[18px] ml-10">
@@ -219,58 +236,60 @@ export default function Enhancements() {
                       'linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%)',
                   }}
                 />
-                <Icon name="plus_round" color="#363738" size={18} />
+                <span onClick={() => setOpenEnvironment(!openEnvironment)} className="flex items-center cursor-pointer"><Icon name={openEnvironment ? 'minus_round' : 'plus_round'} color="#363738" size={18} /></span>
               </div>
-              <div className="text-[#353637] p-10 text-16">
-                Where did your Ethclock come from in the metaverse?
-              </div>
-              <div className="grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10">
-                <div className="relative w-full h-200 m-10 expanded-item active p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">4%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Smart Contact
+              <div className={"border-gradient-dark-linner mr-10 " + (openEnvironment ? "border-r" : "")}>
+                <div className={"text-[#353637] p-10 text-16 " + (openEnvironment ? "block" : "hidden")}>
+                  Where did your Ethclock come from in the metaverse?
+                </div>
+                <div className={"grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10 mr-30 " + (openEnvironment ? "block" : "hidden")}>
+                  <div className="relative w-full h-200 m-10 expanded-item active p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">4%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Smart Contact
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">16%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Renegade Mode
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">8%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738] break-words">
+                      Near Future Tribe
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">32%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Depths of Defi
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">40%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Gas Belt
+                    </div>
                   </div>
                 </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">16%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Renegade Mode
+                <div className={"flex mt-10 flex-wrap text-[#353637] text-16 font-medium " + (openEnvironment ? "hidden" : "block")}>
+                  <div className="level-item p-10 h-40 justify-center items-center flex m-5">
+                    Smart Contract <span className="ml-10 opacity-50">4%</span>
                   </div>
-                </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">8%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738] break-words">
-                    Near Future Tribe
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Renegade Mode <span className="ml-10 opacity-50">16%</span>
                   </div>
-                </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">32%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Depths of Defi
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Near Future Tribe <span className="ml-10 opacity-50">8%</span>
                   </div>
-                </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">40%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Gas Belt
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Depths of Defi <span className="ml-10 opacity-50">32%</span>
                   </div>
-                </div>
-              </div>
-              <div className="flex mt-10 flex-wrap text-[#353637] text-16 font-medium">
-                <div className="level-item p-10 h-40 justify-center items-center flex m-5">
-                  Smart Contract <span className="ml-10 opacity-50">4%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Renegade Mode <span className="ml-10 opacity-50">16%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Near Future Tribe <span className="ml-10 opacity-50">8%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Depths of Defi <span className="ml-10 opacity-50">32%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Gas Belt <span className="ml-10 opacity-50">40%</span>
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Gas Belt <span className="ml-10 opacity-50">40%</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -283,6 +302,7 @@ export default function Enhancements() {
                     layout="intrinsic"
                     width="20"
                     height="20"
+                    alt="Icon Shine"
                   />
                 </div>
                 <div className="font-Subjectivity font-semibold text-[18px] ml-10">
@@ -295,9 +315,13 @@ export default function Enhancements() {
                       'linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%)',
                   }}
                 />
-                <Icon name="plus_round" color="#363738" size={18} />
+                <span onClick={() => setOpenShine(!openShine)} className="flex items-center cursor-pointer"><Icon name={openShine ? 'minus_round' : 'plus_round'} color="#363738" size={18} /></span>
               </div>
-              <div className="grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10">
+              <div className={"border-gradient-dark-linner mr-10 " + (openShine ? "border-r" : "")}>
+                <div className={"text-[#353637] p-10 text-16 " + (openShine ? "block" : "hidden")}>
+                  Semper mattis eget venenatis, vitae, viverra cras suspendisse. Elementum egestas morbi feugiat morbi ultrices nulla pellentesque.
+                </div>
+                <div className={"grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10 mr-30 " + (openShine ? "block" : "hidden")}>
                 <div className="relative w-full h-200 m-10 expanded-item active p-10 font-semibold">
                   <div className="absolute text-24 top-10 right-10">10%</div>
                   <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
@@ -329,7 +353,7 @@ export default function Enhancements() {
                   </div>
                 </div>
               </div>
-              <div className="flex mt-10 flex-wrap text-[#353637] text-16 font-medium">
+                <div className={"flex mt-10 flex-wrap text-[#353637] text-16 font-medium " + (openShine ? "hidden" : "block")}>
                 <div className="level-item p-10 h-40 justify-center items-center flex m-5">
                   Marble <span className="ml-10 opacity-50">10%</span>
                 </div>
@@ -346,6 +370,7 @@ export default function Enhancements() {
                   Acrylic <span className="ml-10 opacity-50">30%</span>
                 </div>
               </div>
+              </div>
             </div>
 
             <div>
@@ -356,6 +381,7 @@ export default function Enhancements() {
                     layout="intrinsic"
                     width="20"
                     height="20"
+                    alt="Icon Efficiency"
                   />
                 </div>
                 <div className="font-Subjectivity font-semibold text-[18px] ml-10">
@@ -368,56 +394,61 @@ export default function Enhancements() {
                       'linear-gradient(270.16deg, rgba(0, 0, 0, 0.4) 1.04%, rgba(0, 0, 0, 0) 48.58%, rgba(0, 0, 0, 0.4) 100.31%)',
                   }}
                 />
-                <Icon name="plus_round" color="#363738" size={18} />
+                <span onClick={() => setOpenEfficiency(!openEfficiency)} className="flex items-center cursor-pointer"><Icon name={openEfficiency ? 'minus_round' : 'plus_round'} color="#363738" size={18} /></span>
               </div>
 
-              <div className="grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10">
-                <div className="relative w-full h-200 m-10 expanded-item active p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">15%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Flawed
+              <div className="mr-10">
+                <div className={"text-[#353637] p-10 text-16 " + (openEfficiency ? "block" : "hidden")}>
+                  Semper mattis eget venenatis, vitae, viverra cras suspendisse. Elementum egestas morbi feugiat morbi ultrices nulla pellentesque.
+                </div>
+                <div className={"grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10 mr-30 " + (openEfficiency ? "block" : "hidden")}>
+                  <div className="relative w-full h-200 m-10 expanded-item active p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">15%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Flawed
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">20%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Raw
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">30%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738] break-words">
+                      Polished
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">40%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Brilliant
+                    </div>
+                  </div>
+                  <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
+                    <div className="absolute text-24 top-10 right-10">15%</div>
+                    <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
+                      Pristine
+                    </div>
                   </div>
                 </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">20%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Raw
+                <div className={"flex mt-10 flex-wrap text-[#353637] text-16 font-medium " + (openEfficiency ? "hidden" : "block")}>
+                  <div className="level-item p-10 h-40 justify-center items-center flex m-5">
+                    Flawed <span className="ml-10 opacity-50">15%</span>
                   </div>
-                </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">30%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738] break-words">
-                    Polished
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Raw <span className="ml-10 opacity-50">20%</span>
                   </div>
-                </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">40%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Brilliant
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Polished <span className="ml-10 opacity-50">30%</span>
                   </div>
-                </div>
-                <div className="relative w-full h-200 m-10 expanded-item p-10 font-semibold">
-                  <div className="absolute text-24 top-10 right-10">15%</div>
-                  <div className="absolute text-16 bottom-10 left-10 text-[#363738]">
-                    Pristine
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Brilliant <span className="ml-10 opacity-50">40%</span>
                   </div>
-                </div>
-              </div>
-              <div className="flex mt-10 flex-wrap text-[#353637] text-16 font-medium">
-                <div className="level-item p-10 h-40 justify-center items-center flex m-5">
-                  Flawed <span className="ml-10 opacity-50">15%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Raw <span className="ml-10 opacity-50">20%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Polished <span className="ml-10 opacity-50">30%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Brilliant <span className="ml-10 opacity-50">40%</span>
-                </div>
-                <div className="p-10 h-40 justify-center items-center flex m-5">
-                  Pristine <span className="ml-10 opacity-50">15%</span>
+                  <div className="p-10 h-40 justify-center items-center flex m-5">
+                    Pristine <span className="ml-10 opacity-50">15%</span>
+                  </div>
                 </div>
               </div>
             </div>

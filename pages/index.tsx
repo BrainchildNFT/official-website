@@ -382,7 +382,7 @@ export default function Home() {
                 <br />
                 Well, Our NFTs are redeemable forever... Yes,
               </p>
-              <p className="text-right font-Voyage text-80">Forever.</p>
+              <p className="text-right font-Future text-80">Forever.</p>
             </div> */}
           </section>
 
@@ -561,7 +561,7 @@ export default function Home() {
                         />
                       </div>
                       <div className="lg:max-w-350 lg:-ml-100 mt-50 relative z-50">
-                        <span className="font-Voyage text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Voyage">
+                        <span className="font-Future text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Future">
                           {nft.name}
                         </span>
                         <p className="mt-20 p-20 border border-gradient-dark-linner">

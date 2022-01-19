@@ -77,7 +77,7 @@ export const timelineStepData = [
   {
     no: '03',
     name: 'Minting',
-    content: 'Whitelisted wallet will be announced on our community channels and website, alternatively, you can also connect your wallet via metamask and find out if you have been whitelisted. You will have 48 hours to mint up to 3 Ethclock directly into your wallet by sending 0.12 ETH for each ethclock. Excess ETH will not be refunded, please do not send any amount other than increments of 0.12 ETH excluding gas fees.',
+    content: 'Whitelisted wallet will be announced on our community channels and website, alternatively, you can also connect your wallet via metamask and find out if you have been whitelisted. You will have 48 hours to mint 1 Ethclock directly into your wallet by sending 0.06 ETH. Excess ETH will not be refunded, please do not send any other amount excluding gas fees.',
   },
 ];
 

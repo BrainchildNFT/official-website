@@ -140,7 +140,7 @@ export default function Enhancements() {
             </div>
           </ScrollContainer>
           <div className="mt-40 sm:mt-100 block sm:flex">
-            <div className="w-full sm:w-500 md:sticky md:top-100 self-start">
+            <div className="w-full sm:w-500 md:sticky md:top-100 self-start flex justify-center">
               <Image
                 src="/assets/images/nfts/ethclock01.png"
                 layout="intrinsic"

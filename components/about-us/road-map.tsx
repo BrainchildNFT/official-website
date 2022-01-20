@@ -86,7 +86,7 @@ export default function RoadMap() {
         <div className="pr-50">
           <div className="text-white h-200 sticky top-60 z-20 dark-background-image">
             <p className="text-22 opacity-30 mb-10 pt-20">ROADMAP</p>
-            {roadMapPeriodNames.map((item, index) => <p key={index} className={'absolute text-60 lg:text-80 opacity-90 font-Future tracking-tighter break-all mb-60 transition-all duration-500 ease-in-out ' + (index === currentRoadMap ? 'opacity-100' : 'opacity-0')}>{item.name}</p>)}
+            {roadMapPeriodNames.map((item, index) => <p key={index} className={'absolute text-55 lg:text-60 xl:text-70 opacity-90 font-Future tracking-tighter break-all mb-60 transition-all duration-500 ease-in-out ' + (index === currentRoadMap ? 'opacity-100' : 'opacity-0')}>{item.name}</p>)}
           </div>
           <div>
             <div className="text-white transition-all duration-500" ref={roadMapContentRef}>
@@ -197,7 +197,7 @@ export default function RoadMap() {
           </div>
         </div>
       </div>
-      <div className="lg:flex lg:w-1/2 text-white justify-between h-screen sticky top-60">
+      <div className="mr-20 sm:mr-0 lg:flex lg:w-1/2 text-white justify-between h-screen sticky top-60">
         <div className="left-40 lg:left-0 h-screen pb-100">
           <div className="road-map-period-border text-white h-full flex flex-col justify-between py-100" style={{ width: '1px'}}>
             {roadMapPeriodNames.map((item, index) => <div key={index} onClick={() => roadMapPeriodClicked(index)} className={'flex flex-col cursor-pointer items-center justify-center border rounded-full ' + (index == currentRoadMap ? '-ml-40 lg:-ml-10 bg-white w-80 h-80 lg:w-20 lg:h-20' : '-ml-5 opacity-40 w-10 h-10')}>

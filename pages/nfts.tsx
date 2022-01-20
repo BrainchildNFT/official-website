@@ -33,6 +33,7 @@ export default function Nfts() {
 
   const { isHuge } = useMatchBreakpoints()
   const nftContentRef = useRef<HTMLDivElement>(null);
+  const mainBody = useRef<HTMLDivElement>(null);
 
   const menuList = [
     {id:NftsMenuType.About, name: 'ABOUT'},
@@ -81,10 +82,10 @@ export default function Nfts() {
 
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
     calculateTimeLeft(0)
-  )
+  );
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
     calculateTimeLeft(1)
-  )
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -102,20 +103,12 @@ export default function Nfts() {
         setIsTop(true);
       }
     }
-  }
-
-  const nftContentScrolled = () => {
-    if (nftContentRef.current?.scrollTop) {
-      setIsTop(false);
-    } else {
-      setIsTop(true);
-    }
 
     let contentHeight = 0;
     Array.from(nftContentRef?.current?.children || []).map((item, index) => {
       const nextHeight = contentHeight + item.clientHeight;
-      const scrollTop = nftContentRef?.current?.scrollTop || 0;
-      if (scrollTop > contentHeight - 300 && scrollTop < nextHeight) {
+      const scrollTop = window.scrollY || 0;
+      if (scrollTop > contentHeight && scrollTop < nextHeight) {
         setCurrentMenuId(NftsMenuTypeArr[index]);
       }
       contentHeight = nextHeight;
@@ -136,13 +129,11 @@ export default function Nfts() {
           contentHeight += childrenArr[index].clientHeight;
         }
       }
-      nftContentRef?.current?.childNodes[1]?.parentElement?.scrollTo(
-        {
-          left: 0,
-          top: contentHeight,
-          behavior: 'smooth'
-        }
-      );
+      window.scrollTo({
+        left: 0,
+        top: contentHeight + 100,
+        behavior: 'smooth'
+      });
     }
   }
 
@@ -188,9 +179,9 @@ export default function Nfts() {
         <meta name="description" content="EthClock: a tribute to Ethereum, is a collection of 5000 perpetually redeemable NFTs— Upgradeable, Physical, Digital, Tradable & Unique."/>
       </Head>
       <Layout>
-        <div className="relative flex flex-col xl:flex-row">
-          <div className={"min-w-400 overflow-x-auto sticky top-0 flex flex-col " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5')}>
-            <div className={"grow py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
+        <div className="relative flex flex-col xl:flex-row" ref={mainBody}>
+          <div className={"sm:min-w-400 overflow-x-auto sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-10 " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5') + (isTop ? ' h-screen-without-navbar' : ' h-screen-without-topbar')}>
+            <div className={"grow py-10 sm:py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
               <a onClick={() => dispatch(sidebarUpdate())} className={"cursor-pointer text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="no-underline hidden xl:block">COLLECTIONS</span></a>
               <div className="mr-40 xl:mr-0 xl:mt-50 flex items-center">
                 <div className="pr-5 flex items-center min-w-40">
@@ -207,7 +198,7 @@ export default function Nfts() {
                 </div>))}
               </div>
               <div className="flex">
-                <div className={"rounded-full px-20 py-10 cursor-pointer " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
+                <div className={"rounded-full px-20 py-5 sm:py-10 cursor-pointer " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
                   <span className={"font-Subjectivity text-18 font-bold " + (themeStatus === ThemeType.DarkMode ? "text-primary" : "text-white")}>OPENSEA <Icon className="ml-10" name='opensea' color={themeStatus === ThemeType.DarkMode ? "primary" : "white"} size={16} /></span>
                 </div>
               </div>
@@ -235,13 +226,13 @@ export default function Nfts() {
             <div className="bg-danger py-20 px-30 hidden xl:block">
               {raffleState === RaffleState.Waiting && (
                 <p className="text-center text-white text-40 font-Subjectivity font-bold">
-                  {`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}
+                  {`${raffleStartTimeLeft.days < 10 ? ('0' + raffleStartTimeLeft.days) : raffleStartTimeLeft.days }:${raffleStartTimeLeft.hours < 10 ? ('0' + raffleStartTimeLeft.hours) : raffleStartTimeLeft.hours }:${raffleStartTimeLeft.minutes < 10 ? ('0' + raffleStartTimeLeft.minutes) : raffleStartTimeLeft.minutes }:${raffleStartTimeLeft.seconds < 10 ? ('0' + raffleStartTimeLeft.seconds) : raffleStartTimeLeft.seconds }`}
                 </p>
               )}
 
               {raffleState === RaffleState.Live && (
                 <p className="text-center text-white text-40 font-Subjectivity font-bold">
-                  {`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}{' '}Left
+                  {`${raffleEndTimeLeft.days < 10 ? ('0' + raffleEndTimeLeft.days) : raffleEndTimeLeft.days }:${raffleEndTimeLeft.hours < 10 ? ('0' + raffleEndTimeLeft.hours) : raffleEndTimeLeft.hours }:${raffleEndTimeLeft.minutes < 10 ? ('0' + raffleEndTimeLeft.minutes) : raffleEndTimeLeft.minutes }:${raffleEndTimeLeft.seconds < 10 ? ('0' + raffleEndTimeLeft.seconds) : raffleEndTimeLeft.seconds }`}{' '}Left
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
@@ -259,14 +250,14 @@ export default function Nfts() {
             </div>
           </div>
 
-          <div onScroll={() => nftContentScrolled()} ref={nftContentRef} className={"h-screen-without-navbar text-white overflow-y-auto overflow-x-hidden" + (isHuge ? " collection-body-width" : " w-screen")}>
+          <div ref={nftContentRef} className={"text-white overflow-x-hidden" + (isHuge ? " collection-body-width" : " w-screen")}>
             <About />
             <Artist />
             <PerksAndUtility />
             <Timeline time={
               raffleState === RaffleState.Waiting ?
-                `${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}` :
-                `${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`
+                `${raffleStartTimeLeft.days < 10 ? ('0' + raffleStartTimeLeft.days) : raffleStartTimeLeft.days }:${raffleStartTimeLeft.hours < 10 ? ('0' + raffleStartTimeLeft.hours) : raffleStartTimeLeft.hours }:${raffleStartTimeLeft.minutes < 10 ? ('0' + raffleStartTimeLeft.minutes) : raffleStartTimeLeft.minutes }:${raffleStartTimeLeft.seconds < 10 ? ('0' + raffleStartTimeLeft.seconds) : raffleStartTimeLeft.seconds }` :
+                `${raffleEndTimeLeft.days < 10 ? ('0' + raffleEndTimeLeft.days) : raffleEndTimeLeft.days }:${raffleEndTimeLeft.hours < 10 ? ('0' + raffleEndTimeLeft.hours) : raffleEndTimeLeft.hours }:${raffleEndTimeLeft.minutes < 10 ? ('0' + raffleEndTimeLeft.minutes) : raffleEndTimeLeft.minutes }:${raffleEndTimeLeft.seconds < 10 ? ('0' + raffleEndTimeLeft.seconds) : raffleEndTimeLeft.seconds }`
             } />
             <Enhancements />
             {/*<Gallery />*/}
@@ -302,14 +293,14 @@ export default function Nfts() {
 
             {raffleState === RaffleState.Waiting && (
               <p className="font-medium text-center">
-                <span className="text-30 font-bold">{`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}</span>{' '}
+                <span className="text-30 font-bold">{`${raffleStartTimeLeft.days < 10 ? ('0' + raffleStartTimeLeft.days) : raffleStartTimeLeft.days }:${raffleStartTimeLeft.hours < 10 ? ('0' + raffleStartTimeLeft.hours) : raffleStartTimeLeft.hours }:${raffleStartTimeLeft.minutes < 10 ? ('0' + raffleStartTimeLeft.minutes) : raffleStartTimeLeft.minutes }:${raffleStartTimeLeft.seconds < 10 ? ('0' + raffleStartTimeLeft.seconds) : raffleStartTimeLeft.seconds }`}</span>{' '}
                 Left
               </p>
             )}
 
             {raffleState === RaffleState.Live && (
               <p className="font-medium text-center">
-                <span className="text-30 font-bold">{`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}</span>{' '}
+                <span className="text-30 font-bold">{`${raffleEndTimeLeft.days < 10 ? ('0' + raffleEndTimeLeft.days) : raffleEndTimeLeft.days }:${raffleEndTimeLeft.hours < 10 ? ('0' + raffleEndTimeLeft.hours) : raffleEndTimeLeft.hours }:${raffleEndTimeLeft.minutes < 10 ? ('0' + raffleEndTimeLeft.minutes) : raffleEndTimeLeft.minutes }:${raffleEndTimeLeft.seconds < 10 ? ('0' + raffleEndTimeLeft.seconds) : raffleEndTimeLeft.seconds }`}</span>{' '}
                 Left
               </p>
             )}

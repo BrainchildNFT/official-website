@@ -423,6 +423,10 @@ html {
   height: calc(100vh - 105px);
 }
 
+.h-screen-without-topbar {
+  height: calc(100vh - 65px);
+}
+
 .collection-body-width {
   width: calc(100vw - 400px);
 }

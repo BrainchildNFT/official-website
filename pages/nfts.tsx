@@ -180,7 +180,7 @@ export default function Nfts() {
       </Head>
       <Layout>
         <div className="relative flex flex-col xl:flex-row" ref={mainBody}>
-          <div className={"sm:min-w-400 overflow-x-auto sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-10 " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5') + (isTop ? ' h-screen-without-navbar' : ' h-screen-without-topbar')}>
+          <div className={"sm:min-w-400 overflow-x-auto sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5') + (isTop ? ' h-screen-without-navbar' : ' h-screen-without-topbar')}>
             <div className={"grow py-10 sm:py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
               <a onClick={() => dispatch(sidebarUpdate())} className={"cursor-pointer text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="no-underline hidden xl:block">COLLECTIONS</span></a>
               <div className="mr-40 xl:mr-0 xl:mt-50 flex items-center">

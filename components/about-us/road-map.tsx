@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function RoadMap() {
   const [currentRoadMap, setCurrentRoadMap] = useState(0);
@@ -8,6 +9,7 @@ export default function RoadMap() {
 
   const roadMapContentRef = useRef<HTMLDivElement>(null);
   const roadMapRef = useRef<HTMLDivElement>(null);
+  const router = useRouter()
   const roadMapPeriodNames = [
     {
       year: 2021,
@@ -30,6 +32,10 @@ export default function RoadMap() {
       name: 'BEYOND',
     },
   ];
+
+  const goToNfts = () => {
+    router.push('/nfts')
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,7 +104,7 @@ export default function RoadMap() {
                   </li>
                   <li className="mb-40">
                     Smart Contract Development
-                    <p className="text-17 opacity-50">Link to github</p>
+                    <p className="text-17 opacity-50">Link to GitHub coming soon...</p>
                   </li>
                   <li className="mb-40">
                     Teaser Website release
@@ -109,7 +115,7 @@ export default function RoadMap() {
                   <li className="mb-40">
                     First Artist Collaboration
                     <div className="flex">
-                      <div className="flex items-center mt-10 p-25 bg-white-10">
+                      <div className="flex items-center mt-10 p-25 bg-white-10 cursor-pointer" onClick={() => goToNfts()}>
                         <div className="pr-10">
                           <Image src="/assets/images/about-us/light-star-in-rhombus.png" layout="intrinsic" width={27} height={30} alt="Star In Square" />
                         </div>

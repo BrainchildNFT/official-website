@@ -21,7 +21,7 @@ export const faqs = {
     {
       name: 'What is EthClock?',
       content:
-        'EthClock (aka Ethereum-clock) is our first brainchildNFT consisting of 5,000 luxurious clocks! ',
+        'EthClock (aka Ethereum-Clock) is our first brainchildNFT consisting of 5,000 luxurious clocks! ',
     },
     {
       name: 'When do EthClocks go on sale?',

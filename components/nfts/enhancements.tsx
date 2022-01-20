@@ -12,12 +12,12 @@ export default function Enhancements() {
 
   return (
     <>
-      <div className="p-40 md:p-100">
+      <div className="p-15 sm:p-40 lg:p-100">
         <p className="p-10 text-danger text-16 font-semibold">ENHANCEMENTS</p>
         <div className="flex flex-col md:flex-row mt-10">
           <div className="md:w-1/2">
             <p className="text-18 text-primary font-light p-10">
-              As an owner of Ethclock, you have full control over the destiny of
+              As an owner of EthClock, you have full control over the destiny of
               your NFT. Set yourself apart and rise above the the others! Will
               you take the chance to upgrade it? Unlocking new looks and
               features while improving its rarity... that is if you succeed...{' '}
@@ -25,10 +25,10 @@ export default function Enhancements() {
           </div>
         </div>
 
-        <div className="mt-100 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-40 sm:mt-100 flex flex-col md:flex-row justify-between items-center">
           <p
             onClick={() => setOpenEnhancement(!openEnhancement)}
-            className="cursor-pointer p-10 text-40 text-primary break-words"
+            className="cursor-pointer p-10 text-40 text-primary text-center break-words"
             style={{ fontFamily: 'Future Classic' }}
           >
             Enhancement Outcomes
@@ -129,18 +129,18 @@ export default function Enhancements() {
             </div>
           </div>
           <ScrollContainer vertical={false} horizontal={true} className="w-full">
-            <div className="w-full">
+            <div className="w-full min-w-1000 md:min-w-0">
               <Image
                 src="/assets/images/landing-page/outcome-table.svg"
-                layout="intrinsic"
+                layout="responsive"
                 width="1080"
                 height="560"
                 alt="Outcome Table"
               />
             </div>
           </ScrollContainer>
-          <div className="mt-100 block sm:flex">
-            <div className="w-full sm:w-500 sticky top-100 self-start">
+          <div className="mt-40 sm:mt-100 block sm:flex">
+            <div className="w-full sm:w-500 md:sticky md:top-100 self-start flex justify-center">
               <Image
                 src="/assets/images/nfts/ethclock01.png"
                 layout="intrinsic"
@@ -176,7 +176,7 @@ export default function Enhancements() {
                 </div>
                 <div className={"border-gradient-dark-linner mr-10 " + (openLevel ? "border-r" : "")}>
                   <div className={"text-[#353637] p-10 text-16 " + (openLevel ? "block" : "hidden")}>
-                    Upgrade your Ethclock to unlock new designs, environment
+                    Upgrade your EthClock to unlock new designs, environment
                     animations and increase rarity. Beware of the risk with
                     different enhancement outcomes! Improved designs at every level.
                     Unlock environment animation at level 4. Significant upgrade at
@@ -242,7 +242,7 @@ export default function Enhancements() {
                 </div>
                 <div className={"border-gradient-dark-linner mr-10 " + (openEnvironment ? "border-r" : "")}>
                   <div className={"text-[#353637] p-10 text-16 " + (openEnvironment ? "block" : "hidden")}>
-                    Where did your Ethclock come from in the metaverse?
+                    Where did your EthClock come from in the metaverse?
                   </div>
                   <div className={"grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-10 ml-10 mb-10 mr-30 " + (openEnvironment ? "block" : "hidden")}>
                     <div className="bg-[url('/assets/images/nfts/enhancements/question-mark-with-stars.png')] bg-cover bg-no-repeat bg-center">

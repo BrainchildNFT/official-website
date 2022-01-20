@@ -180,8 +180,8 @@ export default function Nfts() {
       </Head>
       <Layout>
         <div className="relative flex flex-col xl:flex-row" ref={mainBody}>
-          <div className={"sm:min-w-400 overflow-x-auto sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10' : 'bg-black-5') + (isTop ? ' h-screen-without-navbar' : ' h-screen-without-topbar')}>
-            <div className={"grow py-10 sm:py-25 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col whitespace-nowrap " + textColor}>
+          <div className={"sm:min-w-400 sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 " + (isTop ? 'h-screen-without-navbar' : 'h-screen-without-topbar') + (themeStatus === ThemeType.DarkMode ? ' dark-background-image' : ' light-background-image')}>
+            <div className={"grow pt-10 sm:pt-20 pl-40 pr-0 xl:p-40 flex flex-row xl:flex-col overflow-x-auto overflow-y-hidden whitespace-nowrap " + (themeStatus === ThemeType.DarkMode ? 'bg-white-10 ' : 'bg-black-5 ') + textColor}>
               <a onClick={() => dispatch(sidebarUpdate())} className={"cursor-pointer text-18 font-bold no-underline flex items-center " + textColor}><Icon className="rotate-180 mr-25" name='arrow_right' color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={21} /><span className="no-underline hidden xl:block">COLLECTIONS</span></a>
               <div className="mr-40 xl:mr-0 xl:mt-50 flex items-center">
                 <div className="pr-5 flex items-center min-w-40">
@@ -198,7 +198,7 @@ export default function Nfts() {
                 </div>))}
               </div>
               <div className="flex">
-                <div className={"rounded-full px-20 py-5 sm:py-10 cursor-pointer " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
+                <div className={"rounded-full px-20 py-5 sm:py-10 cursor-pointer max-h-50 " + (themeStatus === ThemeType.DarkMode ? "bg-white" : "bg-primary")}>
                   <span className={"font-Subjectivity text-18 font-bold " + (themeStatus === ThemeType.DarkMode ? "text-primary" : "text-white")}>OPENSEA <Icon className="ml-10" name='opensea' color={themeStatus === ThemeType.DarkMode ? "primary" : "white"} size={16} /></span>
                 </div>
               </div>

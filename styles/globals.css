@@ -296,14 +296,117 @@ html {
   );
 }
 
-.artists-background {
-  background: center no-repeat url(/assets/images/nfts/artists.mp4);
-  background-size: cover;
-}
-
 .about-us-members-background {
   background: top center no-repeat url(/assets/images/about-us/three-faces.png);
   background-size: cover;
+}
+
+.enhancement-item-background {
+  background: radial-gradient(
+    71.11% 71.11% at 39.95% 83.78%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.0790551) 51.63%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border: 1px solid;
+  border-image: url('#') 1 round;
+  border-image-source: linear-gradient(
+    270.16deg,
+    rgba(0, 0, 0, 0.4) 1.04%,
+    rgba(0, 0, 0, 0) 48.58%,
+    rgba(0, 0, 0, 0.4) 100.31%
+  );
+}
+
+.enhancement-item-background {
+  background: radial-gradient(
+    71.11% 71.11% at 39.95% 83.78%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.0790551) 51.63%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border: 1px solid;
+  border-image: url('#') 1 round;
+  border-image-source: linear-gradient(
+    270.16deg,
+    rgba(0, 0, 0, 0.4) 1.04%,
+    rgba(0, 0, 0, 0) 48.58%,
+    rgba(0, 0, 0, 0.4) 100.31%
+  );
+}
+
+.level-item {
+  border: 1px solid #af5f5f;
+
+  background: radial-gradient(
+    61.54% 112.43% at 22.76% 29.67%,
+    rgba(175, 95, 95, 0) 0%,
+    rgba(175, 95, 95, 0.4) 100%
+  );
+  border-radius: 20px;
+}
+
+.expanded-item {
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    225.01deg,
+    rgba(0, 0, 0, 0.4) 2.38%,
+    rgba(0, 0, 0, 0) 47.87%,
+    rgba(0, 0, 0, 0.4) 97.35%
+  );
+
+  background: radial-gradient(
+    71.11% 71.11% at 39.95% 83.78%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.0790551) 51.63%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.expanded-item.active {
+  border: 1px solid #af5f5f;
+  background: radial-gradient(
+    67.75% 67.75% at 30.16% 77.78%,
+    rgba(175, 95, 95, 0.012) 0%,
+    rgba(175, 95, 95, 0.6) 100%
+  );
+}
+
+.artists-background {
+  background: center no-repeat url(/assets/images/collections/artists.gif);
+  background-size: cover;
+}
+
+.expanded-item {
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    225.01deg,
+    rgba(0, 0, 0, 0.4) 2.38%,
+    rgba(0, 0, 0, 0) 47.87%,
+    rgba(0, 0, 0, 0.4) 97.35%
+  );
+
+  background: radial-gradient(
+    71.11% 71.11% at 39.95% 83.78%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.0790551) 51.63%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.expanded-item.active {
+  border: 1px solid #af5f5f;
+  background: radial-gradient(
+    67.75% 67.75% at 30.16% 77.78%,
+    rgba(175, 95, 95, 0.012) 0%,
+    rgba(175, 95, 95, 0.6) 100%
+  );
+}
+
+.transy20 {
+  --tw-translate-y: -10%;
 }
 
 /* swiper */
@@ -318,6 +421,10 @@ html {
 /* screen */
 .h-screen-without-navbar {
   height: calc(100vh - 105px);
+}
+
+.h-screen-without-topbar {
+  height: calc(100vh - 65px);
 }
 
 .collection-body-width {

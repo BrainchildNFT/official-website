@@ -89,7 +89,7 @@ export function Footer() {
               <li className="py-5">
                 <Link href="https://opensea.io">
                   <a target="_blank" rel="noreferrer">
-                    Opensea
+                    OpenSea
                   </a>
                 </Link>
               </li>

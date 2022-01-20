@@ -10,7 +10,12 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import SwiperCore, { Scrollbar } from 'swiper'
 import { Layout } from '../components/layout/layout'
-import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing'
+import {
+  faq_display_limit,
+  faqs,
+  nftList,
+  RaffleState,
+} from '../core/data/landing'
 import useGAService from '../core/app-services/ga-service'
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
 import Icon from '../components/ui-kit/icon'
@@ -115,6 +120,7 @@ export default function Home() {
             window.innerHeight -
             (window.innerHeight - prevChairHeight) * progress +
             'px'
+          // chairImageRef.current.style.marginTop = `-${300 * progress}px`
         } else {
           chairImageRef.current.style.width = '100%'
           chairImageRef.current.style.height = '100%'
@@ -126,23 +132,49 @@ export default function Home() {
   const router = useRouter()
 
   interface TimeLeft {
-    days: number
-    hours: number
-    minutes: number
-    seconds: number
+    days: string
+    hours: string
+    minutes: string
+    seconds: string
   }
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
       +new Date(Date.UTC(2022, 0, 24 + flag, 0, 0, 0)) - +new Date()
-    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 }
+    let timeLeft: TimeLeft = {
+      days: '00',
+      hours: '00',
+      minutes: '00',
+      seconds: '00',
+    }
 
     if (difference > 0) {
       timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)).toLocaleString(
+          'en-US',
+          {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          }
+        ),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24).toLocaleString(
+          'en-US',
+          {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          }
+        ),
+        minutes: Math.floor((difference / 1000 / 60) % 60).toLocaleString(
+          'en-US',
+          {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          }
+        ),
+        seconds: Math.floor((difference / 1000) % 60).toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        }),
       }
     }
 
@@ -186,9 +218,9 @@ export default function Home() {
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
-        <section className="relative dark-background-image h-screen-without-navbar overflow-hidden">
+        <section className="dark-background-image overflow-hidden">
           <div
-            className="relative h-screen-without-navbar"
+            className="relative"
             onMouseMove={(event) => {
               if (exploreImageRef.current) {
                 exploreImageRef.current.style.top =
@@ -209,62 +241,21 @@ export default function Home() {
                 alt="Explore"
               />
             </div>
-            <div className="px-30 flex flex-col xl:flex-row items-end xl:items-center justify-center text-white text-20 sm:text-28 text-right xl:text-center font-light pt-35 xl:pt-125">
-              <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
-                <span
-                  className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
-                  5000
-                </span>{' '}
-                Mints
-              </p>
-              <div className="hidden xl:block bg-white w-10 h-10 mx-30 rounded-full" />
-              <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
-                Upto{' '}
-                <span
-                  className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
-                  Level 10
-                </span>{' '}
-                Enhancement
-              </p>
-              <div className="hidden xl:block bg-white w-10 h-10 mx-30 rounded-full" />
-              <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:w-2/3 xl:w-fit">
-                Perpetually{' '}
-                <span
-                  className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
-                  Redeemable
-                </span>
-              </p>
-              <div className="hidden xl:block bg-white w-10 h-10 mx-30 rounded-full" />
-              <p className="pb-20 sm:py-30 xl:py-0 border-0 sm:border-b xl:border-0 border-gradient-light sm:hidden xl:block">
-                Mint Price{' '}
-                <span
-                  className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
-                >
-                  0.12 Eth
-                </span>
-              </p>
-            </div>
 
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
-              <div className="absolute w-full sm:w-3/5 flex items-center justify-center -mt-50 sm:-mt-100">
-                <Image
-                  className=""
-                  src="/assets/images/landing-page/eth-clock-design.png"
-                  layout="intrinsic"
-                  width={1400}
-                  height={1400}
-                  alt="Ethereum Clock Design"
-                />
+              <div className="absolute w-full sm:w-3/5 flex items-center justify-center transform -translate-y-1/4 transy20">
+                <div className="w-full flex justify-center">
+                  <Image
+                    src="/assets/images/landing-page/eth-clock-design.png"
+                    layout="intrinsic"
+                    width={1400}
+                    height={1400}
+                    alt="Ethereum Clock Design"
+                  />
+                </div>
               </div>
               <div
-                className="w-full sm:w-2/3 mx-auto"
+                className="w-full sm:w-2/3 mx-auto flex justify-center"
                 style={{ fontFamily: 'Future Classic' }}
               >
                 <Image
@@ -276,6 +267,48 @@ export default function Home() {
                   alt="Ethereum Clock Letter"
                 />
               </div>
+            </div>
+            <div className="px-30 lg:px-100 flex flex-col sm:flex-row sm:flex-wrap items-end sm:items-center justify-center text-white text-20 sm:text-28 text-right xl:text-center font-light py-35 xl:py-100">
+              <p className="pb-20 sm:py-30 xl:py-0">
+                <span
+                  className="font-bold italic"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
+                  5000
+                </span>{' '}
+                Mints
+              </p>
+              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full" />
+              <p className="pb-20 sm:py-30 xl:py-0">
+                Up to{' '}
+                <span
+                  className="font-bold italic"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
+                  Level 10
+                </span>{' '}
+                Enhancement
+              </p>
+              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full" />
+              <p className="pb-20 sm:py-30 xl:py-0">
+                Perpetually{' '}
+                <span
+                  className="font-bold italic"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
+                  Redeemable
+                </span>
+              </p>
+              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full" />
+              <p className="pb-20 sm:py-30 xl:py-0">
+                Mint Price{' '}
+                <span
+                  className="font-bold italic"
+                  style={{ fontFamily: 'Subjectivity Serif' }}
+                >
+                  0.12 Eth
+                </span>
+              </p>
             </div>
           </div>
 
@@ -289,12 +322,12 @@ export default function Home() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  Raffle begins on 24 Jan, 2022 at 00:00 AM UTC
+                  Presale raffle begins on 24 Jan, 2022 at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
-                  Raffle Results{' '}
+                  Presale raffle Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> end on 25
                   Jan, 2022 at 00:00 AM UTC
                 </p>
@@ -377,7 +410,7 @@ export default function Home() {
                 <br />
                 Well, Our NFTs are redeemable forever... Yes,
               </p>
-              <p className="text-right font-Voyage text-80">Forever.</p>
+              <p className="text-right font-Future text-80">Forever.</p>
             </div> */}
           </section>
 
@@ -398,8 +431,8 @@ export default function Home() {
               <div className="w-full h-screen flex items-center justify-center sticky top-0">
                 <img
                   ref={chairImageRef}
-                  className="object-cover object-center w-500 h-700"
-                  src="/assets/images/landing-page/cartain-with-chair.png"
+                  className="object-cover w-500 h-700 object-top"
+                  src="/assets/images/landing-page/cartain-with-chair.jpg"
                   alt="Cartain With Chair"
                 />
               </div>
@@ -477,7 +510,7 @@ export default function Home() {
                     </div>
                     <img
                       className="w-full"
-                      src="/assets/images/landing-page/bg-enhance-item.svg"
+                      src="/assets/images/landing-page/bg-enhance-item.png"
                     />
                   </div>
                 </SwiperSlide>
@@ -497,7 +530,7 @@ export default function Home() {
                     </div>
                     <img
                       className="w-full absolute bottom-0 left-0"
-                      src="/assets/images/landing-page/bg-redeem-item.svg"
+                      src="/assets/images/landing-page/bg-redeem-item.png"
                     />
                   </div>
                 </SwiperSlide>
@@ -556,7 +589,7 @@ export default function Home() {
                         />
                       </div>
                       <div className="lg:max-w-350 lg:-ml-100 mt-50 relative z-50">
-                        <span className="font-Voyage text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Voyage">
+                        <span className="font-Future text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Future">
                           {nft.name}
                         </span>
                         <p className="mt-20 p-20 border border-gradient-dark-linner">
@@ -659,7 +692,7 @@ export default function Home() {
         {/*FAQs*/}
         <section className="relative dark-background-image">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
-            <div className="lg:w-1/3 flex lg:justify-center lg:items-center text-white">
+            <div className="lg:w-1/3 flex lg:justify-center text-white">
               <p
                 className="lg:hidden px-30 text-80 lg:vertical-letter"
                 style={{ fontFamily: 'Future Classic' }}
@@ -675,14 +708,13 @@ export default function Home() {
                 </p>
               )}
               {currentFaqIndex !== -1 && (
-                <div className="hidden lg:block faq-content-background w-full h-full text-white text-24 font-semibold p-30 sm:pl-90 transition-all relative">
-                  <div
-                    className="animate-fadeIn absolute"
-                    style={{
-                      top: `${135 * currentFaqIndex + 40}px`,
-                      width: 'calc(100% - 120px)',
-                    }}
-                  >
+                <div
+                  className="hidden lg:block faq-content-background w-full h-max text-white text-24 font-semibold p-30 sm:p-50 transition-all"
+                  style={{
+                    marginTop: `${137 * currentFaqIndex}px`,
+                  }}
+                >
+                  <div className="animate-fadeIn">
                     {faqData[currentFaqIndex].content}
                   </div>
                 </div>

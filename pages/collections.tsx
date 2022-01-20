@@ -44,7 +44,7 @@ export default function Collections() {
 
           <div onClick={() => goToNfts()} className="grow p-100 flex text-white relative overflow-hidden min-h-600 xl:min-h-full">
             <div className="hidden lg:block lg:w-1/2 xl:pr-45 pb-50 z-10">
-              <p className="text-60 font-Voyage leading-tight">Eleifend sed enim vulputate nec, scelerisque. </p>
+              <p className="text-60 font-Future leading-tight">Eleifend sed enim vulputate nec, scelerisque. </p>
               <p className="mt-40 font-light leading-tight">An NFT collection of 5000 Ethereum Clocks with enhancements available upto level 10. Penatibus egestas arcu eget eget ultrices eget et. Vitae, interdum nunc duis justo. Integer tincidunt feugiat sit diam.</p>
               <p className="mt-40 p-20 font-medium border-0 border-b border-gradient-light">500 Mints</p>
               <p className="mt-10 p-20 font-medium border-0 border-b border-gradient-light">Level 1-10 Enhancements available</p>

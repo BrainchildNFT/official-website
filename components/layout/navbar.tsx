@@ -7,10 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Icon from '../ui-kit/icon'
 import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
+import {
+  faDiscord,
+  faInstagram,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThemeType } from '../../core/data/base'
+import { themeUpdate } from '../../core/actions/theme-update'
+import { sidebarUpdate } from '../../core/actions/sidebar-update'
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -19,19 +25,20 @@ export function Navbar() {
   )
   const [textColor, setTextColor] = useState('text-white')
   const [borderColor, setBorderColor] = useState('border-gradient-light')
-  const [collectionSidebarOpen, setCollectionSideBarOpen] = useState(false);
 
   const themeStatus = useSelector((state: any) => state.ThemeStatus)
+  const sidebarStatus = useSelector((state: any) => state.SidebarStatus)
   const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const collectionsClicked = () => {
-    setCollectionSideBarOpen(!collectionSidebarOpen);
-  };
+    dispatch(sidebarUpdate())
+  }
 
   const goToNfts = () => {
-    setCollectionSideBarOpen(false);
-    router.push('/nfts');
+    dispatch(sidebarUpdate())
+    router.push('/nfts')
   }
 
   useEffect(() => {
@@ -94,14 +101,20 @@ export function Navbar() {
                 size={27}
               />
             )}
-            {navbarOpen && <Icon name="close" color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} size={25} />}
+            {navbarOpen && (
+              <Icon
+                name="close"
+                color={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'}
+                size={25}
+              />
+            )}
           </button>
           <div
             className={
               'absolute xl:relative duration-300 transition-all xl:transition-none h-screen xl:h-auto xl:flex flex-col xl:flex-row xl:flex-grow w-full md:w-365 xl:bg-opacity-0 top-0 justify-start xl:justify-between items-start xl:items-center' +
               (navbarOpen
-                ? ' left-0 top-[64px] ease-out-in light-background-image overflow-y-scroll'
-                : ' top-[100vh] left-0 xl:top-0 ease-in-out')
+                ? ' left-0 top-[64px] block ease-out-in light-background-image overflow-y-scroll'
+                : ' top-[100vh] hidden left-0 xl:top-0 ease-in-out')
             }
             style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
           >
@@ -149,9 +162,7 @@ export function Navbar() {
                   onClick={() => collectionsClicked()}
                   className={
                     'cursor-pointer relative xl:px-25 xl:py-10 ' +
-                    (router.pathname == '/collections'
-                      ? 'text-[#AF5F5F]'
-                      : '')
+                    (router.pathname == '/collections' ? 'text-[#AF5F5F]' : '')
                   }
                   style={{ fontFamily: 'Subjectivity Serif' }}
                 >
@@ -187,7 +198,7 @@ export function Navbar() {
                     }
                     style={{ fontFamily: 'Subjectivity Serif' }}
                   >
-                    Opensea
+                    OpenSea
                   </a>
                 </Link>
               </li>
@@ -316,12 +327,8 @@ export function Navbar() {
               </li>
               <div className="block xl:hidden p-20">
                 <div className="flex items-center mt-10">
-                  <div className="w-50">
-                    <FontAwesomeIcon
-                      icon={faDiscord}
-                      size="1x"
-                      className="transform scale-75"
-                    />
+                  <div className="w-20 flex">
+                    <Icon name="discord" color="#353637" size={20} />
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -334,13 +341,9 @@ export function Navbar() {
                     <Link href="https://discord.gg/7S55rjvxm3">Discord</Link>
                   </span>
                 </div>
-                <div className="flex items-center mt-10">
-                  <div className="w-50">
-                    <FontAwesomeIcon
-                      icon={faFileAlt}
-                      size="1x"
-                      className="transform scale-75"
-                    />
+                <div className="flex items-center mt-30">
+                  <div className="w-20 flex">
+                    <Icon name="file_text" color="#353637" size={20} />
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -355,13 +358,9 @@ export function Navbar() {
                     </Link>
                   </span>
                 </div>
-                <div className="flex items-center mt-10">
-                  <div className="w-50">
-                    <FontAwesomeIcon
-                      icon={faInstagram}
-                      size="1x"
-                      className="transform scale-75"
-                    />
+                <div className="flex items-center mt-30">
+                  <div className="w-20 flex">
+                    <Icon name="instagram" color="#353637" size={20} />
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -376,13 +375,9 @@ export function Navbar() {
                     </Link>
                   </span>
                 </div>
-                <div className="flex items-center mt-10">
-                  <div className="w-50">
-                    <FontAwesomeIcon
-                      icon={faTwitter}
-                      size="1x"
-                      className="transform scale-75"
-                    />
+                <div className="flex items-center mt-30">
+                  <div className="w-20 flex">
+                    <Icon name="twitter" color="#353637" size={20} />
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -407,8 +402,9 @@ export function Navbar() {
       </nav>
       <div className="relative">
         <div
-          className={ 'absolute top-0 h-screen w-full sm:w-400 z-[1000] transition-all duration-500 dark-background-image' +
-            (!collectionSidebarOpen
+          className={
+            'absolute top-0 h-screen w-full sm:w-400 z-[1000] transition-all duration-500 dark-background-image' +
+            (!sidebarStatus
               ? ' ease-in-out -left-800 sm:-left-400'
               : ' ease-out-in left-0')
           }
@@ -420,13 +416,25 @@ export function Navbar() {
               </div>
             </div>
             <div>
-              <div onClick={() => goToNfts()} className="cursor-pointer flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light">
-                <Icon className="pr-5" name="starWithRhombus" size={40} color="white" />
-                <p className="text-white text-30 font-bold font-Subjectivity">ethereum clock</p>
+              <div
+                onClick={() => goToNfts()}
+                className="cursor-pointer flex items-center mt-40 mx-40 pb-30 border-b border-gradient-light"
+              >
+                <Icon
+                  className="pr-5"
+                  name="starWithRhombus"
+                  size={40}
+                  color="white"
+                />
+                <p className="text-white text-30 font-bold font-Subjectivity">
+                  ethereum clock
+                </p>
               </div>
 
               <div className="mt-20 mx-40">
-                <p className="text-white py-10 opacity-30 text-18 font-semibold"><span className="mr-20">+</span>...more coming soon!</p>
+                <p className="text-white py-10 opacity-30 text-18 font-semibold">
+                  <span className="mr-20">+</span>...more coming soon!
+                </p>
               </div>
             </div>
           </div>

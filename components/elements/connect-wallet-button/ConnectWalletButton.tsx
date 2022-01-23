@@ -1,12 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { ThemeType } from '../../../core/data/base';
+import { AppContext } from '../../context/app-context';
 
 const ConnectWalletButton = () => {
   const themeStatus = useSelector((state: any)  => state.ThemeStatus);
 
+  const [metaMaskAccount, setMetaMaskAccount] = useState<string>("");
+  const {wallet, lang, updateWallet} = useContext(AppContext);
+
+  const connectWallet = async () => {
+    if (typeof (window as any).ethereum !== 'undefined') {
+      const ethereum = (window as any).ethereum;
+      console.log('MetaMask is installed!');
+      if (metaMaskAccount) {
+        updateWallet('');
+      } else {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        updateWallet(account);
+      }
+    } else {
+      console.log('MetaMask is no installed');
+    }
+  }
+  useEffect(() => {
+    setMetaMaskAccount(wallet);
+  }, [wallet]);
+
   return (
-    <div className="group relative flex items-center">
+    <div className="group relative flex items-center cursor-pointer" onClick={() => connectWallet()}>
       <div className="absolute h-full w-full overflow-y-clip">
         <svg
           className="transform rotate-[30deg] scale-y-150 group-hover:scale-y-100 scale-x-90 group-hover:scale-x-100 group-hover:rotate-0 transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-5"
@@ -62,16 +85,17 @@ const ConnectWalletButton = () => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          className="fill-transparent group-hover:stroke-pink-gray group-hover:fill-pink-gray transition-all duration-200"
+          className={"group-hover:stroke-pink-gray group-hover:fill-pink-gray transition-all duration-200 " + (metaMaskAccount ? '' : 'fill-transparent')}
           d="M37.1166 31.649L11.761 38.443C10.8003 38.7004 9.77676 38.5657 8.91544 38.0684C8.05413 37.5711 7.42563 36.752 7.16822 35.7914L2.80065 19.4914C2.54324 18.5307 2.67799 17.5071 3.17528 16.6458C3.67256 15.7845 4.49163 15.156 5.4523 14.8986L30.8079 8.10457C31.7685 7.84716 32.7921 7.98192 33.6534 8.4792C34.5147 8.97648 35.1432 9.79555 35.4006 10.7562L39.7682 27.0562C40.0256 28.0169 39.8909 29.0405 39.3936 29.9018C38.8963 30.7631 38.0772 31.3916 37.1166 31.649Z"
-          stroke="gray"
+          stroke={metaMaskAccount ? 'white' : 'gray'}
           strokeWidth="0.75"
+          fill={metaMaskAccount ? 'green' : ''}
         />
         <path
           className="group-hover:stroke-white group-hover:fill-white"
           d="M29.677 21.9952C29.4368 22.0596 29.1809 22.0259 28.9656 21.9016C28.7503 21.7772 28.5931 21.5725 28.5288 21.3323C28.4644 21.0921 28.4981 20.8362 28.6224 20.6209C28.7468 20.4056 28.9515 20.2485 29.1917 20.1841C29.4319 20.1198 29.6878 20.1535 29.9031 20.2778C30.1184 20.4021 30.2755 20.6069 30.3399 20.847C30.4042 21.0872 30.3705 21.3431 30.2462 21.5584C30.1219 21.7737 29.9171 21.9309 29.677 21.9952Z"
           fill="gray"
-          stroke="gray"
+          stroke={metaMaskAccount ? 'white' : 'gray'}
           strokeWidth="0.75"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -79,15 +103,16 @@ const ConnectWalletButton = () => {
         <path
           className="group-hover:stroke-pink-gray transition-all duration-500"
           d="M28.9965 8.58982L28.3186 6.0597C28.1697 5.50464 27.8952 4.99123 27.5164 4.55911C27.1375 4.12699 26.6644 3.78772 26.1336 3.56751C25.6028 3.3473 25.0285 3.25204 24.455 3.28908C23.8815 3.32612 23.3242 3.49447 22.8261 3.78113L4.32721 14.4313C3.61086 14.8435 3.05078 15.4809 2.73405 16.2444C2.41732 17.0078 2.36167 17.8545 2.57577 18.6528L2.80046 19.4913"
-          stroke="gray"
+          stroke={metaMaskAccount ? 'white' : 'gray'}
           strokeWidth="0.75"
         />
       </svg>
-      <button className="hidden group-hover:block px-5 text-18 font-bold w-150">
-        Coming soon
+      <button className="hidden px-5 text-18 font-bold w-150 group-hover:block">
+        {metaMaskAccount ? 'Disconnect' : ''}
       </button>
-      <button className="block group-hover:hidden px-5 text-18 font-bold w-150">
-        Connect Wallet
+      <button className="flex items-center group-hover:hidden px-5 text-18 font-bold w-150 z-10">
+        <p className={"w-10 h-10 border text-white bg-success rounded-full mr-5 " + (metaMaskAccount ? 'block' : 'hidden')}></p>
+        <p>{metaMaskAccount ? (metaMaskAccount.substring(0, 4) + '...' + metaMaskAccount.slice(-4)) : 'Connect Wallet'}</p>
       </button>
     </div>
   )

@@ -9,6 +9,7 @@ import ErrorPage from '../components/error-page'
 import GoogleAds from '../components/3rd-party/google-ads'
 import useGAService from '../core/app-services/ga-service'
 import reducers from '../core/reducers';
+import { AppProvider } from '../components/context/app-context';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -30,10 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Provider store={store}>
-        <Component {...pageProps} />
-        <GoogleAds />
-      </Provider>
+      <AppProvider>
+        <Provider store={store}>
+          <Component {...pageProps} />
+          <GoogleAds />
+        </Provider>
+      </AppProvider>
     </>
   )
 }

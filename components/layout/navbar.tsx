@@ -3,19 +3,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Icon from '../ui-kit/icon'
 import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import {
-  faDiscord,
-  faInstagram,
-  faTwitter,
-} from '@fortawesome/free-brands-svg-icons'
-import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
 import { ThemeType } from '../../core/data/base'
-import { themeUpdate } from '../../core/actions/theme-update'
 import { sidebarUpdate } from '../../core/actions/sidebar-update'
 
 export function Navbar() {
@@ -118,37 +113,6 @@ export function Navbar() {
             }
             style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
           >
-            {/* <div className="flex w-full xl:hidden justify-between py-30 dark-background-image h-65 px-20 xl:px-0 sticky top-0 z-[100]">
-              <Link href="/">
-                <a className="flex xl:hidden items-center">
-                  <Image
-                    className="cursor-pointer"
-                    src="/assets/images/logo/logo-light-large.svg"
-                    width={isMobile ? 180 : 201}
-                    height={isMobile ? 55 : 63}
-                    alt="Brainchild logo"
-                  />
-                </a>
-              </Link>
-              <button
-                className="px-10 flex items-center"
-                onClick={() => setNavbarOpen(false)}
-              >
-                <Icon name="close" color="white" size={25} />
-              </button>
-            </div> */}
-            {/* <div className="w-full xl:hidden px-10 py-20">
-              <div className="flex justify-between border border-gradient-dark rounded-md p-15">
-                <input
-                  type="search"
-                  className="outline-none bg-transparent text-primary w-10/12"
-                  placeholder="Search"
-                />
-                <button className="flex items-center outline-none">
-                  <Icon name="search" color="primary" size={18} />
-                </button>
-              </div>
-            </div> */}
             <ul
               className={
                 'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 ' +

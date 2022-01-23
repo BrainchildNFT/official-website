@@ -12,7 +12,7 @@ const ConnectWalletButton = () => {
   const connectWallet = async () => {
     if (typeof (window as any).ethereum !== 'undefined') {
       const ethereum = (window as any).ethereum;
-      console.log('MetaMask is installed!');
+      console.log('MetaMask Extension is installed!');
       if (metaMaskAccount) {
         updateWallet('');
       } else {
@@ -21,7 +21,7 @@ const ConnectWalletButton = () => {
         updateWallet(account);
       }
     } else {
-      console.log('MetaMask is no installed');
+      console.log('MetaMask Extension is no installed');
     }
   }
   useEffect(() => {

@@ -37,6 +37,10 @@ export default function RoadMap() {
     router.push('/nfts')
   }
 
+  const goToGithub = () => {
+    window.open('https://github.com/BrainchildNFT', '_blank');
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
@@ -104,7 +108,7 @@ export default function RoadMap() {
                   </li>
                   <li className="mb-40">
                     Smart Contract Development
-                    <p className="text-17 opacity-50">Link to GitHub coming soon...</p>
+                    <p onClick={() => goToGithub()} className="cursor-pointer text-17 opacity-50">Link to GitHub</p>
                   </li>
                   <li className="mb-40">
                     Teaser Website release

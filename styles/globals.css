@@ -295,6 +295,12 @@ html {
     rgba(175, 95, 95, 0.4) 100%
   );
 }
+
+.about-us-members-background {
+  background: top center no-repeat url(/assets/images/about-us/three-faces.png);
+  background-size: cover;
+}
+
 .enhancement-item-background {
   background: radial-gradient(
     71.11% 71.11% at 39.95% 83.78%,
@@ -415,6 +421,10 @@ html {
 /* screen */
 .h-screen-without-navbar {
   height: calc(100vh - 105px);
+}
+
+.h-screen-without-topbar {
+  height: calc(100vh - 65px);
 }
 
 .collection-body-width {

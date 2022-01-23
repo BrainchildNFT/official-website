@@ -659,7 +659,7 @@ export default function Home() {
                         />
                       </div>
                       <div className="lg:max-w-350 lg:-ml-100 mt-50 relative z-50">
-                        <span className="font-Voyage text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Voyage">
+                        <span className="font-Future text-50 sm:text-80 text-primary-75 leading-none mb-20 font-Future">
                           {nft.name}
                         </span>
                         <p className="mt-20 p-20 border border-gradient-dark-linner">

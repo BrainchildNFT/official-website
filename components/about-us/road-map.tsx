@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function RoadMap() {
   const [currentRoadMap, setCurrentRoadMap] = useState(0);
@@ -8,6 +9,7 @@ export default function RoadMap() {
 
   const roadMapContentRef = useRef<HTMLDivElement>(null);
   const roadMapRef = useRef<HTMLDivElement>(null);
+  const router = useRouter()
   const roadMapPeriodNames = [
     {
       year: 2021,
@@ -30,6 +32,10 @@ export default function RoadMap() {
       name: 'BEYOND',
     },
   ];
+
+  const goToNfts = () => {
+    router.push('/nfts')
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +72,6 @@ export default function RoadMap() {
     for (let i = 0; i < index; i ++) {
       heightSum += childrenHeights[i];
     }
-  console.log('roadMapRef = ', roadMapRef);
     window.scrollTo(
       {
         left: 0,
@@ -85,11 +90,10 @@ export default function RoadMap() {
     <div className="flex flex-row" ref={roadMapRef}>
       <div className="relative lg:w-1/2">
         <div className="pr-50">
-          <div className="text-white h-200 sticky top-100 z-20 dark-background-image">
+          <div className="text-white h-200 sticky top-60 z-20 dark-background-image">
             <p className="text-22 opacity-30 mb-10 pt-20">ROADMAP</p>
-            {roadMapPeriodNames.map((item, index) => <p key={index} className={'absolute text-60 lg:text-80 opacity-90 font-Voyage tracking-tighter break-all mb-60 transition-all duration-500 ease-in-out ' + (index === currentRoadMap ? 'opacity-100' : 'opacity-0')}>{item.name}</p>)}
+            {roadMapPeriodNames.map((item, index) => <p key={index} className={'absolute text-55 lg:text-60 xl:text-70 opacity-90 font-Future tracking-tighter break-all mb-60 transition-all duration-500 ease-in-out ' + (index === currentRoadMap ? 'opacity-100' : 'opacity-0')}>{item.name}</p>)}
           </div>
-          {/*<div className="h-500 overflow-hidden">*/}
           <div>
             <div className="text-white transition-all duration-500" ref={roadMapContentRef}>
               <div>
@@ -100,7 +104,7 @@ export default function RoadMap() {
                   </li>
                   <li className="mb-40">
                     Smart Contract Development
-                    <p className="text-17 opacity-50">Link to github</p>
+                    <p className="text-17 opacity-50">Link to GitHub coming soon...</p>
                   </li>
                   <li className="mb-40">
                     Teaser Website release
@@ -111,7 +115,7 @@ export default function RoadMap() {
                   <li className="mb-40">
                     First Artist Collaboration
                     <div className="flex">
-                      <div className="flex items-center mt-10 p-25 bg-white-10">
+                      <div className="flex items-center mt-10 p-25 bg-white-10 cursor-pointer" onClick={() => goToNfts()}>
                         <div className="pr-10">
                           <Image src="/assets/images/about-us/light-star-in-rhombus.png" layout="intrinsic" width={27} height={30} alt="Star In Square" />
                         </div>
@@ -199,11 +203,11 @@ export default function RoadMap() {
           </div>
         </div>
       </div>
-      <div className="lg:flex lg:w-1/2 text-white justify-between h-screen sticky top-100">
+      <div className="mr-20 sm:mr-0 lg:flex lg:w-1/2 text-white justify-between h-screen sticky top-60">
         <div className="left-40 lg:left-0 h-screen pb-100">
           <div className="road-map-period-border text-white h-full flex flex-col justify-between py-100" style={{ width: '1px'}}>
             {roadMapPeriodNames.map((item, index) => <div key={index} onClick={() => roadMapPeriodClicked(index)} className={'flex flex-col cursor-pointer items-center justify-center border rounded-full ' + (index == currentRoadMap ? '-ml-40 lg:-ml-10 bg-white w-80 h-80 lg:w-20 lg:h-20' : '-ml-5 opacity-40 w-10 h-10')}>
-              {index == currentRoadMap && <span className="lg:hidden text-30 text-primary leading-none font-Voyage">{roadMapPeriodNames[currentRoadMap].text}</span>}
+              {index == currentRoadMap && <span className="lg:hidden text-30 text-primary leading-none font-Future">{roadMapPeriodNames[currentRoadMap].text}</span>}
               {index == currentRoadMap && <span className="lg:hidden text-14 font-bold text-primary">{roadMapPeriodNames[currentRoadMap].year}</span>}
             </div>)}
           </div>
@@ -211,7 +215,7 @@ export default function RoadMap() {
         <div className="hidden lg:flex items-end justify-end pb-100">
           {roadMapPeriodNames.map((item, index) => <div key={index} className={'absolute transition-all duration-500 ease-in-out ' + (currentRoadMap === index ? 'opacity-100' : 'opacity-0')}>
             <span className="text-30 mr-10 opacity-30">{roadMapPeriodNames[index].year}</span>
-            <span className="text-300 leading-none font-Voyage road-map-letter-background">{roadMapPeriodNames[index].text}</span>
+            <span className="text-250 leading-none font-Future road-map-letter-background">{roadMapPeriodNames[index].text}</span>
           </div>)}
         </div>
       </div>

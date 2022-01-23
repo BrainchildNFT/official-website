@@ -28,7 +28,7 @@ export const timelineData = [
   {
     isFairmint: false,
     date: 'NOV 2021',
-    title: 'Ethclock Conception',
+    title: 'EthClock Conception',
     content: 'A mattis pellentesque tristique gravida lobortis. In velit at dignissim laoreet elit, amet facilisi massa sit. Mattis aliquet orci pellentesque turpis. Laoreet quisque malesuada gravida dui. Arcu, mattis felis at neque, ut sit.',
   },
   {
@@ -72,12 +72,12 @@ export const timelineStepData = [
   {
     no: '02',
     name: 'Raffle',
-    content: 'Using Chainlink VRF, we will randomly whitelist 4207 wallets; these whitelisted wallets will be able to mint Ethclock by sending 0.12 ETH for each NFT during the next phase. The mint will be FCFS for the whitelisted wallet, which means if everyone is minting the maximum 3 Ethclocks, only the first 1402 wallets will be successful.',
+    content: 'Using Chainlink VRF, we will randomly whitelist 420 wallets; these whitelisted wallets will be able to mint EthClock by sending 0.06 ETH for each NFT during the next phase. The mint will be FCFS for the whitelisted wallet.',
   },
   {
     no: '03',
     name: 'Minting',
-    content: 'Whitelisted wallet will be announced on our community channels and website, alternatively, you can also connect your wallet via metamask and find out if you have been whitelisted. You will have 48 hours to mint up to 3 Ethclock directly into your wallet by sending 0.12 ETH for each ethclock. Excess ETH will not be refunded, please do not send any amount other than increments of 0.12 ETH excluding gas fees.',
+    content: 'Whitelisted wallet will be announced on our community channels and website, alternatively, you can also connect your wallet via metamask and find out if you have been whitelisted. You will have 48 hours to mint 1 EthClock directly into your wallet by sending 0.06 ETH. Excess ETH will not be refunded, please do not send any other amount excluding gas fees.',
   },
 ];
 

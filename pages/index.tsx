@@ -181,7 +181,7 @@ export default function Home() {
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
-      +new Date(Date.UTC(2022, 0, 24 + flag, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
     let timeLeft: TimeLeft = {
       days: '00',
       hours: '00',
@@ -224,9 +224,9 @@ export default function Home() {
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 0, 24, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 0, 25, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
 
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
@@ -373,14 +373,14 @@ export default function Home() {
               >
                 {raffleState === RaffleState.Waiting && (
                   <p className="font-medium text-center">
-                    Presale raffle begins on 24 Jan, 2022 at 00:00 AM UTC
+                    Presale raffle begins on 07 Feb, 2022 at 00:00 AM UTC
                   </p>
                 )}
                 {raffleState === RaffleState.Live && (
                   <p className="font-medium text-center">
                     Presale raffle Results{' '}
                     <span className="text-30 font-bold">LIVE NOW!</span> end on
-                    25 Jan, 2022 at 00:00 AM UTC
+                    08 Feb, 2022 at 00:00 AM UTC
                   </p>
                 )}
                 {raffleState === RaffleState.Ended && (

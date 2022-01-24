@@ -1,14 +1,14 @@
 import Image from 'next/image'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import Icon from '../ui-kit/icon'
-import { useState } from 'react';
+import { useState } from 'react'
 
 export default function Enhancements() {
-  const [openLevel, setOpenLevel] = useState(false);
-  const [openEnvironment, setOpenEnvironment] = useState(false);
-  const [openShine, setOpenShine] = useState(false);
-  const [openEfficiency, setOpenEfficiency] = useState(false);
-  const [openEnhancement, setOpenEnhancement] = useState(true);
+  const [openLevel, setOpenLevel] = useState(false)
+  const [openEnvironment, setOpenEnvironment] = useState(false)
+  const [openShine, setOpenShine] = useState(false)
+  const [openEfficiency, setOpenEfficiency] = useState(false)
+  const [openEnhancement, setOpenEnhancement] = useState(true)
 
   return (
     <>
@@ -34,13 +34,19 @@ export default function Enhancements() {
             Enhancement Outcomes
           </p>
           <div>
-            <Icon name={openEnhancement ? 'down' : 'up'} color="#353637" size={18} />
+            <Icon
+              name={openEnhancement ? 'down' : 'up'}
+              color="#353637"
+              size={18}
+            />
           </div>
         </div>
         <div className={openEnhancement ? 'block' : 'hidden'}>
           <div className="mt-20 grid grid-cols-1 grid-rows-5 sm:grid-cols-2 sm:grid-rows-3 lg:grid-cols-3 lg:grid-rows-2 xxl:grid-cols-5 xxl:grid-rows-1">
             <div className="relative enhancement-item-background min-h-270 p-20 text-[#373839] flex-1 m-10">
-              <p className="text-20 font-Subjectivity font-semibold">GOD-TEIR</p>
+              <p className="text-20 font-Subjectivity font-semibold">
+                GOD-TEIR
+              </p>
               <p className="font-16 mt-10 mb-30">
                 Lady Luck smiles upon you, instantly enhanced to max level 10.
               </p>
@@ -55,7 +61,9 @@ export default function Enhancements() {
               </div>
             </div>
             <div className="relative enhancement-item-background min-h-270 p-20 text-[#373839] flex-1 m-10">
-              <p className="text-20 font-Subjectivity font-semibold">ENHANCED</p>
+              <p className="text-20 font-Subjectivity font-semibold">
+                ENHANCED
+              </p>
               <p className="font-16 mt-10 mb-30">
                 Blessed! Successfully enhanced to the next level.
               </p>
@@ -87,8 +95,8 @@ export default function Enhancements() {
             <div className="relative enhancement-item-background min-h-270 p-20 text-[#373839] flex-1 m-10">
               <p className="text-20 font-Subjectivity font-semibold">FROZEN</p>
               <p className="font-16 mt-10 mb-30">
-                Frost giants came knocking and you weren`&apos;t prepared. Forever stuck
-                at current level.
+                Frost giants came knocking and you weren`&apos;t prepared.
+                Forever stuck at current level.
               </p>
               <div className="absolute bottom-0 right-0 -mb-10">
                 <Image
@@ -104,7 +112,8 @@ export default function Enhancements() {
               <p className="text-20 font-Subjectivity font-semibold">CHARRED</p>
               <p className="font-16 mt-10 mb-30">
                 Burst into a ball of flame! Leaving char and soot behind, unable
-                to redeem or enhance. Grants airdrops and whitelist to the future.
+                to redeem or enhance. Grants airdrops and whitelist to the
+                future.
               </p>
               <div className="absolute bottom-0 right-0 -mb-10">
                 <Image
@@ -123,12 +132,16 @@ export default function Enhancements() {
                 But there&apos;s a chance?...
               </p>
               <p className="text-[18px]">
-                Here&apos;s the probability of each of these outcomes at different
-                levels.
+                Here&apos;s the probability of each of these outcomes at
+                different levels.
               </p>
             </div>
           </div>
-          <ScrollContainer vertical={false} horizontal={true} className="w-full">
+          <ScrollContainer
+            vertical={false}
+            horizontal={true}
+            className="w-full"
+          >
             <div className="w-full min-w-1000 md:min-w-0">
               <Image
                 src="/assets/images/landing-page/outcome-table.svg"
@@ -139,7 +152,7 @@ export default function Enhancements() {
               />
             </div>
           </ScrollContainer>
-          <div className="mt-40 sm:mt-100 block sm:flex">
+          {/* <div className="mt-40 sm:mt-100 block sm:flex">
             <div className="w-full sm:w-500 md:sticky md:top-100 self-start flex justify-center">
               <Image
                 src="/assets/images/nfts/ethclock01.png"
@@ -490,7 +503,7 @@ export default function Enhancements() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

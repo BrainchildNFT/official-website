@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -9,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Layout } from '../components/layout/layout'
 import { RaffleState } from '../core/data/landing'
 import Icon from '../components/ui-kit/icon'
-import { Link } from '@mui/material'
 import { NftsMenuType, NftsMenuTypeArr } from '../core/data/nfts'
 import About from '../components/nfts/about'
 import PerksAndUtility from '../components/nfts/perks-and-utility'
@@ -396,25 +396,45 @@ export default function Nfts() {
               )}
               <p className="text-16 text-white flex items-center justify-center">
                 <span className="pr-25 opacity-40">Stay connected</span>
-                <Icon
-                  className="pr-25"
-                  name="discord"
-                  color="white"
-                  size={16}
-                />
-                <Icon
-                  className="pr-25"
-                  name="twitter"
-                  color="white"
-                  size={16}
-                />
-                <Icon
-                  className="pr-25"
-                  name="instagram"
-                  color="white"
-                  size={16}
-                />
-                <Icon name="telegram" color="white" size={16} />
+                <Link href="https://discord.gg/7S55rjvxm3" passHref>
+                  <a
+                    className="flex items-center justify-center sm:justify-start"
+                    target="_blank"
+                  >
+                    <Icon
+                      className="pr-25"
+                      name="discord"
+                      color="white"
+                      size={16}
+                    />
+                  </a>
+                </Link>
+                <Link href="https://twitter.com/BrainchildNFT" passHref>
+                  <a
+                    className="flex items-center justify-center sm:justify-start"
+                    target="_blank"
+                  >
+                    <Icon
+                      className="pr-25"
+                      name="twitter"
+                      color="white"
+                      size={16}
+                    />
+                  </a>
+                </Link>
+                <Link href="https://www.instagram.com/brainchildnft/" passHref>
+                  <a
+                    className="flex items-center justify-center sm:justify-start"
+                    target="_blank"
+                  >
+                    <Icon
+                      className="pr-25"
+                      name="instagram"
+                      color="white"
+                      size={16}
+                    />
+                  </a>
+                </Link>
               </p>
             </div>
           </div>

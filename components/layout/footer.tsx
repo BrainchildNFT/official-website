@@ -96,7 +96,7 @@ export function Footer() {
               <li className="py-5">
                 <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
                   <a target="_blank" rel="noreferrer">
-                    Whitepapaer
+                    Whitepaper
                   </a>
                 </Link>
               </li>

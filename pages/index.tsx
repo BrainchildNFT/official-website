@@ -509,7 +509,7 @@ export default function Home() {
               <div className="w-full h-screen sticky top-0 flex flex-row-reverse items-end">
                 <div className="p-30 w-full sm:w-300 text-white">
                   Imagine you could bring your Minecraft axe to dig up your
-                  backyard (Why not?). Well, We are bridging that gap.Our NFTs
+                  backyard (Why not?). Well, We are bridging that gap. Our NFTs
                   transcend the metaverse and find their place in the physical
                   world, even if that place is your mum’s backyard.
                 </div>
@@ -553,7 +553,7 @@ export default function Home() {
                     </p>
                     <div className="text-18 sm:text-20 text-[#343536]">
                       Play with our mysterious dice to test your luck and evolve
-                      your NFTs to higher levels.Roll the dice for 5 possible
+                      your NFTs to higher levels. Roll the dice for 5 possible
                       outcomes of enhancement!
                     </div>
                     <div className="flex w-full flex-wrap mt-10 -m-10">
@@ -594,9 +594,9 @@ export default function Home() {
                     </p>
                     <div className="text-18 sm:text-20 text-[#343536]">
                       Get the physical manifestation of your NFT delivered right
-                      to your front door.Touch it. Feel it. Lick it. Get weird
-                      with it. Throw it and redeem again.It’s yours, FOREVER.Our
-                      NFTs are perpetually redeemable.
+                      to your front door. Touch it. Feel it. Lick it. Get weird
+                      with it. Throw it and redeem again. It’s yours, FOREVER.
+                      Our NFTs are perpetually redeemable.
                     </div>
                     <img
                       className="w-full absolute bottom-0 left-0"

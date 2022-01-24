@@ -25,17 +25,19 @@ export default function Enhancements() {
           </div>
         </div>
 
-        <div className="mt-40 sm:mt-100 flex flex-col md:flex-row justify-between items-center">
+        <div
+          className="cursor-pointer mt-40 sm:mt-100 flex flex-col md:flex-row justify-between items-center"
+          onClick={() => setOpenEnhancement(!openEnhancement)}
+        >
           <p
-            onClick={() => setOpenEnhancement(!openEnhancement)}
-            className="cursor-pointer p-10 text-40 text-primary text-center break-words"
+            className="p-10 text-40 text-primary text-center break-words"
             style={{ fontFamily: 'Future Classic' }}
           >
             Enhancement Outcomes
           </p>
           <div>
             <Icon
-              name={openEnhancement ? 'down' : 'up'}
+              name={openEnhancement ? 'up' : 'down'}
               color="#353637"
               size={18}
             />

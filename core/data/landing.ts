@@ -25,7 +25,7 @@ export const faqs = {
     },
     {
       name: 'When do EthClocks go on sale?',
-      content: 'Presale 24th Jan 2022. Fairmint Raffle TBD.',
+      content: 'Presale 7th Feb 2022. Fairmint Raffle TBD.',
     },
     {
       name: 'How many EthClocks are available?',
@@ -35,7 +35,7 @@ export const faqs = {
     {
       name: 'How do I buy EthClock?',
       content:
-        'Presale goes live on 24th Jan 2022 at 00:00 AM UTC. Be ready with your wallets to submit your signature.',
+        'Presale goes live on 7th Feb 2022 at 00:00 AM UTC. Be ready with your wallets to submit your signature.',
     },
     {
       name: 'What is the answer to life?',

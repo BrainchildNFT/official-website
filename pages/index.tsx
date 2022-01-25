@@ -442,7 +442,7 @@ export default function Home() {
                 <p className="mt-10 text-70 sm:text-140 lg:text-160">LUXURY</p>
               </div>
             </div>
-            <div className="grid w-full grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 p-0 sm:p-40 lg:p-80 gap-0 sm:gap-[40px] lg:gap-[80px] -mt-160 sm:-mt-240 lg:-mt-300">
+            <div className="grid w-full grid-cols-1 grid-rows-3 md:grid-cols-3 md:grid-rows-1 p-0 md:p-40 lg:p-80 gap-0 md:gap-[40px] lg:gap-[80px] -mt-160 md:-mt-240 lg:-mt-300">
               <img
                 className="w-full h-600 sm:h-auto object-cover"
                 src="/assets/images/landing-page/gallery-1.png"

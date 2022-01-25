@@ -1,35 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { ThemeType } from '../../../core/data/base';
-import { AppContext } from '../../context/app-context';
+import { useSelector } from 'react-redux'
+import { ThemeType } from '../../../core/data/base'
+import { AppContext } from '../../context/app-context'
 
 const ConnectWalletButton = () => {
-  const themeStatus = useSelector((state: any)  => state.ThemeStatus);
+  const themeStatus = useSelector((state: any) => state.ThemeStatus)
 
-  const [metaMaskAccount, setMetaMaskAccount] = useState<string>("");
-  const {wallet, lang, updateWallet} = useContext(AppContext);
+  const [metaMaskAccount, setMetaMaskAccount] = useState<string>('')
+  const { wallet, lang, updateWallet } = useContext(AppContext)
 
   const connectWallet = async () => {
     if (typeof (window as any).ethereum !== 'undefined') {
-      const ethereum = (window as any).ethereum;
-      console.log('MetaMask Extension is installed!');
+      const ethereum = (window as any).ethereum
+      console.log('MetaMask Extension is installed!')
       if (metaMaskAccount) {
-        updateWallet('');
+        updateWallet('')
       } else {
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0];
-        updateWallet(account);
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts',
+        })
+        const account = accounts[0]
+        updateWallet(account)
       }
     } else {
-      console.log('MetaMask Extension is no installed');
+      console.log('MetaMask Extension is no installed')
     }
   }
   useEffect(() => {
-    setMetaMaskAccount(wallet);
-  }, [wallet]);
+    setMetaMaskAccount(wallet)
+  }, [wallet])
 
   return (
-    <div className="group relative flex items-center cursor-pointer" onClick={() => connectWallet()}>
+    <div
+      className="group relative flex items-center cursor-pointer"
+      onClick={() => connectWallet()}
+    >
       <div className="absolute h-full w-full overflow-y-clip">
         <svg
           className="transform rotate-[30deg] scale-y-150 group-hover:scale-y-100 scale-x-90 group-hover:scale-x-100 group-hover:rotate-0 transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-5"
@@ -69,9 +74,26 @@ const ConnectWalletButton = () => {
               y2="39.9995"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} stopOpacity="0.4" />
-              <stop offset="0.478947" stopColor={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} stopOpacity="0" />
-              <stop offset="1" stopColor={themeStatus === ThemeType.DarkMode ? 'white' : 'primary'} stopOpacity="0.4" />
+              <stop
+                stopColor={
+                  themeStatus === ThemeType.DarkMode ? 'white' : 'primary'
+                }
+                stopOpacity="0.4"
+              />
+              <stop
+                offset="0.478947"
+                stopColor={
+                  themeStatus === ThemeType.DarkMode ? 'white' : 'primary'
+                }
+                stopOpacity="0"
+              />
+              <stop
+                offset="1"
+                stopColor={
+                  themeStatus === ThemeType.DarkMode ? 'white' : 'primary'
+                }
+                stopOpacity="0.4"
+              />
             </linearGradient>
           </defs>
         </svg>
@@ -85,7 +107,10 @@ const ConnectWalletButton = () => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          className={"group-hover:stroke-pink-gray group-hover:fill-pink-gray transition-all duration-200 " + (metaMaskAccount ? '' : 'fill-transparent')}
+          className={
+            'group-hover:stroke-pink-gray group-hover:fill-pink-gray transition-all duration-200 ' +
+            (metaMaskAccount ? '' : 'fill-transparent')
+          }
           d="M37.1166 31.649L11.761 38.443C10.8003 38.7004 9.77676 38.5657 8.91544 38.0684C8.05413 37.5711 7.42563 36.752 7.16822 35.7914L2.80065 19.4914C2.54324 18.5307 2.67799 17.5071 3.17528 16.6458C3.67256 15.7845 4.49163 15.156 5.4523 14.8986L30.8079 8.10457C31.7685 7.84716 32.7921 7.98192 33.6534 8.4792C34.5147 8.97648 35.1432 9.79555 35.4006 10.7562L39.7682 27.0562C40.0256 28.0169 39.8909 29.0405 39.3936 29.9018C38.8963 30.7631 38.0772 31.3916 37.1166 31.649Z"
           stroke={metaMaskAccount ? 'white' : 'gray'}
           strokeWidth="0.75"
@@ -108,11 +133,22 @@ const ConnectWalletButton = () => {
         />
       </svg>
       <button className="hidden px-5 text-18 font-bold w-150 group-hover:block">
-        {metaMaskAccount ? 'Disconnect' : ''}
+        {metaMaskAccount ? 'Disconnect' : 'Coming Soon'}
       </button>
       <button className="flex items-center group-hover:hidden px-5 text-18 font-bold w-150 z-10">
-        <p className={"w-10 h-10 border text-white bg-success rounded-full mr-5 " + (metaMaskAccount ? 'block' : 'hidden')}></p>
-        <p>{metaMaskAccount ? (metaMaskAccount.substring(0, 4) + '...' + metaMaskAccount.slice(-4)) : 'Connect Wallet'}</p>
+        <p
+          className={
+            'w-10 h-10 border text-white bg-success rounded-full mr-5 ' +
+            (metaMaskAccount ? 'block' : 'hidden')
+          }
+        ></p>
+        <p>
+          {metaMaskAccount
+            ? metaMaskAccount.substring(0, 4) +
+              '...' +
+              metaMaskAccount.slice(-4)
+            : 'Connect Wallet'}
+        </p>
       </button>
     </div>
   )

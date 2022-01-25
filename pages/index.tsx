@@ -181,7 +181,7 @@ export default function Home() {
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
-      +new Date(Date.UTC(2022, 0, 24 + flag, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
     let timeLeft: TimeLeft = {
       days: '00',
       hours: '00',
@@ -224,9 +224,9 @@ export default function Home() {
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 0, 24, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 0, 25, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
 
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
@@ -373,14 +373,14 @@ export default function Home() {
               >
                 {raffleState === RaffleState.Waiting && (
                   <p className="font-medium text-center">
-                    Presale raffle begins on 24 Jan, 2022 at 00:00 AM UTC
+                    Presale raffle begins on 07 Feb, 2022 at 00:00 AM UTC
                   </p>
                 )}
                 {raffleState === RaffleState.Live && (
                   <p className="font-medium text-center">
                     Presale raffle Results{' '}
                     <span className="text-30 font-bold">LIVE NOW!</span> end on
-                    25 Jan, 2022 at 00:00 AM UTC
+                    08 Feb, 2022 at 00:00 AM UTC
                   </p>
                 )}
                 {raffleState === RaffleState.Ended && (
@@ -445,16 +445,16 @@ export default function Home() {
             <div className="grid w-full grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 p-0 sm:p-40 lg:p-80 gap-0 sm:gap-[40px] lg:gap-[80px] -mt-160 sm:-mt-240 lg:-mt-300">
               <img
                 className="w-full h-600 sm:h-auto object-cover"
-                src="/assets/images/landing-page/ethclock-gallery.jpg"
+                src="/assets/images/landing-page/gallery-1.png"
               />
               <img
                 className="w-full h-600 sm:h-auto object-cover"
-                src="/assets/images/landing-page/ethclock-gallery.jpg"
+                src="/assets/images/landing-page/gallery-2.png"
               />
               <div className="w-full h-600 sm:h-auto relative overflow-y-clip">
                 <img
                   className="w-full h-full object-cover"
-                  src="/assets/images/landing-page/ethclock-gallery.jpg"
+                  src="/assets/images/landing-page/gallery-3.png"
                 />
                 <div className="absolute w-full bottom-0 right-0 text-white p-20 z-50">
                   <p className="text-right">
@@ -509,7 +509,7 @@ export default function Home() {
               <div className="w-full h-screen sticky top-0 flex flex-row-reverse items-end">
                 <div className="p-30 w-full sm:w-300 text-white">
                   Imagine you could bring your Minecraft axe to dig up your
-                  backyard (Why not?). Well, We are bridging that gap.Our NFTs
+                  backyard (Why not?). Well, We are bridging that gap. Our NFTs
                   transcend the metaverse and find their place in the physical
                   world, even if that place is your mum’s backyard.
                 </div>
@@ -553,7 +553,7 @@ export default function Home() {
                     </p>
                     <div className="text-18 sm:text-20 text-[#343536]">
                       Play with our mysterious dice to test your luck and evolve
-                      your NFTs to higher levels.Roll the dice for 5 possible
+                      your NFTs to higher levels. Roll the dice for 5 possible
                       outcomes of enhancement!
                     </div>
                     <div className="flex w-full flex-wrap mt-10 -m-10">
@@ -594,9 +594,9 @@ export default function Home() {
                     </p>
                     <div className="text-18 sm:text-20 text-[#343536]">
                       Get the physical manifestation of your NFT delivered right
-                      to your front door.Touch it. Feel it. Lick it. Get weird
-                      with it. Throw it and redeem again.It’s yours, FOREVER.Our
-                      NFTs are perpetually redeemable.
+                      to your front door. Touch it. Feel it. Lick it. Get weird
+                      with it. Throw it and redeem again. It’s yours, FOREVER.
+                      Our NFTs are perpetually redeemable.
                     </div>
                     <img
                       className="w-full absolute bottom-0 left-0"

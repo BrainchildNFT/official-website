@@ -445,16 +445,16 @@ export default function Home() {
             <div className="grid w-full grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 p-0 sm:p-40 lg:p-80 gap-0 sm:gap-[40px] lg:gap-[80px] -mt-160 sm:-mt-240 lg:-mt-300">
               <img
                 className="w-full h-600 sm:h-auto object-cover"
-                src="/assets/images/landing-page/ethclock-gallery.jpg"
+                src="/assets/images/landing-page/gallery-1.png"
               />
               <img
                 className="w-full h-600 sm:h-auto object-cover"
-                src="/assets/images/landing-page/ethclock-gallery.jpg"
+                src="/assets/images/landing-page/gallery-2.png"
               />
               <div className="w-full h-600 sm:h-auto relative overflow-y-clip">
                 <img
                   className="w-full h-full object-cover"
-                  src="/assets/images/landing-page/ethclock-gallery.jpg"
+                  src="/assets/images/landing-page/gallery-3.png"
                 />
                 <div className="absolute w-full bottom-0 right-0 text-white p-20 z-50">
                   <p className="text-right">

@@ -49,7 +49,7 @@ jobs:
         env:
           NAME: "Root"
         with:
-          hosts: ${{secrets.USER}}@${{secrets.HOST}}
-          privateKey: ${{ secrets.SSH_KEY }}
+          hosts: ${{secrets.STAGING_USER}}@${{secrets.STAGING_HOST}}
+          privateKey: ${{ secrets.STAGING_SSH_KEY }}
           debug: false
           command: /home/ubuntu/job/deploy.sh

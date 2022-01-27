@@ -46,7 +46,6 @@ jobs:
 
       - name: run deploy script on host server
         uses: JimCronqvist/action-ssh@master
-
         env:
           NAME: "Root"
         with:

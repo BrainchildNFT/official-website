@@ -301,6 +301,18 @@ html {
   background-size: cover;
 }
 
+.bg-wallet-bar-success {
+  background: radial-gradient(67.75% 67.75% at 30.16% 77.78%, rgba(96, 126, 174, 0.012) 0%, rgba(96, 126, 174, 0.6) 100%);
+}
+
+.bg-wallet-bar-warning {
+  background: radial-gradient(67.75% 67.75% at 30.16% 77.78%, rgba(38, 140, 109, 0.012) 0%, rgba(38, 140, 109, 0.6) 100%);
+}
+
+.bg-wallet-bar-danger {
+  background: radial-gradient(67.75% 67.75% at 30.16% 77.78%, rgba(175, 95, 95, 0.012) 0%, rgba(175, 95, 95, 0.6) 100%);
+}
+
 .enhancement-item-background {
   background: radial-gradient(
     71.11% 71.11% at 39.95% 83.78%,

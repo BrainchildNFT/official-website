@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
@@ -12,6 +12,7 @@ import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWallet
 import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
 import { ThemeType } from '../../core/data/base'
 import { sidebarUpdate } from '../../core/actions/sidebar-update'
+import { AppContext } from '../context/app-context'
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -26,6 +27,7 @@ export function Navbar() {
   const { isMobile, isTablet } = useMatchBreakpoints()
   const router = useRouter()
   const dispatch = useDispatch()
+  const { wallet } = useContext(AppContext)
 
   const collectionsClicked = () => {
     dispatch(sidebarUpdate())
@@ -166,7 +168,20 @@ export function Navbar() {
                   </a>
                 </Link>
               </li>
-              <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 relative group">
+              <li className={"py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 " + (wallet ? 'block' : 'hidden')}>
+                <Link href="/wallet">
+                  <a
+                    className={
+                      'relative xl:px-25 xl:py-10 ' +
+                      (router.pathname == '/wallet' ? 'text-[#AF5F5F]' : '')
+                    }
+                    style={{ fontFamily: 'Subjectivity Serif' }}
+                  >
+                    Wallet
+                  </a>
+                </Link>
+              </li>
+              <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 relative group cursor-pointer">
                 <a
                   className={
                     'relative xl:px-25 xl:py-10 ' +

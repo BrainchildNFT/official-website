@@ -10,12 +10,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import SwiperCore, { Scrollbar } from 'swiper'
 import { Layout } from '../components/layout/layout'
-import {
-  faq_display_limit,
-  faqs,
-  nftList,
-  RaffleState,
-} from '../core/data/landing'
+import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing'
 import useGAService from '../core/app-services/ga-service'
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
 import Icon from '../components/ui-kit/icon'
@@ -251,11 +246,21 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Brainchild: HomePage</title>
-        <meta
-          name="description"
-          content="Unlocking innovative ownership experiences by connecting to web3. Redeem, upgrade, enhance NFTs that traverse both digital and real world."
-        />
+        <title>BrainchildNFT - EthClock</title>
+        <meta name="description" content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+
+        <meta property="og:url" content="https://www.brainchildnft.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="BrainchildNFT - EthClock" />
+        <meta property="og:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+        <meta property="og:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="brainchildnft.com" />
+        <meta property="twitter:url" content="https://www.brainchildnft.com/" />
+        <meta name="twitter:title" content="BrainchildNFT - EthClock" />
+        <meta name="twitter:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+        <meta name="twitter:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
       </Head>
       <Layout>
         {/*Ether clock landing page*/}

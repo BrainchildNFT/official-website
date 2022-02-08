@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import 'swiper/css'
@@ -132,6 +132,19 @@ export default function AboutUs() {
           name="description"
           content="We collaborate with artists, design studios & brands to provide experimental interactions and novel experience around product ownership enabled by blockchain."
         />
+
+        <meta property="og:url" content="https://www.brainchildnft.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="BrainchildNFT - EthClock" />
+        <meta property="og:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+        <meta property="og:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="brainchildnft.com" />
+        <meta property="twitter:url" content="https://www.brainchildnft.com/" />
+        <meta name="twitter:title" content="BrainchildNFT - EthClock" />
+        <meta name="twitter:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+        <meta name="twitter:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
       </Head>
       <Layout>
         <div className="dark-background-image">

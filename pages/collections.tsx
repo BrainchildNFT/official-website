@@ -21,6 +21,19 @@ export default function Collections() {
       <Head>
         <title>Brainchild: Collections</title>
         <meta name="description" content="EthClock: a tribute to Ethereum, is a collection of 5000 perpetually redeemable NFTs— Upgradeable, Physical, Digital, Tradable & Unique."/>
+
+        <meta property="og:url" content="https://www.brainchildnft.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="BrainchildNFT - EthClock" />
+        <meta property="og:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+        <meta property="og:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="brainchildnft.com" />
+        <meta property="twitter:url" content="https://www.brainchildnft.com/" />
+        <meta name="twitter:title" content="BrainchildNFT - EthClock" />
+        <meta name="twitter:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+        <meta name="twitter:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
       </Head>
       <Layout>
         <div className="flex flex-col xl:flex-row" onClick={() => goToNfts}>

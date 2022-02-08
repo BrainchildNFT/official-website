@@ -1,57 +1,31 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
+import { monthNames, projectSchedule, TimeLeft } from '../core/data/base';
 import { Layout } from '../components/layout/layout'
 import { RaffleState } from '../core/data/landing'
 import Icon from '../components/ui-kit/icon'
-import { NftsMenuType, NftsMenuTypeArr } from '../core/data/nfts'
-import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
-import { themeUpdate } from '../core/actions/theme-update'
-import { ThemeType } from '../core/data/base'
 import { WalletMenuType } from '../core/data/wallet';
-import Image from 'next/image';
 import { AppContext } from '../components/context/app-context';
-import { useRouter } from 'next/router';
 
 export default function Wallet() {
   const [isTop, setIsTop] = useState(true)
   const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
   const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
-  const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About)
-  const [textColor, setTextColor] = useState('text-white')
-
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
-  const dispatch = useDispatch()
-
-  const { isHuge } = useMatchBreakpoints()
-  const nftContentRef = useRef<HTMLDivElement>(null)
-  const mainBody = useRef<HTMLDivElement>(null)
-
-  const menuList = [
-    { id: NftsMenuType.About, name: 'ABOUT' },
-    { id: NftsMenuType.Artist, name: 'ARTIST' },
-    { id: NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY' },
-    { id: NftsMenuType.TimeLine, name: 'TIMELINE' },
-    { id: NftsMenuType.Enhancements, name: 'ENHANCEMENTS' },
-    // {id:NftsMenuType.Gallery, name: 'GALLERY'},
-    { id: NftsMenuType.WhitePaper, name: 'WHITEPAPER' },
-  ]
-
-  interface TimeLeft {
-    days: number
-    hours: number
-    minutes: number
-    seconds: number
-  }
+  const [selectedMenu, setSelectedMenu] = useState(WalletMenuType.NFTs);
+  const [showOutcomeStates, setShowOutcomeStates] = useState(true);
+  const { wallet } = useContext(AppContext);
+  const router = useRouter();
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
-      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
     let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 }
 
     if (difference > 0) {
@@ -68,9 +42,9 @@ export default function Wallet() {
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
 
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
@@ -92,71 +66,16 @@ export default function Wallet() {
     }, 1000)
   }, [])
 
-  const handleScroll = () => {
-    if (typeof window !== 'undefined') {
-      if (window.scrollY) {
-        setIsTop(false)
-      } else {
-        setIsTop(true)
-      }
-    }
-
-    let contentHeight = 0
-    Array.from(nftContentRef?.current?.children || []).map((item, index) => {
-      const nextHeight = contentHeight + item.clientHeight
-      const scrollTop = window.scrollY || 0
-      if (scrollTop > contentHeight && scrollTop < nextHeight) {
-        setCurrentMenuId(NftsMenuTypeArr[index])
-      }
-      contentHeight = nextHeight
-    })
-  }
-
-  const menuClicked = (menuId: NftsMenuType) => {
-    if (menuId === NftsMenuType.WhitePaper) {
-      window.open(
-        'https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub',
-        '_blank'
-      )
-    } else {
-      setCurrentMenuId(menuId)
-
-      const selectedSectionIndex = NftsMenuTypeArr.findIndex(
-        (element) => element === menuId
-      )
-      const childrenArr = Array.from(nftContentRef?.current?.children || [])
-      let contentHeight = 0
-      if (selectedSectionIndex < childrenArr.length) {
-        for (let index = 0; index < selectedSectionIndex; index++) {
-          contentHeight += childrenArr[index].clientHeight
-        }
-      }
-      window.scrollTo({
-        left: 0,
-        top: contentHeight + 100,
-        behavior: 'smooth',
-      })
-    }
-  }
-
-  useEffect(() => {
-    if (currentMenuId === NftsMenuType.About) {
-      dispatch(themeUpdate(ThemeType.DarkMode))
-    } else {
-      dispatch(themeUpdate(ThemeType.LightMode))
-    }
-  }, [currentMenuId])
-
   useEffect(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white')
+        setStateBarBackground('bg-wallet-bar-danger')
         break
       case RaffleState.Live:
-        setStateBarBackground('bg-success text-white')
+        setStateBarBackground('bg-wallet-bar-warning')
         break
       case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary')
+        setStateBarBackground('bg-wallet-bar-success')
         break
       default:
         setStateBarBackground('bg-danger text-white')
@@ -164,28 +83,14 @@ export default function Wallet() {
   }, [raffleState])
 
   useEffect(() => {
-    setTextColor(
-      themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary'
-    )
-  }, [themeStatus])
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  const [selectedMenu, setSelectedMenu] = useState(WalletMenuType.NFTs);
-  const [showOutcomeStates, setShowOutcomeStates] = useState(true);
-  const { wallet } = useContext(AppContext);
-  const router = useRouter();
-
-  useEffect(() => {
     if (!wallet) {
       router.push('/');
     }
   }, [])
+
+  const raffleClicked = () => {
+    alert(process.env.contractAddress);
+  }
 
   return (
     <>
@@ -277,7 +182,7 @@ export default function Wallet() {
           </div>
 
           <div id="content" className="grow">
-            <div className="p-25 w-full border-y border-gradient-light bg-wallet-bar-warning flex flex-col md:flex-row md:justify-between">
+            <div className={"p-25 w-full border-y border-gradient-light flex flex-col md:flex-row md:justify-between " + stateBarBackground}>
               <div className="flex items-start xl:items-center flex-col xl:flex-row">
                 <div className="flex items-center">
                   <span><Icon name="starWithRhombus" size={36} color="white"/></span>
@@ -291,15 +196,92 @@ export default function Wallet() {
 
               <div className="flex flex-col xl:flex-row xl:items-center items-end">
                 <div className="text-white">
-                  <span className="font-medium text-16 mr-15">RESULTS WILL BE LIVE IN</span>
+                  {raffleState === RaffleState.Waiting && (
+                    <span className="font-medium text-16 mr-15">
+                      RAFFLE BEGINS ON { monthNames[projectSchedule.wMonth - 1] + ' ' + projectSchedule.wDay + ' ' + projectSchedule.wYear }
+                    </span>
+                  )}
+                  {raffleState === RaffleState.Live && (
+                    <span className="font-medium text-16 mr-15">
+                      RESULTS WILL BE LIVE IN
+                    </span>
+                  )}
+                  {raffleState === RaffleState.Ended && (
+                    <span className="font-medium text-16 mr-15">
+                      Connect wallet to check if you’re whitelisted
+                    </span>
+                  )}
                 </div>
                 <div className="text-white">
-                  <span className="font-bold text-30">21:45:12</span>
+                  {raffleState === RaffleState.Waiting && (
+                    <span className="font-bold text-30">
+                      {`${
+                        raffleStartTimeLeft.days < 10
+                          ? '0' + raffleStartTimeLeft.days
+                          : raffleStartTimeLeft.days
+                      }:${
+                        raffleStartTimeLeft.hours < 10
+                          ? '0' + raffleStartTimeLeft.hours
+                          : raffleStartTimeLeft.hours
+                      }:${
+                        raffleStartTimeLeft.minutes < 10
+                          ? '0' + raffleStartTimeLeft.minutes
+                          : raffleStartTimeLeft.minutes
+                      }:${
+                        raffleStartTimeLeft.seconds < 10
+                          ? '0' + raffleStartTimeLeft.seconds
+                          : raffleStartTimeLeft.seconds
+                      }`}
+                    </span>
+                  )}
+
+                  {raffleState === RaffleState.Live && (
+                    <span className="font-bold text-30">
+                      {`${
+                        raffleEndTimeLeft.days < 10
+                          ? '0' + raffleEndTimeLeft.days
+                          : raffleEndTimeLeft.days
+                      }:${
+                        raffleEndTimeLeft.hours < 10
+                          ? '0' + raffleEndTimeLeft.hours
+                          : raffleEndTimeLeft.hours
+                      }:${
+                        raffleEndTimeLeft.minutes < 10
+                          ? '0' + raffleEndTimeLeft.minutes
+                          : raffleEndTimeLeft.minutes
+                      }:${
+                        raffleEndTimeLeft.seconds < 10
+                          ? '0' + raffleEndTimeLeft.seconds
+                          : raffleEndTimeLeft.seconds
+                      }`}{' '}
+                          Left
+                    </span>
+                  )}
+                  {raffleState === RaffleState.Ended && (
+                    <p className="font-medium text-center">
+                      Connect wallet to check if you’re whitelisted
+                    </p>
+                  )}
                 </div>
-                <div className="px-20 py-10 xl:ml-15 rounded-full bg-white-50 flex items-center">
-                  <span className="mr-10"><Icon name="check_circle" color="white" size={16} /></span>
-                  <span className="text-white text-16 font-semibold">Joined Raffle</span>
-                </div>
+                {raffleState === RaffleState.Live && (
+                  <div className="px-20 py-10 xl:ml-15 rounded-full bg-white-50 flex items-center cursor-pointer" onClick={() => raffleClicked()}>
+                    <span className="mr-10"><Icon name="check_circle" color="white" size={16} /></span>
+                    <span className="text-white text-16 font-semibold">Joined Raffle</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className={"flex flex-col justify-center items-center my-40 px-10 " + (raffleState !== RaffleState.Waiting ? 'hidden' : '')}>
+              <p className="text-30 lg:text-60 font-Future wallet-notify-background">You dont own any</p>
+              <p className="text-40 lg:text-80 font-Future wallet-notify-background">brainchildNFTs</p>
+              <p className="text-22 lg:text-40 text-right font-Future wallet-notify-background">...yet</p>
+              <div
+                className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer mt-20"
+                onClick={() => router.push('/nfts')}
+              >
+                <img src="/assets/images/landing-page/icon-ethereum.svg" />
+                <span className="mx-15">EXPLORE COLLECTION</span>
+                <img src="/assets/images/landing-page/icon-arrow-right.svg" />
               </div>
             </div>
           </div>

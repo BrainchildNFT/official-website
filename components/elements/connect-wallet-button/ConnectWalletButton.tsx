@@ -23,7 +23,7 @@ const ConnectWalletButton = () => {
         updateWallet(account)
       }
     } else {
-      console.log('MetaMask Extension is no installed')
+      alert('MetaMask Extension is not installed');
     }
   }
   useEffect(() => {

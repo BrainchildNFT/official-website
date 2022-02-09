@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons'
-import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useContext, useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiscord, faInstagram, faTwitter, } from '@fortawesome/free-brands-svg-icons';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Icon from '../ui-kit/icon'
-import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton'
-import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints'
-import { ThemeType } from '../../core/data/base'
-import { sidebarUpdate } from '../../core/actions/sidebar-update'
-import { AppContext } from '../context/app-context'
+import Icon from '../ui-kit/icon';
+import ConnectWalletButton from '../elements/connect-wallet-button/ConnectWalletButton';
+import useMatchBreakpoints from '../ui-kit/common/useMatchBreakpoints';
+import { ThemeType } from '../../core/data/base';
+import { sidebarUpdate } from '../../core/actions/sidebar-update';
+import { AppContext } from '../context/app-context';
 
 export function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false)

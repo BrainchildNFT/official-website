@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import React from 'react';
 
 class MyDocument extends Document {
   render() {
@@ -6,6 +7,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta name="application-name" content="Brainchild" />
+          <meta name="description" content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
           <link rel="apple-touch-icon" href="/icons/icon-512.png" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
@@ -21,6 +23,18 @@ class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, maximum-scale=1"
           />
+          <meta property="og:url" content="https://www.brainchildnft.com/" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="BrainchildNFT - EthClock" />
+          <meta property="og:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+          <meta property="og:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="brainchildnft.com" />
+          <meta property="twitter:url" content="https://www.brainchildnft.com/" />
+          <meta name="twitter:title" content="BrainchildNFT - EthClock" />
+          <meta name="twitter:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
+          <meta name="twitter:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link

@@ -9,6 +9,8 @@ module.exports = withPWA({
   compress: false, // brotli compress rather than default gzip support of next.js
   env: {
     contractAddress: '0xBD1029b72bf166322B4e8f22c87cc315c3f50789',
+    rpcURI: 'https://speedy-nodes-nyc.moralis.io/a0dd13b0091772cbf75a91db/eth/rinkeby',
+    network: 'rinkeby',
     //googleApiKey: '',
     //api: process.env.API_URL || 'http://127.0.0.1:3005/api',
     //production: process.env.PRODUCTION,

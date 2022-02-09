@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react'
-import ReactSlider from 'react-slider'
-import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css/scrollbar'
-import SwiperCore, { Scrollbar } from 'swiper'
-import { Layout } from '../components/layout/layout'
-import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing'
-import useGAService from '../core/app-services/ga-service'
-import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
-import Icon from '../components/ui-kit/icon'
-import { useRouter } from 'next/router'
+import React, { useEffect, useRef, useState } from 'react';
+import ReactSlider from 'react-slider';
+import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import SwiperCore, { Scrollbar } from 'swiper';
+import { Layout } from '../components/layout/layout';
+import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing';
+import useGAService from '../core/app-services/ga-service';
+import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
+import Icon from '../components/ui-kit/icon';
+import { useRouter } from 'next/router';
 
 SwiperCore.use([Scrollbar])
 
@@ -248,19 +248,6 @@ export default function Home() {
       <Head>
         <title>BrainchildNFT - EthClock</title>
         <meta name="description" content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
-
-        <meta property="og:url" content="https://www.brainchildnft.com/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="BrainchildNFT - EthClock" />
-        <meta property="og:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
-        <meta property="og:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="brainchildnft.com" />
-        <meta property="twitter:url" content="https://www.brainchildnft.com/" />
-        <meta name="twitter:title" content="BrainchildNFT - EthClock" />
-        <meta name="twitter:description" content="A tribute to Ethereum. Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
-        <meta name="twitter:image" content="https://i.ibb.co/C1bXMkp/home-env-8.jpg" />
       </Head>
       <Layout>
         {/*Ether clock landing page*/}

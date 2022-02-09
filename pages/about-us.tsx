@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-import { Layout } from '../components/layout/layout'
-import { RaffleState } from '../core/data/landing'
-import Icon from '../components/ui-kit/icon'
-import RoadMap from '../components/about-us/road-map'
+import { TimeLeft, projectSchedule, monthNames } from '../core/data/base';
+import { Layout } from '../components/layout/layout';
+import { RaffleState } from '../core/data/landing';
+import Icon from '../components/ui-kit/icon';
+import RoadMap from '../components/about-us/road-map';
 
 export default function AboutUs() {
   const [isTop, setIsTop] = useState(true)
   const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
   const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
 
   const handleScroll = () => {
     if (typeof window !== 'undefined') {
@@ -48,50 +51,22 @@ export default function AboutUs() {
     }
   }, [])
 
-  interface TimeLeft {
-    days: string
-    hours: string
-    minutes: string
-    seconds: string
-  }
-
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
-      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let timeLeft: TimeLeft = {
-      days: '00',
-      hours: '00',
-      minutes: '00',
-      seconds: '00',
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
     }
 
     if (difference > 0) {
       timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        minutes: Math.floor((difference / 1000 / 60) % 60).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        seconds: Math.floor((difference / 1000) % 60).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        }),
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
       }
     }
 
@@ -100,21 +75,14 @@ export default function AboutUs() {
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
 
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
     if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
   }
-
-  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(0)
-  )
-  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(1)
-  )
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -173,14 +141,14 @@ export default function AboutUs() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  Presale raffle begins on 07 Feb, 2022 at 00:00 AM UTC
+                  Presale raffle begins on { projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear } at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
                   Presale raffle Results{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span> end on 08
-                  Feb, 2022 at 00:00 AM UTC
+                  <span className="text-30 font-bold">LIVE NOW!</span> end on
+                  { projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear } at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
@@ -192,14 +160,50 @@ export default function AboutUs() {
 
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  <span className="text-30 font-bold">{`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}</span>{' '}
+                  <span className="text-30 font-bold">
+                      {`${
+                        raffleStartTimeLeft.days < 10
+                          ? '0' + raffleStartTimeLeft.days
+                          : raffleStartTimeLeft.days
+                      }:${
+                        raffleStartTimeLeft.hours < 10
+                          ? '0' + raffleStartTimeLeft.hours
+                          : raffleStartTimeLeft.hours
+                      }:${
+                        raffleStartTimeLeft.minutes < 10
+                          ? '0' + raffleStartTimeLeft.minutes
+                          : raffleStartTimeLeft.minutes
+                      }:${
+                        raffleStartTimeLeft.seconds < 10
+                          ? '0' + raffleStartTimeLeft.seconds
+                          : raffleStartTimeLeft.seconds
+                      }`}
+                  </span>{' '}
                   Left
                 </p>
               )}
 
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
-                  <span className="text-30 font-bold">{`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}</span>{' '}
+                  <span className="text-30 font-bold">
+                      {`${
+                        raffleEndTimeLeft.days < 10
+                          ? '0' + raffleEndTimeLeft.days
+                          : raffleEndTimeLeft.days
+                      }:${
+                        raffleEndTimeLeft.hours < 10
+                          ? '0' + raffleEndTimeLeft.hours
+                          : raffleEndTimeLeft.hours
+                      }:${
+                        raffleEndTimeLeft.minutes < 10
+                          ? '0' + raffleEndTimeLeft.minutes
+                          : raffleEndTimeLeft.minutes
+                      }:${
+                        raffleEndTimeLeft.seconds < 10
+                          ? '0' + raffleEndTimeLeft.seconds
+                          : raffleEndTimeLeft.seconds
+                      }`}{' '}
+                  </span>
                   Left
                 </p>
               )}

@@ -21,11 +21,15 @@ const ConnectWalletButton = () => {
     },
   }
 
-  const web3Modal = new Web3Modal({
-    network: process.env.network,
-    cacheProvider: true,
-    providerOptions,
-  })
+  let web3Modal: any = null;
+
+  if (typeof (window as any) !== 'undefined') {
+    web3Modal = new Web3Modal({
+      network: process.env.network,
+      cacheProvider: true,
+      providerOptions,
+    });
+  }
 
   const loadProvider = async () => {
     if (!gProvider) {
@@ -70,6 +74,9 @@ const ConnectWalletButton = () => {
   }
 
   useEffect(() => {
+    if (wallet) {
+      setMetaMaskAccount(shortenTxHash(wallet));
+    }
     function handleClickOutside(event: any) {
       if (metaMaskRef.current && !metaMaskRef.current.contains(event.target)) {
         setShowConnectModal(false);

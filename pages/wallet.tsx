@@ -198,7 +198,7 @@ export default function Wallet() {
                 <div className="text-white">
                   {raffleState === RaffleState.Waiting && (
                     <span className="font-medium text-16 mr-15">
-                      RAFFLE BEGINS ON { monthNames[projectSchedule.wMonth - 1] + ' ' + projectSchedule.wDay + ' ' + projectSchedule.wYear }
+                      RAFFLE BEGINS ON { monthNames[projectSchedule.wMonth - 1] + ' ' + projectSchedule.wDay + ', ' + projectSchedule.wYear }
                     </span>
                   )}
                   {raffleState === RaffleState.Live && (

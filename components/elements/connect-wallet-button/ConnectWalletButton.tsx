@@ -15,7 +15,7 @@ const ConnectWalletButton = () => {
   const { wallet, lang, updateWallet } = useContext(AppContext)
   const metaMaskRef = useRef<HTMLDivElement>(null);
 
-  const providerOptions = {
+  const providerOptions: any = {
     walletconnect: {
       rpcUrl: process.env.rpcURI,
     },
@@ -60,7 +60,7 @@ const ConnectWalletButton = () => {
     return txHash.substr(0, 6) + "_" + txHash.substr(txHash.length-4)
   }
 
-  const connectMetaMask = () => {
+  const connectMetaMask = async () => {
     gProvider = loadProvider()
     setShowConnectModal(false);
   }

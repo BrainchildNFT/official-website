@@ -197,12 +197,16 @@ export default function Home() {
     let differenceFromRaffleEnd =
       +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
 
-    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
-    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
-    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
+    if (differenceFromRaffleEnd < 1) {
+      setRaffleState(RaffleState.Ended)
+    } else {
+      if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
+      if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
+    }
   }
 
   useEffect(() => {
+    updateRaffleState()
     const timer = setInterval(() => {
       setRaffleStartTimeLeft(calculateTimeLeft(0))
       setRaffleEndTimeLeft(calculateTimeLeft(1))
@@ -304,7 +308,7 @@ export default function Home() {
           </div>
         )}
     </>)
-  }, [raffleStartTimeLeft, raffleEndTimeLeft, stateBarBackground]);
+  }, [raffleStartTimeLeft, raffleEndTimeLeft, stateBarBackground, raffleState])
 
   return (
     <>

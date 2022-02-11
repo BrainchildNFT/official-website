@@ -88,6 +88,7 @@ export default function Nfts() {
   }
 
   useEffect(() => {
+    updateRaffleState()
     const timer = setInterval(() => {
       setRaffleStartTimeLeft(calculateTimeLeft(0))
       setRaffleEndTimeLeft(calculateTimeLeft(1))

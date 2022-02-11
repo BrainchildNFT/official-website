@@ -156,6 +156,43 @@ export const brainchildIcons = {
         )}"/>
     </svg>
   `,
+  gift: (size = 330, color?: string) => `
+    <svg width="${size}" height="${size}" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.6654 10V18.3333H3.33203V10" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18.3346 5.83333H1.66797V10H18.3346V5.83333Z" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 18.3333V5.83333" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.0013 5.83334H6.2513C5.69877 5.83334 5.16886 5.61384 4.77816 5.22314C4.38746 4.83244 4.16797 4.30254 4.16797 3.75C4.16797 3.19747 4.38746 2.66757 4.77816 2.27687C5.16886 1.88617 5.69877 1.66667 6.2513 1.66667C9.16797 1.66667 10.0013 5.83334 10.0013 5.83334Z" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 5.83334H13.75C14.3025 5.83334 14.8324 5.61384 15.2231 5.22314C15.6138 4.83244 15.8333 4.30254 15.8333 3.75C15.8333 3.19747 15.6138 2.66757 15.2231 2.27687C14.8324 1.88617 14.3025 1.66667 13.75 1.66667C10.8333 1.66667 10 5.83334 10 5.83334Z" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+  environment_icon: (size = 330, color?: string) => `
+    <svg width="${size}" height="${size}" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.8">
+      <path d="M3.33464 1.66666C2.89261 1.66666 2.46868 1.84225 2.15612 2.15481C1.84356 2.46737 1.66797 2.8913 1.66797 3.33332" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6.66797 1.66666H8.33463" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.668 1.66666H13.3346" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3.33464 18.3333C2.89261 18.3333 2.46868 18.1577 2.15612 17.8452C1.84356 17.5326 1.66797 17.1087 1.66797 16.6667" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18.332 6.66666V8.33332" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18.332 11.6667V13.3333" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18.3346 16.6667C18.3346 17.1087 18.159 17.5326 17.8465 17.8452C17.5339 18.1577 17.11 18.3333 16.668 18.3333" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.668 18.3333H13.3346" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6.66797 18.3333H8.33463" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16.668 1.66666C17.11 1.66666 17.5339 1.84225 17.8465 2.15481C18.159 2.46737 18.3346 2.8913 18.3346 3.33332" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1.66797 11.6667V13.3333" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1.66797 6.66666V8.33332" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  `,
+  shine_icon: (size = 330, color?: string) => `
+    <svg width="${size}" height="${size}" fill="none" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M6.91738 0.858183C6.23548 3.44693 5.25621 4.94236 3.53253 6.02717C2.88306 6.43591 2.07578 6.79817 1.20864 7.06999C1.09384 7.10598 0.999958 7.13862 1 7.14252C1.00004 7.14642 1.12848 7.19095 1.2854 7.24145C3.33246 7.90032 4.7583 8.91698 5.67966 10.3746C6.18553 11.175 6.60532 12.2156 6.93029 13.4748C6.9643 13.6065 6.99547 13.7143 6.9996 13.7143C7.00372 13.7143 7.04108 13.5853 7.08261 13.4276C7.76452 10.8388 8.74379 9.34338 10.4675 8.25857C11.1169 7.84983 11.9242 7.48757 12.7914 7.21575C12.9061 7.17976 13 7.14712 13 7.14322C13 7.13932 12.8715 7.09479 12.7146 7.04428C10.6675 6.38541 9.2417 5.36876 8.32034 3.91109C7.81447 3.11077 7.39467 2.07016 7.06971 0.810955C7.0357 0.679229 7.00453 0.571442 7.0004 0.571442C6.99628 0.571442 6.95892 0.700482 6.91738 0.858183Z" stroke="${getColor(color)}"/>
+    </svg>
+  `,
+  efficiency_icon: (size = 330, color?: string) => `
+    <svg width="${size}" height="${size}" fill="none" viewBox="0 0 16 17" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.45833 3C4.29257 3 4.1336 3.06585 4.01639 3.18306C3.89918 3.30027 3.83333 3.45924 3.83333 3.625V7.375C3.83333 7.72 4.11333 8 4.45833 8H9.04167C9.20743 8 9.3664 7.93415 9.48361 7.81694C9.60082 7.69973 9.66667 7.54076 9.66667 7.375V3.625C9.66667 3.45924 9.60082 3.30027 9.48361 3.18306C9.3664 3.06585 9.20743 3 9.04167 3H4.45833ZM5.08333 6.75V4.25H8.41667V6.75H5.08333ZM3.625 0.5C3.01721 0.5 2.43432 0.741443 2.00455 1.17121C1.57478 1.60098 1.33333 2.18388 1.33333 2.79167V15.0833H1.125C0.95924 15.0833 0.800268 15.1492 0.683058 15.2664C0.565848 15.3836 0.5 15.5426 0.5 15.7083C0.5 15.8741 0.565848 16.0331 0.683058 16.1503C0.800268 16.2675 0.95924 16.3333 1.125 16.3333H12.375C12.5408 16.3333 12.6997 16.2675 12.8169 16.1503C12.9342 16.0331 13 15.8741 13 15.7083C13 15.5426 12.9342 15.3836 12.8169 15.2664C12.6997 15.1492 12.5408 15.0833 12.375 15.0833H12.1667V13.5808C12.5154 13.7601 12.9044 13.8467 13.2963 13.8324C13.6882 13.818 14.0698 13.7032 14.4044 13.4988C14.7391 13.2945 15.0157 13.0075 15.2075 12.6655C15.3994 12.3235 15.5001 11.938 15.5 11.5458V6.68083C15.5 6.18499 15.3392 5.70251 15.0417 5.30583L14.125 4.08333C14.0255 3.95073 13.8775 3.86306 13.7134 3.83962C13.5493 3.81617 13.3826 3.85888 13.25 3.95833C13.1174 4.05779 13.0297 4.20585 13.0063 4.36995C12.9828 4.53404 13.0255 4.70073 13.125 4.83333L14.0417 6.05583C14.1767 6.23583 14.25 6.45583 14.25 6.68083V11.5458C14.25 11.6821 14.2232 11.817 14.171 11.9429C14.1189 12.0687 14.0425 12.1831 13.9461 12.2795C13.8498 12.3758 13.7354 12.4522 13.6095 12.5044C13.4837 12.5565 13.3487 12.5833 13.2125 12.5833C13.0763 12.5833 12.9413 12.5565 12.8155 12.5044C12.6896 12.4522 12.5752 12.3758 12.4789 12.2795C12.3825 12.1831 12.3061 12.0687 12.254 11.9429C12.2018 11.817 12.175 11.6821 12.175 11.5458V10.0833C12.1749 10.0496 12.1721 10.0158 12.1667 9.9825V2.79167C12.1667 2.49072 12.1074 2.19272 11.9922 1.91468C11.8771 1.63665 11.7083 1.38401 11.4955 1.17121C11.2827 0.958413 11.03 0.78961 10.752 0.674443C10.4739 0.559276 10.1759 0.5 9.875 0.5H3.625ZM10.9167 15.0833H2.58333V2.79167C2.58333 2.21667 3.05 1.75 3.625 1.75H9.875C10.45 1.75 10.9167 2.21667 10.9167 2.79167V15.0833Z" fill="${getColor(color)}"/>
+    </svg>
+  `,
   hyperLink: (size = 330, color?: string) => `
     <svg width="${size}" height="${size}" fill="none" viewBox="0 0 24 25" xmlns="http://www.w3.org/2000/svg">
       <path d="M18 13.5V19.5C18 20.0304 17.7893 20.5391 17.4142 20.9142C17.0391 21.2893 16.5304 21.5 16 21.5H5C4.46957 21.5 3.96086 21.2893 3.58579 20.9142C3.21071 20.5391 3 20.0304 3 19.5V8.5C3 7.96957 3.21071 7.46086 3.58579 7.08579C3.96086 6.71071 4.46957 6.5 5 6.5H11" stroke-linecap="round" stroke-linejoin="round" stroke="${getColor(
@@ -167,6 +204,21 @@ export const brainchildIcons = {
       <path d="M10 14.5L21 3.5" stroke-linecap="round" stroke-linejoin="round" stroke="${getColor(
         color
       )}"/>
+    </svg>
+  `,
+  circle_info: (size = 24, color?: string) => `
+    <svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+      <path d="M10.0013 1.66667C14.6037 1.66667 18.3346 5.39763 18.3346 10C18.3346 14.6024 14.6037 18.3333 10.0013 18.3333C5.39893 18.3333 1.66797 14.6024 1.66797 10C1.66797 5.39763 5.39893 1.66667 10.0013 1.66667Z" stroke="${getColor(color)}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 6.66667V10" stroke="${getColor(color)}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 13.3333H10.0083" stroke="${getColor(color)}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+  gem: (size = 24, color?: string) => `
+    <svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+      <path d="M5.0013 2.5H15.0013L18.3346 7.5L10.0013 18.3333L1.66797 7.5L5.0013 2.5Z" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 18.3333L13.3333 7.5L10.8333 2.5" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.0013 18.3333L6.66797 7.5L9.16797 2.5" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1.66797 7.5H18.3346" stroke="${getColor(color)}" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   `,
   check: (size = 24, color?: string) => `

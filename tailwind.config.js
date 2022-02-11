@@ -89,6 +89,7 @@ module.exports = {
         75: '#BFE3BC',
         100: '#74B06F',
         200: '#63965F',
+        500: '#71A1ED',
       },
       warning: {
         DEFAULT: '#F18F01',
@@ -118,7 +119,7 @@ module.exports = {
       },
       pink: {
         gray: '#AF5F5F',
-      },
+      }
     },
     fontFamily: {
       poppins: ['Inter', 'sans-serif'],

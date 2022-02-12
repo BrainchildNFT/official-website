@@ -1,25 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react'
-import ReactSlider from 'react-slider'
-import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css/scrollbar'
-import SwiperCore, { Scrollbar } from 'swiper'
-import { Layout } from '../components/layout/layout'
-import {
-  faq_display_limit,
-  faqs,
-  nftList,
-  RaffleState,
-} from '../core/data/landing'
-import useGAService from '../core/app-services/ga-service'
-import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
-import Icon from '../components/ui-kit/icon'
-import { useRouter } from 'next/router'
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import ReactSlider from 'react-slider';
+import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import SwiperCore, { Scrollbar } from 'swiper';
+
+import { monthNames, projectSchedule, TimeLeft } from '../core/data/base';
+import { Layout } from '../components/layout/layout';
+import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing';
+import useGAService from '../core/app-services/ga-service';
+import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
+import Icon from '../components/ui-kit/icon';
 
 SwiperCore.use([Scrollbar])
 
@@ -82,9 +79,19 @@ export default function Home() {
 
   const [currentFaqIndex, setCurrentFaqIndex] = useState(-1)
   const [isLoadMoreFaq, setIsLoadMoreFaq] = useState(false)
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
+  const [raffleState, setRaffleState] = useState<RaffleState>(RaffleState.Waiting)
   const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
   const [swiperValue, setSwiperValue] = useState(0)
+  const [scrollY, setScrollY] = useState(0)
+  const [prevChairWidth, setPrevChairWidth] = useState(500)
+  const [prevChairHeight, setPrevChairHeight] = useState(700)
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+
+  const experiencedNFTRef = useRef<HTMLDivElement>(null)
+  const chairImageRef = useRef<HTMLImageElement>(null)
+  const heroSectionRef = useRef<HTMLDivElement>(null)
+  const swiperRef = useRef<SwiperCore>()
 
   const nfts = nftList.images
   const faqData = faqs.data
@@ -108,19 +115,9 @@ export default function Home() {
 
   const size = useWindowSize()
 
-  const experiencedNFTRef = useRef<HTMLDivElement>(null)
-  const chairImageRef = useRef<HTMLImageElement>(null)
-  const exploreImageRef = useRef<HTMLDivElement>(null)
-  const heroSectionRef = useRef<HTMLDivElement>(null)
-  const swiperRef = useRef<SwiperCore>()
-
   const onInit = (Swiper: SwiperCore): void => {
     swiperRef.current = Swiper
   }
-
-  const [scrollY, setScrollY] = useState(0)
-  const [prevChairWidth, setPrevChairWidth] = useState(500)
-  const [prevChairHeight, setPrevChairHeight] = useState(700)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -172,50 +169,22 @@ export default function Home() {
 
   const router = useRouter()
 
-  interface TimeLeft {
-    days: string
-    hours: string
-    minutes: string
-    seconds: string
-  }
-
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
-      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let timeLeft: TimeLeft = {
-      days: '00',
-      hours: '00',
-      minutes: '00',
-      seconds: '00',
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
     }
 
     if (difference > 0) {
       timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        minutes: Math.floor((difference / 1000 / 60) % 60).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        seconds: Math.floor((difference / 1000) % 60).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        }),
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
       }
     }
 
@@ -224,23 +193,20 @@ export default function Home() {
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
 
-    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
-    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
-    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
+    if (differenceFromRaffleEnd < 1) {
+      setRaffleState(RaffleState.Ended)
+    } else {
+      if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
+      if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
+    }
   }
 
-  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(0)
-  )
-  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(1)
-  )
-
   useEffect(() => {
+    updateRaffleState()
     const timer = setInterval(() => {
       setRaffleStartTimeLeft(calculateTimeLeft(0))
       setRaffleEndTimeLeft(calculateTimeLeft(1))
@@ -248,14 +214,107 @@ export default function Home() {
     }, 1000)
   }, [])
 
+  const stateComponent = useMemo(() => {
+    return (<>
+      {scrollY <
+        (heroSectionRef.current?.clientHeight || 0) - size.height / 2 && (
+          <div className="fixed bottom-0 w-full flex flex-col items-center">
+            <div
+              className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer"
+              onClick={() => router.push('/nfts')}
+            >
+              <img src="/assets/images/landing-page/icon-ethereum.svg" />
+              <span className="mx-15">EXPLORE COLLECTION</span>
+              <img src="/assets/images/landing-page/icon-arrow-right.svg" />
+            </div>
+            <div
+              className={
+                'w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 text-18 sm:text-20 mt-50 ' +
+                stateBarBackground
+              }
+            >
+              {raffleState === RaffleState.Waiting && (
+                <p className="font-medium text-center">
+                  Presale raffle begins on { projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear } at 00:00 AM UTC
+                </p>
+              )}
+              {raffleState === RaffleState.Live && (
+                <p className="font-medium text-center">
+                  Presale raffle Results{' '}
+                  <span className="text-30 font-bold">LIVE NOW!</span> end on
+                  { projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear } at 00:00 AM UTC
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  Raffle Results{' '}
+                  <span className="text-30 font-bold">LIVE NOW!</span>
+                </p>
+              )}
+
+              {raffleState === RaffleState.Waiting && (
+                <p className="font-medium text-center">
+                  <span className="text-30 font-bold">
+                      {`${
+                        raffleStartTimeLeft.days < 10
+                          ? '0' + raffleStartTimeLeft.days
+                          : raffleStartTimeLeft.days
+                      }:${
+                        raffleStartTimeLeft.hours < 10
+                          ? '0' + raffleStartTimeLeft.hours
+                          : raffleStartTimeLeft.hours
+                      }:${
+                        raffleStartTimeLeft.minutes < 10
+                          ? '0' + raffleStartTimeLeft.minutes
+                          : raffleStartTimeLeft.minutes
+                      }:${
+                        raffleStartTimeLeft.seconds < 10
+                          ? '0' + raffleStartTimeLeft.seconds
+                          : raffleStartTimeLeft.seconds
+                      }`}
+                  </span>{' '}
+                  Left
+                </p>
+              )}
+
+              {raffleState === RaffleState.Live && (
+                <p className="font-medium text-center">
+                  {`${
+                    raffleEndTimeLeft.days < 10
+                      ? '0' + raffleEndTimeLeft.days
+                      : raffleEndTimeLeft.days
+                  }:${
+                    raffleEndTimeLeft.hours < 10
+                      ? '0' + raffleEndTimeLeft.hours
+                      : raffleEndTimeLeft.hours
+                  }:${
+                    raffleEndTimeLeft.minutes < 10
+                      ? '0' + raffleEndTimeLeft.minutes
+                      : raffleEndTimeLeft.minutes
+                  }:${
+                    raffleEndTimeLeft.seconds < 10
+                      ? '0' + raffleEndTimeLeft.seconds
+                      : raffleEndTimeLeft.seconds
+                  }`}{' '}
+                  Left
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  Connect wallet to check if you’re whitelisted
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+    </>)
+  }, [raffleStartTimeLeft, raffleEndTimeLeft, stateBarBackground, raffleState])
+
   return (
     <>
       <Head>
-        <title>Brainchild: HomePage</title>
-        <meta
-          name="description"
-          content="Unlocking innovative ownership experiences by connecting to web3. Redeem, upgrade, enhance NFTs that traverse both digital and real world."
-        />
+        <title>BrainchildNFT - EthClock</title>
+        <meta name="description" content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
@@ -263,26 +322,7 @@ export default function Home() {
           <div
             className="relative"
             ref={heroSectionRef}
-            // onMouseMove={(event) => {
-            //   if (exploreImageRef.current) {
-            //     exploreImageRef.current.style.top =
-            //       event.clientY - 105 + scrollY + 'px'
-            //     exploreImageRef.current.style.left = event.clientX + 'px'
-            //   }
-            // }}
-            // onClick={() => router.push('/nfts')}
           >
-            {/* <div
-              className="absolute w-120 h-120 sm:w-120 sm:h-120 xl:w-150 xl:h-150 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[0] sm:z-[400]"
-              ref={exploreImageRef}
-            >
-              <Image
-                src="/assets/images/landing-page/radial-explore.png"
-                layout="fill"
-                alt="Explore"
-              />
-            </div> */}
-
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
               <div className="absolute w-full sm:w-3/5 flex items-center justify-center transform -translate-y-1/4 transy20">
                 <div className="w-full flex justify-center">
@@ -354,77 +394,12 @@ export default function Home() {
           </div>
 
           {/*state bar*/}
-          {scrollY <
-            (heroSectionRef.current?.clientHeight || 0) - size.height / 2 && (
-            <div className="fixed bottom-0 w-full flex flex-col items-center">
-              <div
-                className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer"
-                onClick={() => router.push('/nfts')}
-              >
-                <img src="/assets/images/landing-page/icon-ethereum.svg" />
-                <span className="mx-15">EXPLORE COLLECTION</span>
-                <img src="/assets/images/landing-page/icon-arrow-right.svg" />
-              </div>
-              <div
-                className={
-                  'w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 text-18 sm:text-20 mt-50 ' +
-                  stateBarBackground
-                }
-              >
-                {raffleState === RaffleState.Waiting && (
-                  <p className="font-medium text-center">
-                    Presale raffle begins on 07 Feb, 2022 at 00:00 AM UTC
-                  </p>
-                )}
-                {raffleState === RaffleState.Live && (
-                  <p className="font-medium text-center">
-                    Presale raffle Results{' '}
-                    <span className="text-30 font-bold">LIVE NOW!</span> end on
-                    08 Feb, 2022 at 00:00 AM UTC
-                  </p>
-                )}
-                {raffleState === RaffleState.Ended && (
-                  <p className="font-medium text-center">
-                    Raffle Results{' '}
-                    <span className="text-30 font-bold">LIVE NOW!</span>
-                  </p>
-                )}
-
-                {raffleState === RaffleState.Waiting && (
-                  <p className="font-medium text-center">
-                    <span className="text-30 font-bold">{`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}</span>{' '}
-                    Left
-                  </p>
-                )}
-
-                {raffleState === RaffleState.Live && (
-                  <p className="font-medium text-center">
-                    <span className="text-30 font-bold">{`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}</span>{' '}
-                    Left
-                  </p>
-                )}
-                {raffleState === RaffleState.Ended && (
-                  <p className="font-medium text-center">
-                    Connect wallet to check if you’re whitelisted
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
+          {stateComponent}
         </section>
 
         <div className="light-background-image">
           {/*Immerse yourself in the new age of LUXURY*/}
           <section className="relative pt-130 overflow-x-hidden">
-            {/* <div className="border-y border-gradient-dark p-25">
-              <p className="text-primary-50 whitespace-nowrap transition eas-in-out transform -translate-y-1">
-                Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
-                eget mi augue malesuada scelerisque sed consequat, non. Sagittis
-                magnis ac, auctor dictum tristique turpis posuere. Fermentum
-                euismod sed pretium amet viverra odio ut. Mattis urna eget mi
-                augue malesuada scelerisque sed consequat, non.
-              </p>
-            </div> */}
             <div className="p-30 sm:p-100 mx-auto relative z-50">
               <div
                 className="text-45 sm:text-95 lg:text-120 text-center leading-tight text-primary-75 pt-60 lg:text-center"

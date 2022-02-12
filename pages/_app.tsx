@@ -10,6 +10,7 @@ import GoogleAds from '../components/3rd-party/google-ads'
 import useGAService from '../core/app-services/ga-service'
 import reducers from '../core/reducers';
 import { AppProvider } from '../components/context/app-context';
+import { DialogProvider } from '../components/dialog/dialog-context';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -31,12 +32,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <AppProvider>
-        <Provider store={store}>
-          <Component {...pageProps} />
-          <GoogleAds />
-        </Provider>
-      </AppProvider>
+      <DialogProvider>
+        <AppProvider>
+          <Provider store={store}>
+            <Component {...pageProps} />
+            <GoogleAds />
+          </Provider>
+        </AppProvider>
+      </DialogProvider>
     </>
   )
 }

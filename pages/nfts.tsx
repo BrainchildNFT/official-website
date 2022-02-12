@@ -18,7 +18,7 @@ import Enhancements from '../components/nfts/enhancements'
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
 import Artist from '../components/nfts/artist'
 import { themeUpdate } from '../core/actions/theme-update'
-import { ThemeType } from '../core/data/base'
+import { monthNames, projectSchedule, ThemeType, TimeLeft } from '../core/data/base';
 import { sidebarUpdate } from '../core/actions/sidebar-update'
 
 export default function Nfts() {
@@ -27,6 +27,8 @@ export default function Nfts() {
   const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
   const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About)
   const [textColor, setTextColor] = useState('text-white')
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
 
   const themeStatus = useSelector((state: any) => state.ThemeStatus)
   const dispatch = useDispatch()
@@ -54,8 +56,13 @@ export default function Nfts() {
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
-      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
-    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 }
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
+    let timeLeft: TimeLeft = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    }
 
     if (difference > 0) {
       timeLeft = {
@@ -71,23 +78,17 @@ export default function Nfts() {
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
 
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
     if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
   }
 
-  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(0)
-  )
-  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(1)
-  )
-
   useEffect(() => {
+    updateRaffleState()
     const timer = setInterval(() => {
       setRaffleStartTimeLeft(calculateTimeLeft(0))
       setRaffleEndTimeLeft(calculateTimeLeft(1))
@@ -327,14 +328,14 @@ export default function Nfts() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className={'text-center text-16 ' + textColor}>
-                  PRESALE RAFFLE BEGINS ON FEB 07, 2022
+                  RAFFLE BEGINS ON { monthNames[projectSchedule.wMonth - 1] + ' ' + projectSchedule.wDay + ', ' + projectSchedule.wYear }
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className={'text-center text-16 ' + textColor}>
                   RAFFLE RESULTS{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span> END ON 08
-                  FEB, 2022
+                  <span className="text-30 font-bold">LIVE NOW!</span> END ON
+                  { projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear } at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (

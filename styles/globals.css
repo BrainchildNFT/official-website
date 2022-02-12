@@ -244,6 +244,16 @@ html {
   background-image: url('/assets/images/light-background-tile.png');
 }
 
+.wallet-notify-background {
+  background: radial-gradient(67.75% 67.75% at 30.16% 77.78%, rgba(255, 255, 255, 0.012) 0%, rgba(255, 255, 255, 0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wallet-mint-background {
+  background: radial-gradient(67.75% 67.75% at 30.16% 77.78%, rgba(76, 128, 213, 0.012) 0%, rgba(113, 161, 237, 0.012) 0.01%, rgba(113, 161, 237, 0.6) 100%);
+}
+
 .faq-content-background {
   background: conic-gradient(
       from 180deg at 50% 50%,
@@ -498,6 +508,39 @@ html {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* spinner */
+.spinner .path {
+  stroke: #07A39D;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* z-index */
+.z-999 {
+  z-index: 99 !important;
 }
 
 /* vertical letter */

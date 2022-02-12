@@ -126,6 +126,12 @@ export default function Wallet() {
     }
   };
 
+  const showMintDiv = () => {
+    if (isWhiteListed) {
+      setShowMint(true);
+    }
+  };
+
   const stateBarBackground = useMemo(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
@@ -168,7 +174,7 @@ export default function Wallet() {
       setIsLoading(true);
       const web3 = new Web3(Web3.givenProvider);
       const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-      const _currentTokenId = await contract.methods.currentTokenId().call();
+      const _currentTokenId = await contract.methods.totalSupply().call();
       setCurrentTokenId(_currentTokenId);
     } catch(err: any) {
       alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
@@ -189,7 +195,7 @@ export default function Wallet() {
       setPresaleAllowed(!!_presaleAllowed);
       const whiteListedFlag = await contract.methods.whiteList(wallet).call();
       setIsWhiteListed(!!whiteListedFlag);
-      const _tokenIdList = await contract.methods.tokenIdList(wallet).call();
+      const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();
       setTokenIdList(_tokenIdList || []);
     } catch(err: any) {
       alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
@@ -213,19 +219,21 @@ export default function Wallet() {
           console.log('receipt = ', receipt);
         })
         .on('confirmation', function(confirmationNumber: any, receipt: any){
+          setIsLoading(false);
           getInitialValues()
         })
         .on('error', function(error: any, receipt: any) {
           alertService.notify('Raffle Failed', 'You wallet didn\'t joined raffle. Please try again', 'Ok');
+          setIsLoading(false);
         });
       } else {
         alertService.notify('Raffle Failed', 'You wallet address already registered.', 'Ok');
+        setIsLoading(false);
       }
     } catch(err: any) {
+      setIsLoading(false);
       alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
       console.log(err)
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -237,26 +245,24 @@ export default function Wallet() {
         const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress, {from: wallet, gasPrice: '20000000000'});
         contract.methods.drop().send({from: wallet, value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount})
           .on('transactionHash', function(hash: any){
-            console.log('hash - ', hash);
             alertService.notify('Minting Success', 'You minted a Eth-Clock NFT.', 'Ok');
           })
           .on('receipt', function(receipt: any){
             console.log('receipt = ', receipt);
           })
           .on('confirmation', function(confirmationNumber: any, receipt: any){
-            console.log('confirmationNumber - ', confirmationNumber);
-            console.log('receipt - ', receipt);
+            setIsLoading(false);
             setShowMint(false);
             getInitialValues();
           })
           .on('error', function(error: any, receipt: any) {
             alertService.notify('Minting Failed', 'You wallet didn\'t mint. Please try again', 'Ok');
+            setIsLoading(false);
           });
       } catch(err: any) {
         alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-        console.log(err)
-      } finally {
         setIsLoading(false);
+        console.log(err)
       }
     }
   }
@@ -334,7 +340,7 @@ export default function Wallet() {
                     </span>
             )}
             {raffleState === RaffleState.Ended && (
-              <div onClick={() => setShowMint(true)} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer " + (isWhiteListed ? 'bg-success-500' : 'bg-danger')}>
+              <div onClick={() => showMintDiv()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer " + (isWhiteListed ? 'bg-success-500' : 'bg-danger')}>
                 <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white" size={16} /></span>
                 <span className="text-white text-16 font-semibold">{isWhiteListed ? 'Start Minting' : 'Not Whitelisted'}</span>
               </div>

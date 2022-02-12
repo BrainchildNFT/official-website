@@ -22,7 +22,15 @@ export interface TimeLeft {
 
 export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-export const probabilities = {
+interface TraitValuesType {
+  [key: string]: string;
+}
+
+interface ProbabilitiesType {
+  [key: string]: TraitValuesType;
+}
+
+export const probabilities: ProbabilitiesType = {
   'Environment': {
     'Smart Contract': '4%',
     'Near Future':    '8%',

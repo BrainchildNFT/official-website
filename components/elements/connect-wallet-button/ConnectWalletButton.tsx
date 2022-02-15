@@ -36,8 +36,14 @@ const ConnectWalletButton = () => {
       console.log("connecting >> network = " + process.env.network)
       gProvider = await web3Modal.connect()
       onConnect()
-      gProvider.on('accountsChanged', onConnect)
-      gProvider.on('disconnect', onDisconnect)
+      gProvider.on('accountsChanged', onConnect);
+      gProvider.on('connect', (info: { chainId: number }) => {
+        console.log('connect info = ', info);
+      });
+      gProvider.on('disconnect', onDisconnect);
+      gProvider.on('chainChanged', (chainId: number) => {
+        console.log('changed chainId = ', chainId);
+      });
     }
     return gProvider
   }
@@ -194,7 +200,7 @@ const ConnectWalletButton = () => {
           />
         </svg>
         <button className="hidden px-5 text-18 font-bold w-150 group-hover:block">
-          {metaMaskAccount ? 'Disconnect' : 'Coming Soon'}
+          {metaMaskAccount ? 'Disconnect' : ''}
         </button>
         <button className="flex items-center group-hover:hidden px-5 text-18 font-bold w-150 z-10">
           <p

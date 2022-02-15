@@ -74,6 +74,7 @@ export default function Wallet() {
     if (!wallet) {
       router.push('/');
     } else {
+      // nftApiService.requestIPFSInfo("https://ipfs.io/ipfs/QmbyxTCiC7w4xt3fcyN1huZH831sq1Mc6TVxxW9U2hnxDS");
       // const source = `{
       //                   "name":"Pending #1",
       //                   "symbol":"BRAINChiLD",
@@ -132,6 +133,10 @@ export default function Wallet() {
     }
   };
 
+  const shortenTxHash = (txHash: any) => {
+    return txHash.substr(0, 6) + "_" + txHash.substr(txHash.length-4)
+  }
+
   const stateBarBackground = useMemo(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
@@ -153,6 +158,11 @@ export default function Wallet() {
     try {
       setIsLoading(true);
       const web3 = new Web3(Web3.givenProvider);
+      const chainInfo: number = await web3.eth.getChainId();
+      if (chainInfo !== parseInt(process.env.chainId || '')) {
+        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        return;
+      }
       const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
       let tempList: Object[] = [];
       tokenIdList.map(async (tokenId: any) => {
@@ -173,6 +183,11 @@ export default function Wallet() {
     try {
       setIsLoading(true);
       const web3 = new Web3(Web3.givenProvider);
+      const chainInfo: number = await web3.eth.getChainId();
+      if (chainInfo !== parseInt(process.env.chainId || '')) {
+        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        return;
+      }
       const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
       const _currentTokenId = await contract.methods.totalSupply().call();
       setCurrentTokenId(_currentTokenId);
@@ -188,6 +203,11 @@ export default function Wallet() {
     try {
       setIsLoading(true);
       const web3 = new Web3(Web3.givenProvider);
+      const chainInfo: number = await web3.eth.getChainId();
+      if (chainInfo !== parseInt(process.env.chainId || '')) {
+        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        return;
+      }
       const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
       const registerFlag = await contract.methods.userList(wallet).call();
       setIsRegistered(!!registerFlag);
@@ -209,11 +229,16 @@ export default function Wallet() {
     try {
       setIsLoading(true);
       const web3 = new Web3(Web3.givenProvider);
+      const chainInfo: number = await web3.eth.getChainId();
+      if (chainInfo !== parseInt(process.env.chainId || '')) {
+        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        return;
+      }
       const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress, {from: wallet, gasPrice: '20000000000'});
       if (!isRegistered) {
         contract.methods.register().send({from: wallet})
         .on('transactionHash', function(hash: any){
-          alertService.notify('Raffle Success', 'You wallet address joined raffle.', 'Ok');
+          alertService.notify('Raffle Success', 'You wallet address ' + shortenTxHash(wallet) + ' joined raffle, good luck!', 'Ok');
         })
         .on('receipt', function(receipt: any){
           console.log('receipt = ', receipt);
@@ -223,7 +248,7 @@ export default function Wallet() {
           getInitialValues()
         })
         .on('error', function(error: any, receipt: any) {
-          alertService.notify('Raffle Failed', 'You wallet didn\'t joined raffle. Please try again', 'Ok');
+          alertService.notify('Raffle Failed', 'You wallet ' + shortenTxHash(wallet) + ' didn\'t joined raffle. Please try again', 'Ok');
           setIsLoading(false);
         });
       } else {
@@ -237,11 +262,16 @@ export default function Wallet() {
     }
   }
 
-  const mint = () => {
+  const mint = async () => {
     if (isWhiteListed) {
       try {
         setIsLoading(true);
         const web3 = new Web3(Web3.givenProvider);
+        const chainInfo: number = await web3.eth.getChainId();
+        if (chainInfo !== parseInt(process.env.chainId || '')) {
+          alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+          return;
+        }
         const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress, {from: wallet, gasPrice: '20000000000'});
         contract.methods.drop().send({from: wallet, value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount})
           .on('transactionHash', function(hash: any){
@@ -382,7 +412,7 @@ export default function Wallet() {
                   <Icon name="rhombusStars" color="white" size={20} />
                   <span className="text-bold font-Subjectivity text-24 break-all ml-10 text-white">NFTs</span>
                 </div>
-                <div onClick={() => setSelectedMenu(WalletMenuType.TransactionHistory)} className={"cursor-pointer pb-20 pl-10 border-b-2 " + (selectedMenu === WalletMenuType.TransactionHistory ? 'opacity-100 border-white' : 'opacity-30 border-transparent') }>
+                <div onClick={() => setSelectedMenu(WalletMenuType.TransactionHistory)} className={"hidden cursor-pointer pb-20 pl-10 border-b-2 " + (selectedMenu === WalletMenuType.TransactionHistory ? 'opacity-100 border-white' : 'opacity-30 border-transparent') }>
                   <Icon name="arrowLeftRight" color="white" size={20} />
                   <span className="text-bold font-Subjectivity text-24 break-all ml-10 text-white">Transaction History</span>
                 </div>
@@ -390,13 +420,13 @@ export default function Wallet() {
 
               <div className="mt-20 xl:mt-40 flex items-center justify-between text-16">
                 <div className="hidden xl:block">
-                  <span className="font-medium text-16 text-white">OUTCOME STATES</span>
+                  <span className="font-medium text-16 text-white">NFT Status</span>
                 </div>
                 <div onClick={() => setShowOutcomeStates(!showOutcomeStates)} className="xl:hidden text-white flex items-center px-20 py-10 bg-white-10 rounded-xl cursor-pointer">
-                  <span className="mr-10">OUTCOME STATES</span>
+                  <span className="mr-10">NFT Status</span>
                   <span><Icon name={showOutcomeStates ? 'down' : 'up'} color="white" size={10} /></span>
                 </div>
-                <div className="text-white flex items-center px-20 py-10 bg-white-10 rounded-xl">
+                <div className="hidden text-white flex items-center px-20 py-10 bg-white-10 rounded-xl">
                   <span className="opacity-30 mr-5">Sort by:</span>
                   <span className="mr-10">Mint Date</span>
                   <span><Icon name="down" color="white" size={10} /></span>
@@ -404,46 +434,46 @@ export default function Wallet() {
               </div>
 
               <div className={"mt-20 xl:mt-40 grid grid-cols-2 grid-rows-3 gap-10 " + (showOutcomeStates ? 'block' : 'hidden')}>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between">
+                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">ENHANCABLE</p>
-                    <p className="text-16 opacity-50">12 NFTs</p>
+                    <p className="text-16 opacity-50">0 NFTs</p>
                   </div>
                   <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">
                     <Image src="/assets/images/wallet/red-up-arrow.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
                   </div>
                 </div>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between">
+                <div className="hidden p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">GOD-TEIR</p>
-                    <p className="text-16 opacity-50">12 NFTs</p>
+                    <p className="text-16 opacity-50">0 NFTs</p>
                   </div>
                   <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">
                     <Image src="/assets/images/wallet/red-crown.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
                   </div>
                 </div>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between">
+                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">FROZEN</p>
-                    <p className="text-16 opacity-50">12 NFTs</p>
+                    <p className="text-16 opacity-50">0 NFTs</p>
                   </div>
                   <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">
                     <Image src="/assets/images/wallet/red-snow.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
                   </div>
                 </div>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between">
-                  <div>
-                    <p className="font-Subjectivity text-24 break-all">FAILED</p>
-                    <p className="text-16 opacity-50">12 NFTs</p>
-                  </div>
-                  <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">
-                    <Image src="/assets/images/wallet/red-circle-quote.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
-                  </div>
-                </div>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between">
+                {/*<div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">*/}
+                {/*  <div>*/}
+                {/*    <p className="font-Subjectivity text-24 break-all">FAILED</p>*/}
+                {/*    <p className="text-16 opacity-50">0 NFTs</p>*/}
+                {/*  </div>*/}
+                {/*  <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">*/}
+                {/*    <Image src="/assets/images/wallet/red-circle-quote.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>*/}
+                {/*  </div>*/}
+                {/*</div>*/}
+                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">CHARRED</p>
-                    <p className="text-16 opacity-50">12 NFTs</p>
+                    <p className="text-16 opacity-50">0 NFTs</p>
                   </div>
                   <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">
                     <Image src="/assets/images/wallet/red-fire.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>

@@ -313,7 +313,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>BrainchildNFT - EthClock</title>
+        <title>Brainchild: HomePage</title>
         <meta name="description" content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
       </Head>
       <Layout>

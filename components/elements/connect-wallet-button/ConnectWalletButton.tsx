@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
+import { useRouter } from 'next/router';
 
 import { ThemeType } from '../../../core/data/base';
 import { AppContext } from '../../context/app-context';
@@ -12,8 +13,10 @@ const ConnectWalletButton = () => {
   const themeStatus = useSelector((state: any) => state.ThemeStatus)
   const [metaMaskAccount, setMetaMaskAccount] = useState<string>('')
   const [showConnectModal, setShowConnectModal] = useState(false);
+  const [isFirstConnect, setIsFirstConnect] = useState(false);
   const { wallet, lang, updateWallet } = useContext(AppContext)
   const metaMaskRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const providerOptions: any = {
     walletconnect: {
@@ -52,6 +55,7 @@ const ConnectWalletButton = () => {
     const web3 = new Web3(gProvider)
     const accounts = await web3.eth.getAccounts()
     if (accounts.length > 0) {
+      setIsFirstConnect(true);
       updateWallet(accounts[0]);
       setMetaMaskAccount(shortenTxHash(accounts[0]));
     }
@@ -78,6 +82,13 @@ const ConnectWalletButton = () => {
       onDisconnect();
     }
   }
+
+  useEffect(() => {
+    if (isFirstConnect) {
+      router.push('/wallet');
+      setIsFirstConnect(false);
+    }
+  }, [wallet])
 
   useEffect(() => {
     if (wallet) {

@@ -63,7 +63,9 @@ const ConnectWalletButton = () => {
 
   const onDisconnect = () => {
     setMetaMaskAccount('');
+    updateWallet('');
     gProvider = null
+    router.push('/');
   }
 
   const shortenTxHash = (txHash: any) => {

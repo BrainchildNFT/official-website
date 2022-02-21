@@ -192,7 +192,7 @@ export default function Nfts() {
         <div className="relative flex flex-col xl:flex-row" ref={mainBody}>
           <div
             className={
-              'sm:min-w-400 sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 ' +
+              'sm:min-w-400 xl:max-w-400 sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 ' +
               (isTop ? 'h-screen-without-navbar' : 'h-screen-without-topbar') +
               (themeStatus === ThemeType.DarkMode
                 ? ' dark-background-image'
@@ -319,7 +319,7 @@ export default function Nfts() {
             </div>
             <div
               className={
-                'px-30 py-15 hidden xl:block ' +
+                'px-30 py-15 hidden xl:hidden ' +
                 (themeStatus === ThemeType.DarkMode
                   ? 'bg-primary'
                   : 'bg-white-50')
@@ -344,9 +344,9 @@ export default function Nfts() {
                 </p>
               )}
             </div>
-            <div className="bg-danger py-20 px-30 hidden xl:block">
+            <div className="bg-danger py-20 px-30 hidden xl:hidden">
               {raffleState === RaffleState.Waiting && (
-                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                <p className="text-center text-white text-20 font-Subjectivity font-bold">
                   {`${
                     raffleStartTimeLeft.days < 10
                       ? '0' + raffleStartTimeLeft.days
@@ -368,7 +368,7 @@ export default function Nfts() {
               )}
 
               {raffleState === RaffleState.Live && (
-                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                <p className="text-center text-white text-20 font-Subjectivity font-bold">
                   {`${
                     raffleEndTimeLeft.days < 10
                       ? '0' + raffleEndTimeLeft.days
@@ -390,7 +390,7 @@ export default function Nfts() {
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                <p className="text-center text-white text-20 font-Subjectivity font-bold">
                   Connect wallet to check if you’re whitelisted
                 </p>
               )}
@@ -493,7 +493,7 @@ export default function Nfts() {
           </div>
         </div>
 
-        <section className={isTop ? 'z-40 block xl:hidden' : 'hidden'}>
+        <section className={isTop ? 'z-40 hidden xl:hidden' : 'hidden'}>
           <div
             className={
               'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 ' +

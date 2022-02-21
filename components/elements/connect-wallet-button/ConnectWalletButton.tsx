@@ -33,7 +33,6 @@ const ConnectWalletButton = () => {
   return (
     <div
       className="group relative flex items-center cursor-pointer"
-      onClick={() => connectWallet()}
     >
       <div className="absolute h-full w-full overflow-y-clip">
         <svg

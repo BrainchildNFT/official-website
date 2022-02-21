@@ -356,7 +356,7 @@ export default function Home() {
           {/*state bar*/}
           {scrollY <
             (heroSectionRef.current?.clientHeight || 0) - size.height / 2 && (
-            <div className="fixed bottom-0 w-full flex flex-col items-center">
+            <div className="fixed bottom-0 w-full flex flex-col items-center hidden">
               <div
                 className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer"
                 onClick={() => router.push('/nfts')}

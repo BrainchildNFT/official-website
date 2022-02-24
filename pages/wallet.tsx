@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Web3 from 'web3';
-import IPFS from 'ipfs-mini';
+// import * as IPFS from 'ipfs-mini/src';
 
 import {
   errorDescription, ErrorMessage, monthNames, probabilities, projectSchedule, TimeLeft, WalletSate
@@ -21,6 +21,7 @@ import ethereumClockTokenAbi from '../abis/EthereumClockToken.json';
 import Spinner from '../components/common/spinner';
 import useAlert from '../components/dialog/use-alert';
 import { nftApiService } from '../core/api-services/nft-api.service';
+// import ipfsClient from 'ipfs-http-client';
 
 export default function Wallet() {
   const [isTop, setIsTop] = useState(true)
@@ -75,25 +76,38 @@ export default function Wallet() {
     }
   }
 
+  // const ipfsTest = async () => {
+  //   console.log("********************************");
+  //   const hash = 'QmWEL46PvVWwtxX5z6WPUn8XtKYAETgKG83V85iaoh14kp';
+  //   const ipfsClient = require('ipfs-http-client');
+  //   const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+  //   const res = await ipfs.cat(hash)
+  //   console.log("++++ = ", res.toString())
+  //   const checkPins = await ipfs.pin.ls(hash)
+  //   console.log("++++1 = ", checkPins) //{hash: QmYc..., type: "recursive" }
+  // }
+
   useEffect(() => {
     if (!wallet) {
       router.push('/');
     } else {
 
-      const ipfs = new IPFS({
-        host: 'ipfs.infura.io',
-        port: 5001,
-        protocol: 'https'
-      })
-      console.log('================');
-      ipfs.catJSON('QmWEL46PvVWwtxX5z6WPUn8XtKYAETgKG83V85iaoh14kp', async (err: any, data: any) => {
-        console.log('--------------');
-        if(err) {
-          console.log('err = ', err);
-        } else {
-          console.log('data = ', data);
-        }
-      });
+      // ipfsTest();
+
+      // const ipfs = new IPFS({
+      //   host: 'ipfs.infura.io',
+      //   port: 5001,
+      //   protocol: 'https'
+      // })
+      // console.log('================');
+      // ipfs.catJSON('QmWEL46PvVWwtxX5z6WPUn8XtKYAETgKG83V85iaoh14kp', async (err: any, data: any) => {
+      //   console.log('--------------');
+      //   if(err) {
+      //     console.log('err = ', err);
+      //   } else {
+      //     console.log('data = ', data);
+      //   }
+      // });
 
       // nftApiService.requestIPFSInfo("https://ipfs.io/ipfs/QmbyxTCiC7w4xt3fcyN1huZH831sq1Mc6TVxxW9U2hnxDS");
       // const source = `{

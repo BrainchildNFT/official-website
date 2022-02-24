@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Web3 from 'web3';
+import IPFS from 'ipfs-mini';
 
 import {
   errorDescription, ErrorMessage, monthNames, probabilities, projectSchedule, TimeLeft, WalletSate
@@ -78,6 +79,22 @@ export default function Wallet() {
     if (!wallet) {
       router.push('/');
     } else {
+
+      const ipfs = new IPFS({
+        host: 'ipfs.infura.io',
+        port: 5001,
+        protocol: 'https'
+      })
+      console.log('================');
+      ipfs.catJSON('QmWEL46PvVWwtxX5z6WPUn8XtKYAETgKG83V85iaoh14kp', async (err: any, data: any) => {
+        console.log('--------------');
+        if(err) {
+          console.log('err = ', err);
+        } else {
+          console.log('data = ', data);
+        }
+      });
+
       // nftApiService.requestIPFSInfo("https://ipfs.io/ipfs/QmbyxTCiC7w4xt3fcyN1huZH831sq1Mc6TVxxW9U2hnxDS");
       // const source = `{
       //                   "name":"Pending #1",
@@ -161,6 +178,7 @@ export default function Wallet() {
   const getTokenInfo = async () => {
     try {
       setIsLoading(true);
+
       const web3 = new Web3(Web3.givenProvider);
       const chainInfo: number = await web3.eth.getChainId();
       if (chainInfo !== parseInt(process.env.chainId || '')) {
@@ -171,11 +189,8 @@ export default function Wallet() {
       let tempList: Object[] = [];
       tokenIdList.map(async (tokenId: any) => {
         const tokenURI = await contract.methods.tokenURI(tokenId).call();
-
-        console.log('tokenURI = ', tokenURI);
         const res: any = await nftApiService.requestNFTInfo(tokenURI);
-        console.log('res = ', res);
-        tempList.push(JSON.parse(res));
+        tempList.push(res);
       })
       setTokenInfoList(tempList);
     } catch(err: any) {

@@ -141,12 +141,12 @@ export default function AboutUs() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  Presale raffle begins on { projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear } at 00:00 AM UTC
+                  { projectSchedule.stateStr } begins on { projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear } at 00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
-                  Presale raffle Results{' '}
+                  { projectSchedule.stateStr } Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> end on
                   { projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear } at 00:00 AM UTC
                 </p>

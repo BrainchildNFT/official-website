@@ -8,7 +8,9 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Web3 from 'web3';
 
-import { monthNames, projectSchedule, TimeLeft, probabilities } from '../core/data/base';
+import {
+  errorDescription, ErrorMessage, monthNames, probabilities, projectSchedule, TimeLeft, WalletSate
+} from '../core/data/base';
 import { Layout } from '../components/layout/layout';
 import { RaffleState } from '../core/data/landing';
 import Icon from '../components/ui-kit/icon';
@@ -27,6 +29,8 @@ export default function Wallet() {
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isWhiteListed, setIsWhiteListed] = useState(false);
+  const [isMinted, setIsMinted] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
   const [showMint, setShowMint] = useState(false);
   const [presaleAllowed, setPresaleAllowed] = useState(false);
   const [currentTokenId, setCurrentTokenId] = useState(0);
@@ -128,7 +132,7 @@ export default function Wallet() {
   };
 
   const showMintDiv = () => {
-    if (isWhiteListed) {
+    if (isWhiteListed && !isMinted) {
       setShowMint(true);
     }
   };
@@ -167,7 +171,10 @@ export default function Wallet() {
       let tempList: Object[] = [];
       tokenIdList.map(async (tokenId: any) => {
         const tokenURI = await contract.methods.tokenURI(tokenId).call();
+
+        console.log('tokenURI = ', tokenURI);
         const res: any = await nftApiService.requestNFTInfo(tokenURI);
+        console.log('res = ', res);
         tempList.push(JSON.parse(res));
       })
       setTokenInfoList(tempList);
@@ -208,15 +215,67 @@ export default function Wallet() {
         alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
         return;
       }
+      if (wallet === process.env.ownerAddress || '') {
+        setIsOwner(true);
+      }
+
       const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-      const registerFlag = await contract.methods.userList(wallet).call();
-      setIsRegistered(!!registerFlag);
-      const _presaleAllowed = await contract.methods._PRESALE_ALLOWED_().call();
-      setPresaleAllowed(!!_presaleAllowed);
-      const whiteListedFlag = await contract.methods.whiteList(wallet).call();
-      setIsWhiteListed(!!whiteListedFlag);
       const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();
       setTokenIdList(_tokenIdList || []);
+
+      const result = await nftApiService.requestWalletInfo(wallet);
+      if (result.state === ErrorMessage.NoneResult) {
+        setIsRegistered(false);
+        setIsWhiteListed(false);
+      } else if (result.state === ErrorMessage.Success) {
+        setIsRegistered(true);
+        switch (result.content.state) {
+          case WalletSate.WhiteListed:
+            const _presaleAllowed = await contract.methods._PRESALE_ALLOWED_().call();
+            setPresaleAllowed(!!_presaleAllowed);
+            setIsWhiteListed(true);
+            break;
+          case WalletSate.NotWhiteListed:
+            setIsWhiteListed(false);
+            break;
+          case WalletSate.Minted:
+            setIsWhiteListed(true);
+            setIsMinted(true);
+            break;
+        }
+      } else {
+        alertService.notify('Wallet Information Error', errorDescription[result.state], 'Ok');
+        return;
+      }
+    } catch(err: any) {
+      alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const registerClicked = async () => {
+    try {
+      setIsLoading(true);
+      const web3 = new Web3(Web3.givenProvider);
+      const chainInfo: number = await web3.eth.getChainId();
+      if (chainInfo !== parseInt(process.env.chainId || '')) {
+        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        return;
+      }
+
+      const plainTextRes = await nftApiService.requestPlainText();
+      const plainText = plainTextRes.content;
+      const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+
+      const registerRes = await nftApiService.registerWallet(wallet, signature);
+      if (registerRes.state === ErrorMessage.Success) {
+        setIsRegistered(true);
+        alertService.notify('Register Success', 'You wallet address ' + shortenTxHash(wallet) + ' joined raffle, good luck!', 'Ok');
+      } else {
+        alertService.notify('Wallet Register Error', errorDescription[registerRes.state], 'Ok');
+      }
     } catch(err: any) {
       alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
       console.log(err)
@@ -226,39 +285,74 @@ export default function Wallet() {
   }
 
   const raffleClicked = async () => {
-    try {
-      setIsLoading(true);
-      const web3 = new Web3(Web3.givenProvider);
-      const chainInfo: number = await web3.eth.getChainId();
-      if (chainInfo !== parseInt(process.env.chainId || '')) {
-        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-        return;
-      }
-      const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress, {from: wallet, gasPrice: '20000000000'});
-      if (!isRegistered) {
-        contract.methods.register().send({from: wallet})
-        .on('transactionHash', function(hash: any){
-          alertService.notify('Raffle Success', 'You wallet address ' + shortenTxHash(wallet) + ' joined raffle, good luck!', 'Ok');
-        })
-        .on('receipt', function(receipt: any){
-          console.log('receipt = ', receipt);
-        })
-        .on('confirmation', function(confirmationNumber: any, receipt: any){
-          setIsLoading(false);
-          getInitialValues()
-        })
-        .on('error', function(error: any, receipt: any) {
-          alertService.notify('Raffle Failed', 'You wallet ' + shortenTxHash(wallet) + ' didn\'t joined raffle. Please try again', 'Ok');
-          setIsLoading(false);
-        });
-      } else {
-        alertService.notify('Raffle Failed', 'You wallet address already registered.', 'Ok');
+    if (isOwner) {
+      try {
+        setIsLoading(true);
+        const web3 = new Web3(Web3.givenProvider);
+        const chainInfo: number = await web3.eth.getChainId();
+        if (chainInfo !== parseInt(process.env.chainId || '')) {
+          alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+          return;
+        }
+
+        const plainTextRes = await nftApiService.requestPlainText();
+        const plainText = plainTextRes.content;
+        const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+
+        const raffleRes = await nftApiService.raffle(signature);
+        if (raffleRes.state === ErrorMessage.Success) {
+          const whiteList = raffleRes.content;
+          if (whiteList.includes(wallet)) {
+            setIsWhiteListed(true);
+          }
+          if (whiteList.length) {
+            const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
+            const whiteListLen = await contract.methods.raffle(whiteList).send({ from: wallet });
+            alertService.notify('Raffle Success', whiteList.length + ' addresses successfully whitelisted.', 'Ok');
+          } else {
+            alertService.notify('Raffle Warning', 'None account to raffle.', 'Ok');
+          }
+        } else {
+          alertService.notify('Raffle Error', errorDescription[raffleRes.state], 'Ok');
+        }
+      } catch(err: any) {
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log(err)
+      } finally {
         setIsLoading(false);
       }
-    } catch(err: any) {
-      setIsLoading(false);
-      alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-      console.log(err)
+    }
+  }
+
+  const resetClicked = async () => {
+    if (isOwner) {
+      try {
+        setIsLoading(true);
+        const web3 = new Web3(Web3.givenProvider);
+        const chainInfo: number = await web3.eth.getChainId();
+        if (chainInfo !== parseInt(process.env.chainId || '')) {
+          alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+          return;
+        }
+
+        const plainTextRes = await nftApiService.requestPlainText();
+        const plainText = plainTextRes.content;
+        const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+
+        const raffleRes = await nftApiService.reset(signature);
+        if (raffleRes.state === ErrorMessage.Success) {
+          alertService.notify('Reset Success', 'Successfully reset.', 'Ok');
+          setIsRegistered(false);
+          setIsMinted(false);
+        } else {
+          alertService.notify('Reset Error', errorDescription[raffleRes.state], 'Ok');
+        }
+      } catch(err: any) {
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log(err)
+      } finally {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -272,27 +366,29 @@ export default function Wallet() {
           alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
           return;
         }
-        const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress, {from: wallet, gasPrice: '20000000000'});
-        contract.methods.drop().send({from: wallet, value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount})
-          .on('transactionHash', function(hash: any){
-            alertService.notify('Minting Success', 'You minted a Eth-Clock NFT.', 'Ok');
-          })
-          .on('receipt', function(receipt: any){
-            console.log('receipt = ', receipt);
-          })
-          .on('confirmation', function(confirmationNumber: any, receipt: any){
-            setIsLoading(false);
-            setShowMint(false);
-            getInitialValues();
-          })
-          .on('error', function(error: any, receipt: any) {
-            alertService.notify('Minting Failed', 'You wallet didn\'t mint. Please try again', 'Ok');
-            setIsLoading(false);
-          });
+
+        const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
+        await contract.methods.drop().send({from: wallet, value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount});
+        const tokenId = await contract.methods.totalSupply().call();
+        setShowMint(false);
+        setIsMinted(true);
+
+        const plainTextRes = await nftApiService.requestPlainText();
+        const plainText = plainTextRes.content;
+        const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+        const updateRes = await nftApiService.updateWalletInfo(wallet, WalletSate.Minted, signature);
+        if (updateRes.state === ErrorMessage.Success) {
+          alertService.notify('Minting Success', 'You minted a ' + tokenId + '\'s Eth-Clock NFT.', 'Ok');
+          const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();
+          setTokenIdList(_tokenIdList || []);
+        } else {
+          alertService.notify('Mint Failed', errorDescription[updateRes.state], 'Ok');
+        }
       } catch(err: any) {
         alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-        setIsLoading(false);
         console.log(err)
+      } finally {
+        setIsLoading(false);
       }
     }
   }
@@ -370,15 +466,25 @@ export default function Wallet() {
                     </span>
             )}
             {raffleState === RaffleState.Ended && (
-              <div onClick={() => showMintDiv()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer " + (isWhiteListed ? 'bg-success-500' : 'bg-danger')}>
-                <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white" size={16} /></span>
-                <span className="text-white text-16 font-semibold">{isWhiteListed ? 'Start Minting' : 'Not Whitelisted'}</span>
+              <div className="flex gap-10">
+                <div onClick={() => showMintDiv()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer " + (isWhiteListed ? 'bg-success-500' : 'bg-danger')}>
+                  <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white" size={16} /></span>
+                  <span className="text-white text-16 font-semibold">{isWhiteListed ? (isMinted ? 'Minted' : 'Start Minting') : 'Not Whitelisted'}</span>
+                </div>
+                <div onClick={() => raffleClicked()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger " + (isOwner ? 'block' : 'hidden')}>
+                  <span className="mr-10"><Icon name='gem' color="white" size={16} /></span>
+                  <span title="Owner can only do raffle" className="text-white text-16 font-semibold">Raffle</span>
+                </div>
+                <div onClick={() => resetClicked()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger " + (isOwner ? 'block' : 'hidden')}>
+                  <span className="mr-10"><Icon name='setting' color="white" size={16} /></span>
+                  <span title="Owner can only do raffle" className="text-white text-16 font-semibold">Reset</span>
+                </div>
               </div>
             )}
           </div>
           {raffleState === RaffleState.Live && (
             <>
-              <div className={"px-20 py-10 xl:ml-15 rounded-full bg-success flex items-center cursor-pointer " + (isRegistered ? 'hidden' : 'block')} onClick={() => raffleClicked()}>
+              <div className={"px-20 py-10 xl:ml-15 rounded-full bg-success flex items-center cursor-pointer " + (isRegistered ? 'hidden' : 'block')} onClick={() => registerClicked()}>
                 <span className="text-white text-16 font-semibold">JOIN RAFFLE</span>
               </div>
               <div className={"px-20 py-10 xl:ml-15 rounded-full bg-white-50 flex items-center " + (isRegistered ? 'block' : 'hidden')}>

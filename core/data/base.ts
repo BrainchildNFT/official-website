@@ -20,6 +20,11 @@ export interface TimeLeft {
   seconds: number
 }
 
+export interface Response {
+  state: number;
+  content: any;
+}
+
 export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
 interface TraitValuesType {
@@ -57,22 +62,47 @@ export const probabilities: ProbabilitiesType = {
   }
 };
 
+export enum WalletSate {
+  Registered = 0,
+  WhiteListed = 1,
+  NotWhiteListed = 2,
+  Minted = 3,
+  Ended = 9,
+}
+
+export enum ErrorMessage {
+  Success = 200,
+  Failed = 400,
+  DBError = 900,
+  IncorrectWallet = 899,
+  AlreadyRegistered = 879,
+  NoneResult = 700,
+}
+
+export const errorDescription: {[key: number]: string} = {
+  [ErrorMessage.Failed]: 'Your request failed. Please try again.',
+  [ErrorMessage.DBError]: 'Fetching database error. please try again.',
+  [ErrorMessage.IncorrectWallet]: 'The wallet address is not correct. Please check wallet address.',
+  [ErrorMessage.AlreadyRegistered]: 'The wallet address is already registered.',
+  [ErrorMessage.NoneResult]: 'No data exist.',
+}
+
 export const projectSchedule = {
   wYear: 2022,
   wMonth: 2,
-  wDay: 12,
+  wDay: 23,
   wHour: 0,
   wMin: 0,
   wSec: 0,
   endYear: 2022,
   endMonth: 2,
-  endDay: 13,
+  endDay: 24,
   endHour: 0,
   endMin: 0,
   endSec: 0,
+  stateStr: 'Presale raffle',
   landing: {
-    waiting: 'Presale raffle begins on 07 Feb, 2022 at 00:00 AM UTC',
-    live: '08 Feb, 2022 at 00:00 AM UTC',
+    state: 'Presale raffle',
   },
   wallet: {
     waiting: '',

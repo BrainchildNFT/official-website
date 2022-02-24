@@ -18,6 +18,7 @@ export function Layout(props: any) {
         : 'light-background-image'
     )
   }, [themeStatus])
+
   return (
     <div
       className={'transition duration-500 overflow-x-clip ' + backgroundColor}

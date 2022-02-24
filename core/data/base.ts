@@ -101,12 +101,4 @@ export const projectSchedule = {
   endMin: 0,
   endSec: 0,
   stateStr: 'Presale raffle',
-  landing: {
-    state: 'Presale raffle',
-  },
-  wallet: {
-    waiting: '',
-    live: '',
-    ended: ''
-  }
 };

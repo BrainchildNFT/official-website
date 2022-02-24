@@ -4,7 +4,9 @@ import { Response } from '../data/base';
 export const nftApiService = {
   requestNFTInfo: (tokenURI: any) => {
     const body = null;
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = {
+      'Content-Type': 'application/json'
+    };
     const method = 'GET';
     return new Promise((resolve, reject) => {
       fetch(tokenURI, { body, headers, method })

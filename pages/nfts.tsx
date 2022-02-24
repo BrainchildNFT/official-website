@@ -193,7 +193,7 @@ export default function Nfts() {
         <div className="relative flex flex-col xl:flex-row" ref={mainBody}>
           <div
             className={
-              'sm:min-w-400 sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 ' +
+              'sm:min-w-400 xl:max-w-400 sticky top-65 flex flex-col max-h-70 sm:max-h-100 xl:max-h-1800 z-50 ' +
               (isTop ? 'h-screen-without-navbar' : 'h-screen-without-topbar') +
               (themeStatus === ThemeType.DarkMode
                 ? ' dark-background-image'
@@ -345,7 +345,7 @@ export default function Nfts() {
                 </p>
               )}
             </div>
-            <div className="bg-danger py-20 px-30 hidden xl:block">
+            <div className={"py-20 px-30 hidden xl:block " + stateBarBackground}>
               {raffleState === RaffleState.Waiting && (
                 <p className="text-center text-white text-40 font-Subjectivity font-bold">
                   {`${

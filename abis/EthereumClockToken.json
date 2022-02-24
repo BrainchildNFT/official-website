@@ -8,16 +8,6 @@
       },
       {
         "internalType": "address",
-        "name": "_chainLinkVRFCoordinator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_linkTokenAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_proxyRegistryAddress",
         "type": "address"
       }
@@ -445,45 +435,6 @@
   },
   {
     "inputs": [],
-    "name": "_CHAIN_LINK_FEE_",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "_CHAIN_LINK_KEY_HASH_",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "_CHAIN_LINK_VRF_COORDINATOR_",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "_COUNT_PER_LEVEL_",
     "outputs": [
       {
@@ -503,19 +454,6 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "_LINK_TOKEN_ADDRESS_",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -667,19 +605,6 @@
   {
     "inputs": [],
     "name": "_WHITE_LIST_COUNT_",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "_userListLength",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1067,16 +992,6 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "_chainLinkKeyHash",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_chainLinkFee",
-        "type": "uint256"
-      },
-      {
         "internalType": "uint256",
         "name": "_maxTokenLevel",
         "type": "uint256"
@@ -1253,33 +1168,21 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_addressList",
+        "type": "address[]"
+      }
+    ],
     "name": "raffle",
     "outputs": [
       {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "requestId",
-        "type": "bytes32"
-      },
-      {
         "internalType": "uint256",
-        "name": "randomness",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "rawFulfillRandomness",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1312,13 +1215,6 @@
       }
     ],
     "name": "registerController",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "registerWhiteList",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1657,25 +1553,6 @@
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "userList",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function PerksAndUtility() {
   return (<>
     <div className="px-15 sm:px-40 lg:px-100 py-50 sm:py-70 xl:py-120">
-      <p className="p-10 text-danger text-16 font-medium">PERKS AND UTILITY</p>
+      <h1 className="p-10 text-danger text-16 font-medium">PERKS AND UTILITY</h1>
       <div className="mt-10 flex flex-col xl:flex-row xl:flex-wrap">
 
         <div className="flex flex-col md:flex-row xl:flex-col xl:w-1/3">

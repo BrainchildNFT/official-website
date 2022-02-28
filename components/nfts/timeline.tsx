@@ -22,7 +22,7 @@ export default function Timeline({ time }: Props) {
   return (
     <>
       <div className="p-15 sm:p-40 lg:p-100">
-        <p className="text-danger test-16 px-30 py-10">TIMELINE</p>
+        <h1 className="text-danger test-16 px-30 py-10">TIMELINE</h1>
         <div className="mt-25">
           {timelineData.map((item, index) => (
             <div key={index}>

@@ -1,0 +1,9 @@
+Sitemap: https://www.brainchildnft.com/sitemap.xml
+
+User-agent: *
+Allow: /
+Allow: /about-us
+Allow: /nfts
+Allow: /wallet
+
+Disallow: /collections

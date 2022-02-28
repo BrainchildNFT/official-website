@@ -478,8 +478,6 @@ export default function Wallet() {
     </>)
   }, [stateBarBackground, raffleStartTimeLeft, raffleEndTimeLeft, raffleState, isWhiteListed, isRegistered])
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     <>
       <Head>
@@ -495,12 +493,10 @@ export default function Wallet() {
             <div className="bg-white-10 p-20 xl:p-30 h-full">
               <div className="flex items-center justify-between border-b border-gradient-light">
                 <div onClick={() => setSelectedMenu(WalletMenuType.NFTs)} className={"cursor-pointer pb-20 pr-10 border-b-2 " + (selectedMenu === WalletMenuType.NFTs ? 'opacity-100 border-white' : 'opacity-30 border-transparent') }>
-                  <Icon name="rhombusStars" color="white" size={20} />
-                  <span className="text-bold font-Subjectivity text-24 break-all ml-10 text-white">NFTs</span>
+                  <h1 className="text-bold font-Subjectivity text-24 break-all text-white"><Icon className="mr-10" name="rhombusStars" color="white" size={20} />NFTs</h1>
                 </div>
                 <div onClick={() => setSelectedMenu(WalletMenuType.TransactionHistory)} className={"hidden cursor-pointer pb-20 pl-10 border-b-2 " + (selectedMenu === WalletMenuType.TransactionHistory ? 'opacity-100 border-white' : 'opacity-30 border-transparent') }>
-                  <Icon name="arrowLeftRight" color="white" size={20} />
-                  <span className="text-bold font-Subjectivity text-24 break-all ml-10 text-white">Transaction History</span>
+                  <h1 className="text-bold font-Subjectivity text-24 break-all text-white"><Icon className="mr-10" name="arrowLeftRight" color="white" size={20} />Transaction History</h1>
                 </div>
               </div>
 

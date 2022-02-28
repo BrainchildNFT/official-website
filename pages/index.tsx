@@ -421,15 +421,18 @@ export default function Home() {
               <img
                 className="w-full h-600 sm:h-auto object-cover"
                 src="/assets/images/landing-page/gallery-1.png"
+                alt="LUXURY-1"
               />
               <img
                 className="w-full h-600 sm:h-auto object-cover"
                 src="/assets/images/landing-page/gallery-2.png"
+                alt="LUXURY-2"
               />
               <div className="w-full h-600 sm:h-auto relative overflow-y-clip">
                 <img
                   className="w-full h-full object-cover"
                   src="/assets/images/landing-page/gallery-3.png"
+                  alt="LUXURY-3"
                 />
                 <div className="absolute w-full bottom-0 right-0 text-white p-20 z-50">
                   <p className="text-right">
@@ -467,10 +470,12 @@ export default function Home() {
                   className="hidden sm:block sm:p-50 xs:p-200"
                   style={{ maxWidth: '100%' }}
                   src="/assets/images/landing-page/text-experienced-nft.svg"
+                  alt="Experience NFT"
                 />
                 <img
                   className="block sm:hidden w-full"
                   src="/assets/images/landing-page/text-experienced-nft-mobile.svg"
+                  alt="Mobile Experience NFT"
                 />
               </div>
               <div className="w-full h-screen flex items-center justify-center sticky top-0">
@@ -535,27 +540,33 @@ export default function Home() {
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-enhanced.svg"
+                        alt="Enhanced Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-god-teir.svg"
+                        alt="God Tier Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-frozen.svg"
+                        alt="Frozen Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-failed.svg"
+                        alt="Failed Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-charred.svg"
+                        alt="Charred Tag"
                       />
                     </div>
                     <img
                       className="w-full"
                       src="/assets/images/landing-page/bg-enhance-item.png"
+                      alt="Enhance Item"
                     />
                   </div>
                 </SwiperSlide>
@@ -576,6 +587,7 @@ export default function Home() {
                     <img
                       className="w-full absolute bottom-0 left-0"
                       src="/assets/images/landing-page/bg-redeem-item.png"
+                      alt="Redeem Item"
                     />
                   </div>
                 </SwiperSlide>
@@ -596,6 +608,7 @@ export default function Home() {
                     <img
                       className="w-full mt-20 absolute left-0 bottom-0"
                       src="/assets/images/landing-page/bg-coming-soon.svg"
+                      alt="Coming Soon"
                     />
                   </div>
                 </SwiperSlide>
@@ -615,6 +628,7 @@ export default function Home() {
                     <img
                       className="w-full mt-20 absolute left-0 bottom-0"
                       src="/assets/images/landing-page/bg-coming-soon.svg"
+                      alt="Coming Soon"
                     />
                   </div>
                 </SwiperSlide>
@@ -679,12 +693,12 @@ export default function Home() {
             style={{ fontFamily: 'Future Classic' }}
           >
             <p className="text-45 lg:text-80">exquisite</p>
-            <p
+            <h1
               className="text-justify indent-2 sm:indent-0 sm:ml-0 sm:text-center break-all text-80 lg:text-100 xl:text-150"
               style={{ textIndent: `${isMobile ? '4rem' : '0'}` }}
             >
               Collaborations
-            </p>
+            </h1>
             <p className="text-45 lg:text-80">
               <span className="text-30 lg:text-60">with</span> wondrous artists
             </p>

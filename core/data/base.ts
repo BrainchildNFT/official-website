@@ -82,7 +82,7 @@ export enum ErrorMessage {
 export const errorDescription: {[key: number]: string} = {
   [ErrorMessage.Failed]: 'Your request failed. Please try again.',
   [ErrorMessage.DBError]: 'Fetching database error. please try again.',
-  [ErrorMessage.IncorrectWallet]: 'The wallet address is not correct. Please check wallet address.',
+  [ErrorMessage.IncorrectWallet]: 'The wallet address is not correct. Please check if you signed with your wallet address.',
   [ErrorMessage.AlreadyRegistered]: 'The wallet address is already registered.',
   [ErrorMessage.NoneResult]: 'No data exist.',
 }

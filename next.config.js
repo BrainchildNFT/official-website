@@ -17,6 +17,7 @@ module.exports = withPWA({
     chainId: 4,
     api: 'https://api.brainchildnft.com',
     infuraId: '41ef39b8a23943439d5c1d071593c52f',
+    mintCount: 3,
     //googleApiKey: '',
     //production: process.env.PRODUCTION,
   },

@@ -7,7 +7,6 @@ import 'swiper/css/pagination';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Web3 from 'web3';
-// import * as IPFS from 'ipfs-mini/src';
 
 import {
   errorDescription, ErrorMessage, monthNames, probabilities, projectSchedule, TimeLeft, WalletSate
@@ -21,7 +20,6 @@ import ethereumClockTokenAbi from '../abis/EthereumClockToken.json';
 import Spinner from '../components/common/spinner';
 import useAlert from '../components/dialog/use-alert';
 import { nftApiService } from '../core/api-services/nft-api.service';
-// import ipfsClient from 'ipfs-http-client';
 
 export default function Wallet() {
   const [isTop, setIsTop] = useState(true)
@@ -31,7 +29,7 @@ export default function Wallet() {
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isWhiteListed, setIsWhiteListed] = useState(false);
-  const [isMinted, setIsMinted] = useState(false);
+  const [isAllMinted, setIsAllMinted] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [showMint, setShowMint] = useState(false);
   const [presaleAllowed, setPresaleAllowed] = useState(false);
@@ -76,64 +74,10 @@ export default function Wallet() {
     }
   }
 
-  // const ipfsTest = async () => {
-  //   console.log("********************************");
-  //   const hash = 'QmWEL46PvVWwtxX5z6WPUn8XtKYAETgKG83V85iaoh14kp';
-  //   const ipfsClient = require('ipfs-http-client');
-  //   const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-  //   const res = await ipfs.cat(hash)
-  //   console.log("++++ = ", res.toString())
-  //   const checkPins = await ipfs.pin.ls(hash)
-  //   console.log("++++1 = ", checkPins) //{hash: QmYc..., type: "recursive" }
-  // }
-
   useEffect(() => {
     if (!wallet) {
       router.push('/');
     } else {
-
-      // ipfsTest();
-
-      // const ipfs = new IPFS({
-      //   host: 'ipfs.infura.io',
-      //   port: 5001,
-      //   protocol: 'https'
-      // })
-      // console.log('================');
-      // ipfs.catJSON('QmWEL46PvVWwtxX5z6WPUn8XtKYAETgKG83V85iaoh14kp', async (err: any, data: any) => {
-      //   console.log('--------------');
-      //   if(err) {
-      //     console.log('err = ', err);
-      //   } else {
-      //     console.log('data = ', data);
-      //   }
-      // });
-
-      // nftApiService.requestIPFSInfo("https://ipfs.io/ipfs/QmbyxTCiC7w4xt3fcyN1huZH831sq1Mc6TVxxW9U2hnxDS");
-      // const source = `{
-      //                   "name":"Pending #1",
-      //                   "symbol":"BRAINChiLD",
-      //                   "edition":"2022",
-      //                   "description":"BrainchildNFT Pending Image",
-      //                   "image":"https://ipfs.io/ipfs/QmeUx26kP3SybJGPKGgQqp5ABcU8jBwZyt9UPat24PLopw",
-      //                   "external_url":"https://ipfs.io/ipfs/images/1.png",
-      //                   "attributes":[
-      //                     {
-      //                       "trait_type":"Environment",
-      //                       "value":"Reneqade Node"
-      //                     },
-      //                     {
-      //                       "trait_type":"Shine",
-      //                       "value":"Marble"
-      //                     },
-      //                     {
-      //                       "trait_type":"Efficiency",
-      //                       "value":"Brilliant"
-      //                     }
-      //                   ]
-      //                 }`;
-      // setTokenIdList([3080]);
-      // setTokenInfoList([JSON.parse(source)]);
       updateRaffleState();
     }
 
@@ -163,7 +107,7 @@ export default function Wallet() {
   };
 
   const showMintDiv = () => {
-    if (isWhiteListed && !isMinted) {
+    if (isWhiteListed && !isAllMinted) {
       setShowMint(true);
     }
   };
@@ -258,10 +202,15 @@ export default function Wallet() {
         setIsWhiteListed(false);
       } else if (result.state === ErrorMessage.Success) {
         setIsRegistered(true);
+        const mintCountResult = await nftApiService.requestMintCount(wallet);
+        const mintCount = mintCountResult.content || 0;
+        if (mintCount >= process.env.mintCount) {
+          setIsAllMinted(true);
+        }
+        const _presaleAllowed = await contract.methods._PRESALE_ALLOWED_().call();
+        setPresaleAllowed(!!_presaleAllowed);
         switch (result.content.state) {
           case WalletSate.WhiteListed:
-            const _presaleAllowed = await contract.methods._PRESALE_ALLOWED_().call();
-            setPresaleAllowed(!!_presaleAllowed);
             setIsWhiteListed(true);
             break;
           case WalletSate.NotWhiteListed:
@@ -269,7 +218,6 @@ export default function Wallet() {
             break;
           case WalletSate.Minted:
             setIsWhiteListed(true);
-            setIsMinted(true);
             break;
         }
       } else {
@@ -372,7 +320,6 @@ export default function Wallet() {
         if (raffleRes.state === ErrorMessage.Success) {
           alertService.notify('Reset Success', 'Successfully reset.', 'Ok');
           setIsRegistered(false);
-          setIsMinted(false);
         } else {
           alertService.notify('Reset Error', errorDescription[raffleRes.state], 'Ok');
         }
@@ -400,7 +347,6 @@ export default function Wallet() {
         await contract.methods.drop().send({from: wallet, value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount});
         const tokenId = await contract.methods.totalSupply().call();
         setShowMint(false);
-        setIsMinted(true);
 
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
@@ -408,10 +354,15 @@ export default function Wallet() {
         const updateRes = await nftApiService.updateWalletInfo(wallet, WalletSate.Minted, signature);
         if (updateRes.state === ErrorMessage.Success) {
           alertService.notify('Minting Success', 'You minted a ' + tokenId + '\'s Eth-Clock NFT.', 'Ok');
+          const mintCountResult = await nftApiService.requestMintCount(wallet);
+          const mintCount = mintCountResult.content || 0;
+          if (mintCount >= process.env.mintCount) {
+            setIsAllMinted(true);
+          }
           const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();
           setTokenIdList(_tokenIdList || []);
         } else {
-          alertService.notify('Mint Failed', errorDescription[updateRes.state], 'Ok');
+          alertService.notify('Mint Error', errorDescription[updateRes.state], 'Ok');
         }
       } catch(err: any) {
         alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
@@ -498,7 +449,7 @@ export default function Wallet() {
               <div className="flex gap-10">
                 <div onClick={() => showMintDiv()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer " + (isWhiteListed ? 'bg-success-500' : 'bg-danger')}>
                   <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white" size={16} /></span>
-                  <span className="text-white text-16 font-semibold">{isWhiteListed ? (isMinted ? 'Minted' : 'Start Minting') : 'Not Whitelisted'}</span>
+                  <span className="text-white text-16 font-semibold">{isWhiteListed ? (isAllMinted ? process.env.mintCount + ' times Minted' : 'Start Minting') : 'Not Whitelisted'}</span>
                 </div>
                 <div onClick={() => raffleClicked()} className={"px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger " + (isOwner ? 'block' : 'hidden')}>
                   <span className="mr-10"><Icon name='gem' color="white" size={16} /></span>
@@ -640,10 +591,12 @@ export default function Wallet() {
               </div>
             </div>
             <div className={"" + (tokenIdList.length === 0 ? 'hidden' : 'block')}>
-              {tokenInfoList.map((tokenInfo: any, index) => (<div key="index">
+              {tokenInfoList.map((tokenInfo: any, index) => (<div key={index}>
                 <div className="flex flex-col md:flex-row py-50">
                   <div className="md:w-1/2 lg:w-1/3 flex justify-center items-center px-40">
-                    <div><Image src={tokenInfo.image} layout="intrinsic" width="384" height="524" alt="Ethereum Clock"/></div>
+                    <div>
+                      <Image src={tokenInfo.image} layout="intrinsic" width="384" height="524" alt="Ethereum Clock"/>
+                    </div>
                   </div>
 
                   <div className="md:w-1/2 lg:w-2/3 px-40 mt-50 md:mt-0">

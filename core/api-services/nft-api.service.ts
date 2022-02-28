@@ -41,6 +41,9 @@ export const nftApiService = {
   requestWalletInfo: async (wallet: string): Promise<Response> => {
     return doGet('/api/v0/wallet/' + wallet);
   },
+  requestMintCount: async (wallet: string): Promise<Response> => {
+    return doGet('/api/v0/mint-count/' + wallet);
+  },
   registerWallet: async (wallet: string, signature: string): Promise<Response> => {
     return doPost('/api/v0/wallet/' + wallet, { signature });
   },

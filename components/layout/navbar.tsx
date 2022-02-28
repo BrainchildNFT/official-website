@@ -38,6 +38,10 @@ export function Navbar() {
     router.push('/nfts')
   }
 
+  const goToOpenSea = () => {
+    window.open('https://testnets.opensea.io/assets/0xd8a3c2a69ab79cf75c15299e00528f7da244c42a', '_blank');
+  };
+
   useEffect(() => {
     setBackgroundColor(
       themeStatus === ThemeType.DarkMode
@@ -156,17 +160,17 @@ export function Navbar() {
                 </Link>
               </li> */}
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
-                <Link href="/opensea">
+
                   <a
+                    onClick={goToOpenSea}
                     className={
-                      'relative xl:px-25 xl:py-10 ' +
+                      'relative xl:px-25 xl:py-10 cursor-pointer ' +
                       (router.pathname == '/opensea' ? 'text-[#AF5F5F]' : '')
                     }
                     style={{ fontFamily: 'Subjectivity Serif' }}
                   >
                     OpenSea
                   </a>
-                </Link>
               </li>
               <li className={"py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 " + (wallet ? 'block' : 'hidden')}>
                 <Link href="/wallet">

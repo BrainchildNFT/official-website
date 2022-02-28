@@ -7,7 +7,7 @@ export default function About() {
   return (<>
     <div className="flex flex-col xl:flex-row py-40 px-15 sm:px-40 lg:p-100">
       <div className="xl:w-1/2 xl:pr-45 pb-50">
-        <p className="text-60 font-Future leading-tight">A Timeless Tribute to Ethereum</p>
+        <h1 className="text-60 font-Future leading-tight">A Timeless Tribute to Ethereum</h1>
         <p className="mt-40 font-light leading-tight">
           9 years after Vitalik’s inception of Ethereum in 2013.
           7 years after Genesis Block One on 30th July 2015.

@@ -13,7 +13,7 @@ export default function Enhancements() {
   return (
     <>
       <div className="p-15 sm:p-40 lg:p-100">
-        <p className="p-10 text-danger text-16 font-semibold">ENHANCEMENTS</p>
+        <h1 className="p-10 text-danger text-16 font-semibold">ENHANCEMENTS</h1>
         <div className="flex flex-col md:flex-row mt-10">
           <div className="md:w-1/2">
             <p className="text-18 text-primary font-light p-10">

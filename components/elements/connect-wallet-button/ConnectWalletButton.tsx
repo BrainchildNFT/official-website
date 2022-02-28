@@ -233,7 +233,7 @@ const ConnectWalletButton = () => {
       </div>
       <div className={"absolute flex justify-center top-0 left-0 bottom-0 right-0 bg-black-60 z-50 " + (showConnectModal ? 'block' : 'hidden')}>
         <div ref={metaMaskRef} className="flex flex-col items-center h-200 mt-200 w-350 bg-black-90 rounded-xl p-40 border border cursor-pointer" onClick={() => connectMetaMask()}>
-          <img src="/assets/images/common/metamask.svg"/>
+          <img src="/assets/images/common/metamask.svg" alt="MetaMask Logo"/>
           <span className="text-white text-25 font-medium">Metamask</span>
           <span className="text-warning text-12">Connect your metamask wallet</span>
         </div>

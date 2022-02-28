@@ -83,7 +83,7 @@ export function Footer() {
           </div>
           <div>
             <p className="text-14 font-Subjectivity font-bold text-white mb-20 mt-30 lg:mt-0 tracking-widest">
-              RELEVENT LINKS
+              RELEVANT LINKS
             </p>
             <ul className="flex flex-col font-['Inter']">
               <li className="py-5">

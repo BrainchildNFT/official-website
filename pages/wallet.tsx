@@ -204,7 +204,7 @@ export default function Wallet() {
         setIsRegistered(true);
         const mintCountResult = await nftApiService.requestMintCount(wallet);
         const mintCount = mintCountResult.content || 0;
-        if (mintCount >= process.env.mintCount) {
+        if (mintCount >= (process.env.mintCount as any)) {
           setIsAllMinted(true);
         }
         const _presaleAllowed = await contract.methods._PRESALE_ALLOWED_().call();
@@ -356,7 +356,7 @@ export default function Wallet() {
           alertService.notify('Minting Success', 'You minted a ' + tokenId + '\'s Eth-Clock NFT.', 'Ok');
           const mintCountResult = await nftApiService.requestMintCount(wallet);
           const mintCount = mintCountResult.content || 0;
-          if (mintCount >= process.env.mintCount) {
+          if (mintCount >= (process.env.mintCount as any)) {
             setIsAllMinted(true);
           }
           const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();

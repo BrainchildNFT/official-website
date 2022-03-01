@@ -223,9 +223,9 @@ export default function Home() {
               className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer"
               onClick={() => router.push('/nfts')}
             >
-              <img src="/assets/images/landing-page/icon-ethereum.svg" />
+              <img src="/assets/images/landing-page/icon-ethereum.svg" alt="Ethereum Icon" />
               <span className="mx-15">EXPLORE COLLECTION</span>
-              <img src="/assets/images/landing-page/icon-arrow-right.svg" />
+              <img src="/assets/images/landing-page/icon-arrow-right.svg" alt="Ethereum Icon" />
             </div>
             <div
               className={

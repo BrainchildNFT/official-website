@@ -36,7 +36,7 @@ export default function Search() {
       </Head>
 
       <Layout>
-        <section className="relative dark-background-image">
+        <section className="relative dark-background-image" role="img" aria-label="Gradient background Image">
           <div className="container mx-auto h-screen-without-navbar py-50 sm:pt-150 flex flex-col justify-start items-center">
             <div className="flex justify-between border border-gradient-light rounded-md p-15 sm:w-1/2">
               <input

@@ -489,7 +489,7 @@ export default function Wallet() {
       </Head>
       <Layout>
         <div className="relative flex flex-col xl:flex-row overflow-hidden">
-          <div id="left-bar" className={'sm:min-w-500 top-65 flex flex-col z-50 dark-background-image ' + (isTop ? 'xl:h-screen-without-navbar' : 'xl:h-screen-without-topbar')}>
+          <div id="left-bar" className={'sm:min-w-500 top-65 flex flex-col z-50 dark-background-image ' + (isTop ? 'xl:h-screen-without-navbar' : 'xl:h-screen-without-topbar')} role="img" aria-label="Gradient background Image">
             <div className="bg-white-10 p-20 xl:p-30 h-full">
               <div className="flex items-center justify-between border-b border-gradient-light">
                 <div onClick={() => setSelectedMenu(WalletMenuType.NFTs)} className={"cursor-pointer pb-20 pr-10 border-b-2 " + (selectedMenu === WalletMenuType.NFTs ? 'opacity-100 border-white' : 'opacity-30 border-transparent') }>
@@ -516,7 +516,7 @@ export default function Wallet() {
               </div>
 
               <div className={"mt-20 xl:mt-40 grid grid-cols-2 grid-rows-3 gap-10 " + (showOutcomeStates ? 'block' : 'hidden')}>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
+                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer" role="img" aria-label="Gradient background Image">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">ENHANCABLE</p>
                     <p className="text-16 opacity-50">0 NFTs</p>
@@ -525,7 +525,7 @@ export default function Wallet() {
                     <Image src="/assets/images/wallet/red-up-arrow.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
                   </div>
                 </div>
-                <div className="hidden p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
+                <div className="hidden p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer" role="img" aria-label="Gradient background Image">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">GOD-TEIR</p>
                     <p className="text-16 opacity-50">0 NFTs</p>
@@ -534,7 +534,7 @@ export default function Wallet() {
                     <Image src="/assets/images/wallet/red-crown.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
                   </div>
                 </div>
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
+                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer" role="img" aria-label="Gradient background Image">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">FROZEN</p>
                     <p className="text-16 opacity-50">0 NFTs</p>
@@ -552,7 +552,7 @@ export default function Wallet() {
                 {/*    <Image src="/assets/images/wallet/red-circle-quote.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>*/}
                 {/*  </div>*/}
                 {/*</div>*/}
-                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer">
+                <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer" role="img" aria-label="Gradient background Image">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">CHARRED</p>
                     <p className="text-16 opacity-50">0 NFTs</p>

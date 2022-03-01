@@ -318,7 +318,7 @@ export default function Home() {
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
-        <section className="dark-background-image overflow-hidden">
+        <section className="dark-background-image overflow-hidden" role="img" aria-label="Gradient background Image">
           <div
             className="relative"
             ref={heroSectionRef}
@@ -397,7 +397,7 @@ export default function Home() {
           {stateComponent}
         </section>
 
-        <div className="light-background-image">
+        <div className="light-background-image" role="img" aria-label="Gradient background Image">
           {/*Immerse yourself in the new age of LUXURY*/}
           <section className="relative pt-130 overflow-x-hidden">
             <div className="p-30 sm:p-100 mx-auto relative z-50">
@@ -687,7 +687,7 @@ export default function Home() {
         </div>
 
         {/*Collaboration*/}
-        <section className="relative dark-background-image" id="collaborations">
+        <section className="relative dark-background-image" id="collaborations" role="img" aria-label="Gradient background Image">
           <div
             className="container mx-auto p-30 pt-50 sm:pt-200 text-white text-center"
             style={{ fontFamily: 'Future Classic' }}
@@ -749,7 +749,7 @@ export default function Home() {
         </section>
 
         {/*FAQs*/}
-        <section className="relative dark-background-image">
+        <section className="relative dark-background-image" role="img" aria-label="Gradient background Image">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
             <div className="lg:w-1/3 flex lg:justify-center text-white">
               <p

@@ -23,7 +23,7 @@ export function AlertDialog({ title, message, type, okCaption, onClose, closeDia
     onClose(result);
   }
 
-  return (<div className="w-500 p-20 dark-background-image">
+  return (<div className="w-500 p-20 dark-background-image" role="img" aria-label="Gradient background Image">
     <div className="flex justify-end">
       <button className="px-5 pt-5" onClick={() => { closeDialog(); onClose(DialogResult.Close) }}><Icon name="close" color="white" size={14} /></button>
     </div>

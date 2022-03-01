@@ -66,6 +66,8 @@ export function Navbar() {
           : backgroundColor +
             ' z-[1000] sticky top-0 transition duration-500 mt-40 relative'
       }
+      role="img"
+      aria-label="Gradient background Image"
     >
       <nav
         className={
@@ -118,6 +120,8 @@ export function Navbar() {
                 : ' top-[100vh] hidden left-0 xl:top-0 ease-in-out')
             }
             style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
+            role="img"
+            aria-label="Gradient background Image"
           >
             <ul
               className={
@@ -391,6 +395,8 @@ export function Navbar() {
               ? ' ease-in-out -left-800 sm:-left-400'
               : ' ease-out-in left-0')
           }
+          role="img"
+          aria-label="Gradient background Image"
         >
           <div className="bg-white-10 h-full">
             <div className="bg-primary">

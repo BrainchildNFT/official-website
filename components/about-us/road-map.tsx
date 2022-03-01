@@ -94,7 +94,7 @@ export default function RoadMap() {
       <div className="flex flex-row" ref={roadMapRef}>
         <div className="relative lg:w-1/2">
           <div className="pr-50">
-            <div className="text-white h-200 sticky top-60 z-20 dark-background-image">
+            <div className="text-white h-200 sticky top-60 z-20 dark-background-image" role="img" aria-label="Gradient background Image">
               <p className="text-22 opacity-30 mb-10 pt-20">ROADMAP</p>
               {roadMapPeriodNames.map((item, index) => (
                 <p

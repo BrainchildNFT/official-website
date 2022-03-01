@@ -199,6 +199,8 @@ export default function Nfts() {
                 ? ' dark-background-image'
                 : ' light-background-image')
             }
+            role="img"
+            aria-label="Gradient background Image"
           >
             <div
               className={

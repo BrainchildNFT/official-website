@@ -484,7 +484,7 @@ export default function Wallet() {
         <title>Brainchild: Wallet</title>
         <meta
           name="description"
-          content=""
+          content="EthClock: nft collections for owner's wallet address, show enhance, redeem and god-tier functionality for each one."
         />
       </Head>
       <Layout>
@@ -581,9 +581,9 @@ export default function Wallet() {
                 className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer mt-20"
                 onClick={() => router.push('/nfts')}
               >
-                <img src="/assets/images/landing-page/icon-ethereum.svg" />
+                <img src="/assets/images/landing-page/icon-ethereum.svg" alt="Ethereum Icon" />
                 <span className="mx-15">EXPLORE COLLECTION</span>
-                <img src="/assets/images/landing-page/icon-arrow-right.svg" />
+                <img src="/assets/images/landing-page/icon-arrow-right.svg" alt="Ethereum Icon" />
               </div>
             </div>
             <div className={"" + (tokenIdList.length === 0 ? 'hidden' : 'block')}>

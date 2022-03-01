@@ -4,10 +4,9 @@ import React from 'react';
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta name="application-name" content="Brainchild" />
-          <meta name="description" content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3." />
           <link rel="apple-touch-icon" href="/icons/icon-512.png" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta

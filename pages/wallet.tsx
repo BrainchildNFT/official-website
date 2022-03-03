@@ -147,7 +147,7 @@ export default function Wallet() {
       let tempList: Object[] = [];
       tokenIdList.map(async (tokenId: any) => {
         const tokenURI = await contract.methods.tokenURI(tokenId).call();
-        const res: any = await nftApiService.requestNFTInfo(tokenURI);
+        const res: any = await nftApiService.catIPFSInfo(tokenURI);
         tempList.push(res);
       })
       setTokenInfoList(tempList);
@@ -519,7 +519,7 @@ export default function Wallet() {
                 <div className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer" role="img" aria-label="Gradient background Image">
                   <div>
                     <p className="font-Subjectivity text-24 break-all">ENHANCABLE</p>
-                    <p className="text-16 opacity-50">0 NFTs</p>
+                    <p className="text-16 opacity-50">{tokenIdList.length} NFTs</p>
                   </div>
                   <div className="-mb-10 sm:-mb-25 -mr-5 sm:-mr-10 flex justify-end">
                     <Image src="/assets/images/wallet/red-up-arrow.png" layout="intrinsic" width="100" height="100" alt="Red Up Arrow"/>
@@ -591,7 +591,10 @@ export default function Wallet() {
                 <div className="flex flex-col md:flex-row py-50">
                   <div className="md:w-1/2 lg:w-1/3 flex justify-center items-center px-40">
                     <div>
-                      <Image src={tokenInfo.image} layout="intrinsic" width="384" height="524" alt="Ethereum Clock"/>
+                      {tokenInfo.image && tokenInfo.image.includes('mp4') && <video id="background-video" autoPlay loop muted>
+                          <source src={tokenInfo.image} type="video/mp4" />
+                      </video>}
+                      {tokenInfo.image && tokenInfo.image.includes('png') && <Image src={tokenInfo.image} layout="intrinsic" width="384" height="524" alt="Ethereum Clock"/>}
                     </div>
                   </div>
 

@@ -2,7 +2,7 @@ import { doGet, doPost, doPut } from './http';
 import { Response } from '../data/base';
 
 export const nftApiService = {
-  requestNFTInfo: (tokenURI: any) => {
+  requestURIInfo: (tokenURI: any) => {
     const body = null;
     const headers = {
       'Content-Type': 'application/json'
@@ -24,16 +24,10 @@ export const nftApiService = {
         });
     });
   },
-  requestIPFSInfo: async (endPoint: string) => {
-    const data = await fetch(endPoint, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Basic ' + process.env.infuraId,
-      },
-      mode: 'no-cors'
-    });
-    console.log('response = ', data);
-    return data;
+  catIPFSInfo: async (ipfsURI: string) => {
+    const uniqueId = ipfsURI.split('/ipfs/')[1];
+    const endPoint = 'https://ipfs.infura.io:5001/api/v0/cat?arg=' + uniqueId;
+    return nftApiService.requestURIInfo(endPoint);
   },
   requestPlainText: async (): Promise<Response> => {
     return doGet('/api/v0/plainText');

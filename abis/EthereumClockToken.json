@@ -351,6 +351,12 @@
         "internalType": "address",
         "name": "ownerAddress",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address[]",
+        "name": "newAddresses",
+        "type": "address[]"
       }
     ],
     "name": "UpdateRaffle",
@@ -386,6 +392,25 @@
       }
     ],
     "name": "UpdateRevealURI",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "oldURIExtension",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "newURIExtension",
+        "type": "string"
+      }
+    ],
+    "name": "UpdateURIExtension",
     "type": "event"
   },
   {
@@ -592,6 +617,19 @@
   {
     "inputs": [],
     "name": "_REVEAL_URI_",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_URI_EXTENSION_",
     "outputs": [
       {
         "internalType": "string",
@@ -1040,6 +1078,11 @@
         "internalType": "bool",
         "name": "_preSaleAllowed",
         "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "_uriExtension",
+        "type": "string"
       }
     ],
     "name": "init",
@@ -1395,6 +1438,19 @@
       }
     ],
     "name": "setRevealURI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "newURIExtension",
+        "type": "string"
+      }
+    ],
+    "name": "setURIExtension",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

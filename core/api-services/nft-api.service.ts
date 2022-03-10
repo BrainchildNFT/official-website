@@ -7,7 +7,7 @@ export const nftApiService = {
     const headers = {
       'Content-Type': 'application/json'
     };
-    const method = 'GET';
+    const method = 'Post';
     return new Promise((resolve, reject) => {
       fetch(tokenURI, { body, headers, method })
         .then(async res => {

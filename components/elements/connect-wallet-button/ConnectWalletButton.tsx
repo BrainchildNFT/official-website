@@ -8,7 +8,7 @@ import { ThemeType } from '../../../core/data/base';
 import { AppContext } from '../../context/app-context';
 
 const ConnectWalletButton = () => {
-  let gProvider: any = null
+  let gProvider: any = null;
 
   const themeStatus = useSelector((state: any) => state.ThemeStatus)
   const [metaMaskAccount, setMetaMaskAccount] = useState<string>('')

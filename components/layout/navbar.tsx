@@ -126,8 +126,7 @@ export function Navbar() {
             <ul
               className={
                 'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 ' +
-                (isMobile || isTablet ? ' text-primary' : '') +
-                ' xl:' +
+                (isMobile || isTablet ? ' text-primary xl:' : 'xl:') +
                 textColor
               }
             >

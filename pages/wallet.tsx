@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { ethers, BigNumber, BigNumberish } from "ethers";
 import Link from 'next/link';
 import Head from 'next/head';
 import 'swiper/css';
@@ -11,7 +12,7 @@ import Web3 from 'web3';
 import {
   errorDescription,
   ErrorMessage,
-  monthNames,
+  monthNames, netInfo,
   probabilities,
   projectSchedule,
   TimeLeft,
@@ -45,11 +46,11 @@ export default function Wallet() {
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const mintRef = useRef<HTMLDivElement>(null);
-  const {wallet} = useContext(AppContext);
+  const {connected, provider, wallet} = useContext(AppContext);
   const router = useRouter();
   const alertService = useAlert();
 
-  const calculateTimeLeft = (flag: number): TimeLeft => {
+  const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
     let difference =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let timeLeft: TimeLeft = {days: 0, hours: 0, minutes: 0, seconds: 0};
@@ -64,9 +65,9 @@ export default function Wallet() {
     }
 
     return timeLeft;
-  };
+  }, []);
 
-  const updateRaffleState = () => {
+  const updateRaffleState = useCallback(() => {
     let differenceFromRaffleStart =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
@@ -78,15 +79,11 @@ export default function Wallet() {
       if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
       if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    if (!wallet) {
-      router.push('/');
-    } else {
-      updateRaffleState();
-    }
-
+    updateRaffleState();
+    getInitialValues();
     const timer = setInterval(() => {
       setRaffleStartTimeLeft(calculateTimeLeft(0));
       setRaffleEndTimeLeft(calculateTimeLeft(1));
@@ -106,21 +103,35 @@ export default function Wallet() {
     getTokenInfo();
   }, [tokenIdList]);
 
-  const mintDivClicked = (event: any) => {
+  const checkChainId = useCallback(async () => {
+    if(connected) {
+      const id = await provider.getNetwork().then(network => network.chainId);
+      if (id != netInfo.rinkeby.chainId) {
+        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        await provider.send("wallet_switchEthereumChain", [{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
+      }
+    }
+  }, [connected, provider]);
+
+  const idToHexString = useCallback((id: number) => {
+    return "0x" + id.toString(16);
+  },[]);
+
+  const mintDivClicked = useCallback((event: any) => {
     if (mintRef.current && !mintRef.current.contains(event.target)) {
       setShowMint(false);
     }
-  };
+  }, []);
 
-  const showMintDiv = () => {
+  const showMintDiv = useCallback(() => {
     if (isWhiteListed && !isAllMinted) {
       setShowMint(true);
     }
-  };
+  }, [isWhiteListed, isAllMinted]);
 
-  const shortenTxHash = (txHash: any) => {
+  const shortenTxHash = useCallback((txHash: any) => {
     return txHash.substr(0, 6) + '_' + txHash.substr(txHash.length - 4);
-  };
+  }, []);
 
   const stateBarBackground = useMemo(() => {
     switch (raffleState) {
@@ -139,148 +150,128 @@ export default function Wallet() {
     }
   }, [raffleState, isWhiteListed]);
 
-  const getTokenInfo = async () => {
-    try {
-      setIsLoading(true);
-
-      const web3 = new Web3(Web3.givenProvider);
-      const chainInfo: number = await web3.eth.getChainId();
-      if (chainInfo !== parseInt(process.env.chainId || '')) {
-        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-        return;
-      }
-      const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-      let tempList: Object[] = [];
-      tokenIdList.map(async (tokenId: any) => {
-        const tokenURI = await contract.methods.tokenURI(tokenId).call();
-        const res: any = await nftApiService.catIPFSInfo(tokenURI);
-        tempList.push(res);
-      });
-      setTokenInfoList(tempList);
-    } catch (err: any) {
-      alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getCurrentTokenId = async () => {
-    try {
-      setIsLoading(true);
-      const web3 = new Web3(Web3.givenProvider);
-      const chainInfo: number = await web3.eth.getChainId();
-      if (chainInfo !== parseInt(process.env.chainId || '')) {
-        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-        return;
-      }
-      const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-      const _currentTokenId = await contract.methods.totalSupply().call();
-      setCurrentTokenId(_currentTokenId);
-    } catch (err: any) {
-      alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getInitialValues = async () => {
-    try {
-      setIsLoading(true);
-      const web3 = new Web3(Web3.givenProvider);
-      const chainInfo: number = await web3.eth.getChainId();
-      if (chainInfo !== parseInt(process.env.chainId || '')) {
-        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-        return;
-      }
-      if (wallet === process.env.ownerAddress || '') {
-        setIsOwner(true);
-      }
-
-      const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-      const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();
-      setTokenIdList(_tokenIdList || []);
-
-      const result = await nftApiService.requestWalletInfo(wallet);
-      if (result.state === ErrorMessage.NoneResult) {
-        setIsRegistered(false);
-        setIsWhiteListed(false);
-      } else if (result.state === ErrorMessage.Success) {
-        setIsRegistered(true);
-        const mintCountResult = await nftApiService.requestMintCount(wallet);
-        const mintCount = mintCountResult.content || 0;
-        if (mintCount >= (process.env.mintCount as any)) {
-          setIsAllMinted(true);
-        }
-        const _presaleAllowed = await contract.methods._PRESALE_ALLOWED_().call();
-        setPresaleAllowed(!!_presaleAllowed);
-        switch (result.content.state) {
-          case WalletSate.WhiteListed:
-            setIsWhiteListed(true);
-            break;
-          case WalletSate.NotWhiteListed:
-            setIsWhiteListed(false);
-            break;
-          case WalletSate.Minted:
-            setIsWhiteListed(true);
-            break;
-        }
-      } else {
-        alertService.notify('Wallet Information Error', errorDescription[result.state], 'Ok');
-        return;
-      }
-    } catch (err: any) {
-      alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const registerClicked = async () => {
-    try {
-      setIsLoading(true);
-      const web3 = new Web3(Web3.givenProvider);
-      const chainInfo: number = await web3.eth.getChainId();
-      if (chainInfo !== parseInt(process.env.chainId || '')) {
-        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-        return;
-      }
-
-      const plainTextRes = await nftApiService.requestPlainText();
-      const plainText = plainTextRes.content;
-      const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
-
-      const registerRes = await nftApiService.registerWallet(wallet, signature);
-      if (registerRes.state === ErrorMessage.Success) {
-        setIsRegistered(true);
-        alertService.notify('Register Success', 'You wallet address ' + shortenTxHash(wallet) + ' joined raffle, good luck!', 'Ok');
-      } else {
-        alertService.notify('Wallet Register Error', errorDescription[registerRes.state], 'Ok');
-      }
-    } catch (err: any) {
-      alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const raffleClicked = async () => {
-    if (isOwner) {
+  const getTokenInfo = useCallback(async () => {
+    if (connected) {
       try {
         setIsLoading(true);
-        const web3 = new Web3(Web3.givenProvider);
-        const chainInfo: number = await web3.eth.getChainId();
-        if (chainInfo !== parseInt(process.env.chainId || '')) {
-          alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
+        await checkChainId();
+        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        let tempList: Object[] = [];
+        tokenIdList.map(async (tokenId: any) => {
+          const tokenURI = await contract.tokenURI(tokenId);
+          const res: any = await nftApiService.catIPFSInfo(tokenURI);
+          tempList.push(res);
+        });
+        setTokenInfoList(tempList);
+      } catch (err: any) {
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [connected, provider, tokenIdList]);
+
+  const getCurrentTokenId = useCallback(async () => {
+    if (connected) {
+      try {
+        setIsLoading(true);
+        await checkChainId();
+        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const _currentTokenId = await contract.totalSupply();
+        setCurrentTokenId(parseInt(_currentTokenId));
+      } catch (err: any) {
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [connected, provider]);
+
+  const getInitialValues = useCallback(async () => {
+    if (connected) {
+      try {
+        setIsLoading(true);
+        await checkChainId();
+        if (wallet === process.env.ownerAddress || '') {
+          setIsOwner(true);
+        }
+
+        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const _tokenIdList = await contract.getTokenIdList(wallet);
+        setTokenIdList(_tokenIdList.map(id => parseInt(id)) || []);
+
+        const result = await nftApiService.requestWalletInfo(wallet);
+        if (result.state === ErrorMessage.NoneResult) {
+          setIsRegistered(false);
+          setIsWhiteListed(false);
+        } else if (result.state === ErrorMessage.Success) {
+          setIsRegistered(true);
+          const mintCountResult = await nftApiService.requestMintCount(wallet);
+          const mintCount = mintCountResult.content || 0;
+          if (mintCount >= (process.env.mintCount as any)) {
+            setIsAllMinted(true);
+          }
+          const _presaleAllowed = await contract._PRESALE_ALLOWED_();
+          setPresaleAllowed(!!_presaleAllowed);
+          switch (result.content.state) {
+            case WalletSate.WhiteListed:
+              setIsWhiteListed(true);
+              break;
+            case WalletSate.NotWhiteListed:
+              setIsWhiteListed(false);
+              break;
+            case WalletSate.Minted:
+              setIsWhiteListed(true);
+              break;
+          }
+        } else {
+          alertService.notify('Wallet Information Error', errorDescription[result.state], 'Ok');
           return;
         }
+      } catch (err: any) {
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log(err);
+      } finally {
+        // setIsLoading(false);
+      }
+    }
+  }, [connected, provider, wallet]);
+
+  const registerClicked = useCallback(async () => {
+    if (connected) {
+      try {
+        setIsLoading(true);
+        await checkChainId();
+        const plainTextRes = await nftApiService.requestPlainText();
+        const plainText = plainTextRes.content;
+        const signature = await provider.getSigner().signMessage(plainText);
+        const registerRes = await nftApiService.registerWallet(wallet, signature);
+        if (registerRes.state === ErrorMessage.Success) {
+          setIsRegistered(true);
+          alertService.notify('Register Success', 'You wallet address ' + shortenTxHash(wallet) + ' joined raffle, good luck!', 'Ok');
+        } else {
+          alertService.notify('Wallet Register Error', errorDescription[registerRes.state], 'Ok');
+        }
+      } catch (err: any) {
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [provider, wallet]);
+
+  const raffleClicked = useCallback(async () => {
+    if (isOwner && connected) {
+      try {
+        setIsLoading(true);
+        await checkChainId();
 
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
-        const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+        const signature = await provider.getSigner().signMessage(plainText);
 
         const raffleRes = await nftApiService.raffle(signature);
         if (raffleRes.state === ErrorMessage.Success) {
@@ -289,8 +280,8 @@ export default function Wallet() {
             setIsWhiteListed(true);
           }
           if (whiteList.length) {
-            const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-            const whiteListLen = await contract.methods.raffle(whiteList).send({from: wallet});
+            const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+            await contract.raffle(whiteList);
             alertService.notify('Raffle Success', whiteList.length + ' addresses successfully whitelisted.', 'Ok');
           } else {
             alertService.notify('Raffle Warning', 'None account to raffle.', 'Ok');
@@ -305,22 +296,16 @@ export default function Wallet() {
         setIsLoading(false);
       }
     }
-  };
+  }, [provider, wallet]);
 
-  const resetClicked = async () => {
-    if (isOwner) {
+  const resetClicked = useCallback(async () => {
+    if (isOwner && connected) {
       try {
         setIsLoading(true);
-        const web3 = new Web3(Web3.givenProvider);
-        const chainInfo: number = await web3.eth.getChainId();
-        if (chainInfo !== parseInt(process.env.chainId || '')) {
-          alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-          return;
-        }
-
+        await checkChainId();
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
-        const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+        const signature = await provider.getSigner().signMessage(plainText);
 
         const raffleRes = await nftApiService.reset(signature);
         if (raffleRes.state === ErrorMessage.Success) {
@@ -336,30 +321,28 @@ export default function Wallet() {
         setIsLoading(false);
       }
     }
-  };
+  }, [provider, wallet, connected]);
 
-  const mint = async () => {
-    if (isWhiteListed) {
+  const mint = useCallback(async () => {
+    if (isWhiteListed && connected) {
       try {
         setIsLoading(true);
-        const web3 = new Web3(Web3.givenProvider);
-        const chainInfo: number = await web3.eth.getChainId();
-        if (chainInfo !== parseInt(process.env.chainId || '')) {
-          alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-          return;
-        }
+        await checkChainId();
 
-        const contract = new web3.eth.Contract(ethereumClockTokenAbi as any, process.env.contractAddress);
-        await contract.methods.drop().send({
-          from: wallet,
-          value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount
-        });
-        const tokenId = await contract.methods.totalSupply().call();
+        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const dropSubscriber = await contract.drop();
+        await dropSubscriber.wait();
+        // await contract.drop().send({
+        //   from: wallet,
+        //   value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount
+        // });
+        let tokenId = await contract.totalSupply();
+        tokenId = parseInt(tokenId);
         setShowMint(false);
 
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
-        const signature = await web3.eth.personal.sign(plainText, wallet, plainText);
+        const signature = await provider.getSigner().signMessage(plainText);
         const updateRes = await nftApiService.updateWalletInfo(wallet, WalletSate.Minted, signature);
         if (updateRes.state === ErrorMessage.Success) {
           alertService.notify('Minting Success', 'You minted a ' + tokenId + '\'s Eth-Clock NFT.', 'Ok');
@@ -368,8 +351,8 @@ export default function Wallet() {
           if (mintCount >= (process.env.mintCount as any)) {
             setIsAllMinted(true);
           }
-          const _tokenIdList = await contract.methods.getTokenIdList(wallet).call();
-          setTokenIdList(_tokenIdList || []);
+          const _tokenIdList = await contract.getTokenIdList(wallet);
+          setTokenIdList(_tokenIdList.map(id => parseInt(id)) || []);
         } else {
           alertService.notify('Mint Error', errorDescription[updateRes.state], 'Ok');
         }
@@ -380,7 +363,7 @@ export default function Wallet() {
         setIsLoading(false);
       }
     }
-  };
+  }, [wallet, provider, connected]);
 
   const stateComponent = useMemo(() => {
     return (<>
@@ -391,9 +374,9 @@ export default function Wallet() {
             <span><Icon name="starWithRhombus" size={36} color="white"/></span>
             <span className="font-bold text-30 font-Subjectivity text-white ml-5">ethereum clock</span>
           </div>
-          <div className="px-20 py-10 xl:ml-15 rounded-full bg-black-50 flex items-center">
+          <div onClick={() => router.push('/nfts')} className="px-20 py-10 xl:ml-15 rounded-full bg-black-50 flex items-center cursor-pointer">
             <span className="text-white text-16 font-semibold mr-10">View Collection</span>
-            <Link href="/nfts"><a className="cursor-pointer"><Icon name="hyperLink" color="white" size={16}/></a></Link>
+            <a><Icon name="hyperLink" color="white" size={16}/></a>
           </div>
         </div>
 

@@ -22,6 +22,6 @@ module.exports = withPWA({
     //production: process.env.PRODUCTION,
   },
   images: {
-    domains: ["ipfs.io"],
+    domains: ['ipfs.io'],
   },
 });

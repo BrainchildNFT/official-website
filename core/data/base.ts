@@ -14,10 +14,10 @@ export enum ThemeType {
 }
 
 export interface TimeLeft {
-  days: number
-  hours: number
-  minutes: number
-  seconds: number
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
 
 export interface Response {
@@ -25,7 +25,7 @@ export interface Response {
   content: any;
 }
 
-export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+export const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 interface TraitValuesType {
   [key: string]: string;
@@ -38,27 +38,27 @@ interface ProbabilitiesType {
 export const probabilities: ProbabilitiesType = {
   'Environment': {
     'Smart Contract': '4%',
-    'Near Future':    '8%',
-    'Reneqade Node':  '16%',
+    'Near Future': '8%',
+    'Reneqade Node': '16%',
     'Depths of Defi': '32%',
-    'Gas Belt':       '40%',
-    'Pending':        '0%',
+    'Gas Belt': '40%',
+    'Pending': '0%',
   },
   'Shine': {
-    'Marble':         '10%',
-    'Steel':          '15%',
-    'Patina':         '20%',
-    'Timber':         '25%',
-    'Acrylic':        '30%',
-    'Pending':        '0%',
+    'Marble': '10%',
+    'Steel': '15%',
+    'Patina': '20%',
+    'Timber': '25%',
+    'Acrylic': '30%',
+    'Pending': '0%',
   },
   'Efficiency': {
-    'Pristine':       '15%',
-    'Brilliant':      '20%',
-    'Polished':       '30%',
-    'Raw':            '20%',
-    'Flawed':         '15%',
-    'Pending':        '0%',
+    'Pristine': '15%',
+    'Brilliant': '20%',
+    'Polished': '30%',
+    'Raw': '20%',
+    'Flawed': '15%',
+    'Pending': '0%',
   }
 };
 
@@ -79,13 +79,13 @@ export enum ErrorMessage {
   NoneResult = 700,
 }
 
-export const errorDescription: {[key: number]: string} = {
+export const errorDescription: { [key: number]: string } = {
   [ErrorMessage.Failed]: 'Your request failed. Please try again.',
   [ErrorMessage.DBError]: 'Fetching database error. please try again.',
   [ErrorMessage.IncorrectWallet]: 'The wallet address is not correct. Please check if you signed with your wallet address.',
   [ErrorMessage.AlreadyRegistered]: 'The wallet address is already registered.',
   [ErrorMessage.NoneResult]: 'No data exist.',
-}
+};
 
 export const projectSchedule = {
   wYear: 2022,

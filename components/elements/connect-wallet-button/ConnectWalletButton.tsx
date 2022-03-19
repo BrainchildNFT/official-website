@@ -10,11 +10,11 @@ import { AppContext } from '../../context/app-context';
 const ConnectWalletButton = () => {
   let gProvider: any = null;
 
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
-  const [metaMaskAccount, setMetaMaskAccount] = useState<string>('')
+  const themeStatus = useSelector((state: any) => state.ThemeStatus);
+  const [metaMaskAccount, setMetaMaskAccount] = useState<string>('');
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [isFirstConnect, setIsFirstConnect] = useState(false);
-  const { wallet, lang, updateWallet } = useContext(AppContext)
+  const {wallet, lang, updateWallet} = useContext(AppContext);
   const metaMaskRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -22,7 +22,7 @@ const ConnectWalletButton = () => {
     walletconnect: {
       rpcUrl: process.env.rpcURI,
     },
-  }
+  };
 
   let web3Modal: any = null;
 
@@ -36,9 +36,9 @@ const ConnectWalletButton = () => {
 
   const loadProvider = async () => {
     if (!gProvider) {
-      console.log("connecting >> network = " + process.env.network)
-      gProvider = await web3Modal.connect()
-      onConnect()
+      console.log('connecting >> network = ' + process.env.network);
+      gProvider = await web3Modal.connect();
+      onConnect();
       gProvider.on('accountsChanged', onConnect);
       gProvider.on('connect', (info: { chainId: number }) => {
         console.log('connect info = ', info);
@@ -48,34 +48,34 @@ const ConnectWalletButton = () => {
         console.log('changed chainId = ', chainId);
       });
     }
-    return gProvider
-  }
+    return gProvider;
+  };
 
   const onConnect = async () => {
-    const web3 = new Web3(gProvider)
-    const accounts = await web3.eth.getAccounts()
+    const web3 = new Web3(gProvider);
+    const accounts = await web3.eth.getAccounts();
     if (accounts.length > 0) {
       setIsFirstConnect(true);
       updateWallet(accounts[0]);
       setMetaMaskAccount(shortenTxHash(accounts[0]));
     }
-  }
+  };
 
   const onDisconnect = () => {
     setMetaMaskAccount('');
     updateWallet('');
-    gProvider = null
+    gProvider = null;
     router.push('/');
-  }
+  };
 
   const shortenTxHash = (txHash: any) => {
-    return txHash.substr(0, 6) + "_" + txHash.substr(txHash.length-4)
-  }
+    return txHash.substr(0, 6) + '_' + txHash.substr(txHash.length - 4);
+  };
 
   const connectMetaMask = async () => {
-    gProvider = loadProvider()
+    gProvider = loadProvider();
     setShowConnectModal(false);
-  }
+  };
 
   const connectWallet = async () => {
     if (!metaMaskAccount) {
@@ -83,31 +83,33 @@ const ConnectWalletButton = () => {
     } else {
       onDisconnect();
     }
-  }
+  };
 
   useEffect(() => {
     if (isFirstConnect) {
       router.push('/wallet');
       setIsFirstConnect(false);
     }
-  }, [wallet])
+  }, [wallet]);
 
   useEffect(() => {
     if (wallet) {
       setMetaMaskAccount(shortenTxHash(wallet));
     }
+
     function handleClickOutside(event: any) {
       if (metaMaskRef.current && !metaMaskRef.current.contains(event.target)) {
         setShowConnectModal(false);
       }
     }
+
     // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [])
+  }, []);
 
   return (
     <>
@@ -225,21 +227,24 @@ const ConnectWalletButton = () => {
           <p>
             {metaMaskAccount
               ? metaMaskAccount.substring(0, 4) +
-                '...' +
-                metaMaskAccount.slice(-4)
+              '...' +
+              metaMaskAccount.slice(-4)
               : 'Connect Wallet'}
           </p>
         </button>
       </div>
-      <div className={"absolute flex justify-center top-0 left-0 bottom-0 right-0 bg-black-60 z-50 " + (showConnectModal ? 'block' : 'hidden')}>
-        <div ref={metaMaskRef} className="flex flex-col items-center h-200 mt-200 w-350 bg-black-90 rounded-xl p-40 border border cursor-pointer" onClick={() => connectMetaMask()}>
+      <div
+        className={'absolute flex justify-center top-0 left-0 bottom-0 right-0 bg-black-60 z-50 ' + (showConnectModal ? 'block' : 'hidden')}>
+        <div ref={metaMaskRef}
+             className="flex flex-col items-center h-200 mt-200 w-350 bg-black-90 rounded-xl p-40 border border cursor-pointer"
+             onClick={() => connectMetaMask()}>
           <img src="/assets/images/common/metamask.svg" alt="MetaMask Logo"/>
           <span className="text-white text-25 font-medium">Metamask</span>
           <span className="text-warning text-12">Connect your metamask wallet</span>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ConnectWalletButton
+export default ConnectWalletButton;

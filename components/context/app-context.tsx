@@ -1,9 +1,11 @@
 import React, { createContext, ReactNode, useState } from 'react';
 
+
 const defaultContextValue = {
-  wallet: "testWallet",
+  wallet: 'testWallet',
   lang: 'en',
-  updateWallet: (account: any) => {},
+  updateWallet: (account: any) => {
+  },
 };
 
 export const AppContext = createContext(defaultContextValue);
@@ -12,9 +14,9 @@ type Props = {
   children: ReactNode;
 }
 
-export function AppProvider({ children }: Props) {
-  const [wallet, setWallet] = useState("");
-  const [lang, setLang] = useState("");
+export function AppProvider({children}: Props) {
+  const [wallet, setWallet] = useState('');
+  const [lang, setLang] = useState('');
   const updateWallet = (account: any) => {
     setWallet(account);
   };
@@ -25,10 +27,10 @@ export function AppProvider({ children }: Props) {
     updateWallet,
   };
 
-  return(<>
+  return (<>
     <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
-  </>)
+  </>);
 }
 

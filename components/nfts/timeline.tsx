@@ -1,23 +1,23 @@
-import { timelineData, timelineStepData } from '../../core/data/nfts'
-import Icon from '../ui-kit/icon'
-import { useState } from 'react'
+import { timelineData, timelineStepData } from '../../core/data/nfts';
+import Icon from '../ui-kit/icon';
+import { useState } from 'react';
 
 interface Props {
-  time: string
+  time: string;
 }
 
-export default function Timeline({ time }: Props) {
+export default function Timeline({time}: Props) {
   const [opendUnholdIndex, setOpenedUnholdIndex] = useState([
     false,
     false,
     false,
-  ])
+  ]);
 
   const openUnhold = (index: any) => {
-    const arr = opendUnholdIndex
-    arr[index] = !arr[index]
-    setOpenedUnholdIndex(arr)
-  }
+    const arr = opendUnholdIndex;
+    arr[index] = !arr[index];
+    setOpenedUnholdIndex(arr);
+  };
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function Timeline({ time }: Props) {
             <div key={index}>
               <div className="flex">
                 <div className="flex items-center mr-10 sm:mr-40 relative">
-                  <div className="w-20 h-20 timeline-item-disc-background rounded-full z-20" />
+                  <div className="w-20 h-20 timeline-item-disc-background rounded-full z-20"/>
                   <div className="absolute top-0 left-10 bottom-0 w-[1px] z-0">
                     <div
                       className={
@@ -47,7 +47,8 @@ export default function Timeline({ time }: Props) {
                   </div>
                 </div>
                 <div className="py-20 grow">
-                  <div className="pr-20 sm:pr-0 sm:mr-40 pb-10 sm:pb-0 flex flex-col-reverse sm:flex-row w-full justify-between items-center">
+                  <div
+                    className="pr-20 sm:pr-0 sm:mr-40 pb-10 sm:pb-0 flex flex-col-reverse sm:flex-row w-full justify-between items-center">
                     {!item.isFairmint && (
                       <p className="text-primary font-Subjectivity font-bold text-center">
                         {item.title}
@@ -59,7 +60,7 @@ export default function Timeline({ time }: Props) {
                           Presale Raffle
                         </span>
                         <span className="text-18 font-medium">Starts</span> 07
-                        Feburary 2022 <br />
+                        Feburary 2022 <br/>
                         <span className="text-18 font-medium">at</span> 00:00 AM
                         UTC
                       </p>
@@ -73,11 +74,12 @@ export default function Timeline({ time }: Props) {
                   <div className="flex">
                     <div className="flex items-center mr-10 sm:mr-40 relative">
                       <div className="absolute top-0 left-10 bottom-0 w-[1px] z-0">
-                        <div className="h-full border-1 border-r-0 bg-primary opacity-30" />
+                        <div className="h-full border-1 border-r-0 bg-primary opacity-30"/>
                       </div>
                     </div>
                     <div className="grow">
-                      <p className="mt-40 sm:mt-80 text-center text-80 md:text-100 xl:text-150 text-primary font-Subjectivity font-bold break-all">
+                      <p
+                        className="mt-40 sm:mt-80 text-center text-80 md:text-100 xl:text-150 text-primary font-Subjectivity font-bold break-all">
                         {time}
                       </p>
                       <p className="mt-80 text-primary pl-30 sm:pl-50 lg:pl-100 py-10">
@@ -130,5 +132,5 @@ export default function Timeline({ time }: Props) {
         </div>
       </div>
     </>
-  )
+  );
 }

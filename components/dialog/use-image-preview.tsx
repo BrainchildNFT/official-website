@@ -9,8 +9,8 @@ export default function useImagePreview(): ImagePreviewService {
   const dialog = useDialog();
 
   const preview = (src: string, alt: string): void => {
-    dialog.openDialog(<ImagePreviewDialog src={src} alt={alt} />);
+    dialog.openDialog(<ImagePreviewDialog src={src} alt={alt}/>);
   };
 
-  return { preview };
+  return {preview};
 }

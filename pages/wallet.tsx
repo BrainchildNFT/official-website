@@ -41,6 +41,7 @@ export default function Wallet() {
   const [showMint, setShowMint] = useState(false);
   const [presaleAllowed, setPresaleAllowed] = useState(false);
   const [currentTokenId, setCurrentTokenId] = useState(0);
+  const [isAllowedChainId, setIsAllowedChainId] = useState(false);
   const [tokenIdList, setTokenIdList] = useState<number[]>([]);
   const [tokenInfoList, setTokenInfoList] = useState<Object[]>([]);
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
@@ -49,6 +50,35 @@ export default function Wallet() {
   const {connected, provider, wallet} = useContext(AppContext);
   const router = useRouter();
   const alertService = useAlert();
+
+  useEffect(() => {
+    updateRaffleState();
+    const timer = setInterval(() => {
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    getInitialValues();
+  }, [raffleState]);
+
+  useEffect(() => {
+    getCurrentTokenId();
+  }, [showMint]);
+
+  useEffect(() => {
+    getTokenInfo();
+  }, [tokenIdList]);
+
+  useEffect(() => {
+    getInitialValues();
+  }, [provider, wallet, connected, isAllowedChainId]);
+
+  useEffect(() => {
+    checkChainId();
+  }, [provider, wallet, connected]);
 
   const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
     let difference =
@@ -80,38 +110,6 @@ export default function Wallet() {
       if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
     }
   }, []);
-
-  useEffect(() => {
-    updateRaffleState();
-    getInitialValues();
-    const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0));
-      setRaffleEndTimeLeft(calculateTimeLeft(1));
-      updateRaffleState();
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    getInitialValues();
-  }, [raffleState]);
-
-  useEffect(() => {
-    getCurrentTokenId();
-  }, [showMint]);
-
-  useEffect(() => {
-    getTokenInfo();
-  }, [tokenIdList]);
-
-  const checkChainId = useCallback(async () => {
-    if(connected) {
-      const id = await provider.getNetwork().then(network => network.chainId);
-      if (id != netInfo.rinkeby.chainId) {
-        alertService.notify('MetaMask Connection Error', 'You selected wrong Network. Please try again.', 'Ok');
-        await provider.send("wallet_switchEthereumChain", [{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
-      }
-    }
-  }, [connected, provider]);
 
   const idToHexString = useCallback((id: number) => {
     return "0x" + id.toString(16);
@@ -150,11 +148,44 @@ export default function Wallet() {
     }
   }, [raffleState, isWhiteListed]);
 
-  const getTokenInfo = useCallback(async () => {
-    if (connected) {
+  const checkChainId = useCallback(async () => {
+    if(connected) {
       try {
         setIsLoading(true);
-        await checkChainId();
+        console.log('isLoading6');
+        const id = await provider.getNetwork().then(network => network.chainId);
+        if (id != netInfo.rinkeby.chainId) {
+          await provider.send("wallet_switchEthereumChain", [{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
+        }
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+          try {
+            await provider.send('wallet_addEthereumChain',[{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
+          } catch (addError) {
+            // handle "add" error
+            console.log('addError = ', addError);
+          }
+        }
+        // handle other "switch" errors
+      } finally {
+        setIsLoading(false);
+        const id = await provider.getNetwork().then(network => network.chainId);
+        if (id === netInfo.rinkeby.chainId) {
+          setIsAllowedChainId(true);
+        } else {
+          setIsAllowedChainId(false);
+        }
+        console.log('isLoading6e');
+      }
+    }
+  }, [connected, provider, wallet]);
+
+  const getTokenInfo = useCallback(async () => {
+    if (connected && isAllowedChainId) {
+      try {
+        setIsLoading(true);
+        console.log('isLoading7');
         const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
         let tempList: Object[] = [];
         tokenIdList.map(async (tokenId: any) => {
@@ -164,36 +195,38 @@ export default function Wallet() {
         });
         setTokenInfoList(tempList);
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again1.', 'Ok');
         console.log(err);
       } finally {
         setIsLoading(false);
+        console.log('isLoading7e');
       }
     }
-  }, [connected, provider, tokenIdList]);
+  }, [connected, provider, tokenIdList, isAllowedChainId]);
 
   const getCurrentTokenId = useCallback(async () => {
-    if (connected) {
+    if (connected && isAllowedChainId) {
       try {
         setIsLoading(true);
-        await checkChainId();
+        console.log('isLoading8');
         const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
         const _currentTokenId = await contract.totalSupply();
         setCurrentTokenId(parseInt(_currentTokenId));
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again2.', 'Ok');
         console.log(err);
       } finally {
         setIsLoading(false);
+        console.log('isLoading8e');
       }
     }
-  }, [connected, provider]);
+  }, [connected, provider, isAllowedChainId]);
 
   const getInitialValues = useCallback(async () => {
-    if (connected) {
+    if (connected && isAllowedChainId) {
       try {
         setIsLoading(true);
-        await checkChainId();
+        console.log('isLoading1');
         if (wallet === process.env.ownerAddress || '') {
           setIsOwner(true);
         }
@@ -201,49 +234,51 @@ export default function Wallet() {
         const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
         const _tokenIdList = await contract.getTokenIdList(wallet);
         setTokenIdList(_tokenIdList.map(id => parseInt(id)) || []);
-
-        const result = await nftApiService.requestWalletInfo(wallet);
-        if (result.state === ErrorMessage.NoneResult) {
-          setIsRegistered(false);
-          setIsWhiteListed(false);
-        } else if (result.state === ErrorMessage.Success) {
-          setIsRegistered(true);
-          const mintCountResult = await nftApiService.requestMintCount(wallet);
-          const mintCount = mintCountResult.content || 0;
-          if (mintCount >= (process.env.mintCount as any)) {
-            setIsAllMinted(true);
-          }
-          const _presaleAllowed = await contract._PRESALE_ALLOWED_();
-          setPresaleAllowed(!!_presaleAllowed);
-          switch (result.content.state) {
-            case WalletSate.WhiteListed:
-              setIsWhiteListed(true);
-              break;
-            case WalletSate.NotWhiteListed:
-              setIsWhiteListed(false);
-              break;
-            case WalletSate.Minted:
-              setIsWhiteListed(true);
-              break;
-          }
-        } else {
-          alertService.notify('Wallet Information Error', errorDescription[result.state], 'Ok');
-          return;
-        }
+        console.log('_tokenIdList', _tokenIdList);
+        // const result = await nftApiService.requestWalletInfo(wallet);
+        // if (result.state === ErrorMessage.NoneResult) {
+        //   setIsRegistered(false);
+        //   setIsWhiteListed(false);
+        // } else if (result.state === ErrorMessage.Success) {
+        //   setIsRegistered(true);
+        //   const mintCountResult = await nftApiService.requestMintCount(wallet);
+        //   const mintCount = mintCountResult.content || 0;
+        //   if (mintCount >= (process.env.mintCount as any)) {
+        //     setIsAllMinted(true);
+        //   }
+        //   const _presaleAllowed = await contract._PRESALE_ALLOWED_();
+        //   setPresaleAllowed(!!_presaleAllowed);
+        //   switch (result.content.state) {
+        //     case WalletSate.WhiteListed:
+        //       setIsWhiteListed(true);
+        //       break;
+        //     case WalletSate.NotWhiteListed:
+        //       setIsWhiteListed(false);
+        //       break;
+        //     case WalletSate.Minted:
+        //       setIsWhiteListed(true);
+        //       break;
+        //   }
+        // } else {
+        //   alertService.notify('Wallet Information Error', errorDescription[result.state], 'Ok');
+        //   return;
+        // }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        console.log('err = ', err);
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again3.', 'Ok');
         console.log(err);
       } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
+        console.log('isLoading1e');
       }
     }
-  }, [connected, provider, wallet]);
+  }, [connected, provider, wallet, isAllowedChainId]);
 
   const registerClicked = useCallback(async () => {
-    if (connected) {
+    if (connected && isAllowedChainId) {
       try {
         setIsLoading(true);
-        await checkChainId();
+        console.log('isLoading2');
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
         const signature = await provider.getSigner().signMessage(plainText);
@@ -255,20 +290,20 @@ export default function Wallet() {
           alertService.notify('Wallet Register Error', errorDescription[registerRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again4.', 'Ok');
         console.log(err);
       } finally {
         setIsLoading(false);
+        console.log('isLoading2e');
       }
     }
-  }, [provider, wallet]);
+  }, [provider, wallet, isAllowedChainId]);
 
   const raffleClicked = useCallback(async () => {
-    if (isOwner && connected) {
+    if (isOwner && connected && isAllowedChainId) {
       try {
         setIsLoading(true);
-        await checkChainId();
-
+        console.log('isLoading3');
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
         const signature = await provider.getSigner().signMessage(plainText);
@@ -290,19 +325,20 @@ export default function Wallet() {
           alertService.notify('Raffle Error', errorDescription[raffleRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again5.', 'Ok');
         console.log(err);
       } finally {
         setIsLoading(false);
+        console.log('isLoading3e');
       }
     }
-  }, [provider, wallet]);
+  }, [provider, wallet, isAllowedChainId]);
 
   const resetClicked = useCallback(async () => {
-    if (isOwner && connected) {
+    if (isOwner && connected && isAllowedChainId) {
       try {
         setIsLoading(true);
-        await checkChainId();
+        console.log('isLoading4');
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
         const signature = await provider.getSigner().signMessage(plainText);
@@ -315,20 +351,20 @@ export default function Wallet() {
           alertService.notify('Reset Error', errorDescription[raffleRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again6.', 'Ok');
         console.log(err);
       } finally {
         setIsLoading(false);
+        console.log('isLoading4e');
       }
     }
-  }, [provider, wallet, connected]);
+  }, [provider, wallet, connected, isAllowedChainId]);
 
   const mint = useCallback(async () => {
-    if (isWhiteListed && connected) {
+    if (isWhiteListed && connected && isAllowedChainId) {
       try {
         setIsLoading(true);
-        await checkChainId();
-
+        console.log('isLoading5');
         const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
         const dropSubscriber = await contract.drop();
         await dropSubscriber.wait();
@@ -357,13 +393,14 @@ export default function Wallet() {
           alertService.notify('Mint Error', errorDescription[updateRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again.', 'Ok');
+        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again7.', 'Ok');
         console.log(err);
       } finally {
         setIsLoading(false);
+        console.log('isLoading5e');
       }
     }
-  }, [wallet, provider, connected]);
+  }, [wallet, provider, connected, isAllowedChainId]);
 
   const stateComponent = useMemo(() => {
     return (<>

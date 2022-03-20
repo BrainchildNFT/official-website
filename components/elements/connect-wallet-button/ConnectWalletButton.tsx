@@ -35,15 +35,14 @@ const ConnectWalletButton = () => {
     } else {
       onDisconnect();
     }
-  }, []);
+  }, [connected]);
 
   useEffect(() => {
-    if (isFirstConnect) {
-      router.push('/wallet');
-      setIsFirstConnect(false);
-    }
-
     setMetaMaskAccount(shortenTxHash(wallet));
+    if (isFirstConnect) {
+      setIsFirstConnect(false);
+      router.push('/wallet');
+    }
   }, [wallet, connected]);
 
   useEffect(() => {

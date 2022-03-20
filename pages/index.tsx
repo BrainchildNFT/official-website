@@ -723,7 +723,7 @@ export default function Home() {
           <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110">
             <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0 group cursor-pointer">
               <div className="hidden group-hover:block">
-                <Link href="mailto:BrainchildNFT@gmail.com">
+                <a href="mailto:BrainchildNFT@gmail.com">
                   <Image
                     src="/assets/images/landing-page/radial-connect-hover.png"
                     layout="intrinsic"
@@ -731,7 +731,7 @@ export default function Home() {
                     height={420}
                     alt="Hand Drawing White Hourse"
                   />
-                </Link>
+                </a>
               </div>
               <div className="block group-hover:hidden">
                 <Image

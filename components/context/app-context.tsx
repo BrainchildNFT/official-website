@@ -59,7 +59,7 @@ export function AppProvider({children}: Props) {
   const [lang, setLang] = useState('');
   const [connected, setConnected] = useState(false);
   const [provider, setProvider] = useState<JsonRpcProvider>(getMainnetStaticProvider);
-  const [web3Modal, setWeb3Modal] = useState<Web3Modal>(initModal);
+  const [web3Modal, setWeb3Modal] = useState<Web3Modal>(initModal as Web3Modal);
   const [chainChanged, setChainChanged] = useState(true);
 
   const updateWallet = (account: any) => {

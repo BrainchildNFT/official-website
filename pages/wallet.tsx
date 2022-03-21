@@ -164,7 +164,7 @@ export default function Wallet() {
         if (id != netInfo.rinkeby.chainId) {
           await provider.send("wallet_switchEthereumChain", [{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
         }
-      } catch (switchError) {
+      } catch (switchError: any) {
         // This error code indicates that the chain has not been added to MetaMask.
         if (switchError.code === 4902) {
           try {
@@ -191,7 +191,7 @@ export default function Wallet() {
     if (connected && isAllowedChainId) {
       try {
         increaseLoading();
-        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
         let tempList: Object[] = [];
         tokenIdList.map(async (tokenId: any) => {
           const tokenURI = await contract.tokenURI(tokenId);
@@ -212,7 +212,7 @@ export default function Wallet() {
     if (connected && isAllowedChainId) {
       try {
         increaseLoading();
-        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
         const _currentTokenId = await contract.totalSupply();
         setCurrentTokenId(parseInt(_currentTokenId));
       } catch (err: any) {
@@ -231,9 +231,9 @@ export default function Wallet() {
         if (wallet === process.env.ownerAddress || '') {
           setIsOwner(true);
         }
-        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
         const _tokenIdList = await contract.getTokenIdList(wallet);
-        setTokenIdList(_tokenIdList.map(id => parseInt(id)) || []);
+        setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
         console.log('_tokenIdList', _tokenIdList);
         const result = await nftApiService.requestWalletInfo(wallet);
         if (result.state === ErrorMessage.NoneResult) {
@@ -311,7 +311,7 @@ export default function Wallet() {
             setIsWhiteListed(true);
           }
           if (whiteList.length) {
-            const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+            const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
             await contract.raffle(whiteList);
             alertService.notify('Raffle Success', whiteList.length + ' addresses successfully whitelisted.', 'Ok');
           } else {
@@ -357,7 +357,7 @@ export default function Wallet() {
     if (isWhiteListed && connected && isAllowedChainId) {
       try {
         increaseLoading();
-        const contract = new ethers.Contract(process.env.contractAddress, ethereumClockTokenAbi, provider.getSigner());
+        const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
         const dropSubscriber = await contract.drop({value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount, from: wallet});
         await dropSubscriber.wait();
         // await contract.drop().send({
@@ -380,7 +380,7 @@ export default function Wallet() {
             setIsAllMinted(true);
           }
           const _tokenIdList = await contract.getTokenIdList(wallet);
-          setTokenIdList(_tokenIdList.map(id => parseInt(id)) || []);
+          setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
         } else {
           alertService.notify('Mint Error', errorDescription[updateRes.state], 'Ok');
         }

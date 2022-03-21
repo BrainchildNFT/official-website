@@ -10,8 +10,8 @@ module.exports = withPWA({
   env: {
     contractAddress: '0xaA385813E760f02434B29db34C30F708d8eDFa31',
     ownerAddress: '0x9e16e0C678DbB15aFe8a1159d03F8970e41EE882',
-    preSaleAmount: 60000000000000000,
-    publicSaleAmount: 120000000000000000,
+    preSaleAmount: '60000000000000000',
+    publicSaleAmount: '120000000000000000',
     rpcURI: 'https://speedy-nodes-nyc.moralis.io/a0dd13b0091772cbf75a91db/eth/rinkeby',
     network: 'rinkeby',
     chainId: 4,
@@ -22,6 +22,6 @@ module.exports = withPWA({
     //production: process.env.PRODUCTION,
   },
   images: {
-    domains: ["ipfs.io"],
+    domains: ['ipfs.io'],
   },
 });

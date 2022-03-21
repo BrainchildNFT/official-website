@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { breakpointMap } from '../../../core/data/base';
 
 type State = {
@@ -28,7 +28,7 @@ const mediaQueries: MediaQueries = (() => {
   return Object.keys(breakpointMap).reduce((accum, size, index) => {
     // Largest size is just a min-width of second highest max-width
     if (index === Object.keys(breakpointMap).length - 1) {
-      return { ...accum, [size]: `(min-width: ${prevMinWidth}px)` };
+      return {...accum, [size]: `(min-width: ${prevMinWidth}px)`};
     }
 
     const minWidth = prevMinWidth;
@@ -37,7 +37,7 @@ const mediaQueries: MediaQueries = (() => {
     // Min width for next iteration
     prevMinWidth = breakpoint + 1;
 
-    return { ...accum, [size]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)` };
+    return {...accum, [size]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)`};
   }, {});
 })();
 
@@ -46,10 +46,10 @@ const getKey = (size: string) => `is${size.charAt(0).toUpperCase()}${size.slice(
 const useMatchBreakpoints = (): BreakpointChecks => {
   const [state, setState] = useState<State>(() => {
     return Object.keys(mediaQueries).reduce((accum, size) => {
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         const key = getKey(size);
         const mql = window.matchMedia(mediaQueries[size]);
-        return { ...accum, [key]: mql.matches };
+        return {...accum, [key]: mql.matches};
       } else {
         return accum;
       }
@@ -71,13 +71,13 @@ const useMatchBreakpoints = (): BreakpointChecks => {
 
       // Safari < 14 fix
       if (mql.addEventListener) {
-        mql.addEventListener("change", handler);
+        mql.addEventListener('change', handler);
       }
 
       return () => {
         // Safari < 14 fix
         if (mql.removeEventListener) {
-          mql.removeEventListener("change", handler);
+          mql.removeEventListener('change', handler);
         }
       };
     });

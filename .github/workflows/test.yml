@@ -3,7 +3,7 @@
 name: Test
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-on: [push]
+on: [ push ]
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.17.0]
+        node-version: [ 14.17.0 ]
 
     # Steps represent a sequence o tasks that will be executed as part of the job
     steps:

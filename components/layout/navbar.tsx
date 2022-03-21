@@ -15,28 +15,28 @@ import { sidebarUpdate } from '../../core/actions/sidebar-update';
 import { AppContext } from '../context/app-context';
 
 export function Navbar() {
-  const [navbarOpen, setNavbarOpen] = useState(false)
+  const [navbarOpen, setNavbarOpen] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState(
     'dark-background-image'
-  )
-  const [textColor, setTextColor] = useState('text-white')
-  const [borderColor, setBorderColor] = useState('border-gradient-light')
+  );
+  const [textColor, setTextColor] = useState('text-white');
+  const [borderColor, setBorderColor] = useState('border-gradient-light');
 
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
-  const sidebarStatus = useSelector((state: any) => state.SidebarStatus)
-  const { isMobile, isTablet } = useMatchBreakpoints()
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const { wallet } = useContext(AppContext)
+  const themeStatus = useSelector((state: any) => state.ThemeStatus);
+  const sidebarStatus = useSelector((state: any) => state.SidebarStatus);
+  const {isMobile, isTablet} = useMatchBreakpoints();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const {wallet} = useContext(AppContext);
 
   const collectionsClicked = () => {
-    dispatch(sidebarUpdate())
-  }
+    dispatch(sidebarUpdate());
+  };
 
   const goToNfts = () => {
-    dispatch(sidebarUpdate())
-    router.push('/nfts')
-  }
+    dispatch(sidebarUpdate());
+    router.push('/nfts');
+  };
 
   const goToOpenSea = () => {
     window.open('https://testnets.opensea.io/assets/0xd8a3c2a69ab79cf75c15299e00528f7da244c42a', '_blank');
@@ -47,16 +47,16 @@ export function Navbar() {
       themeStatus === ThemeType.DarkMode
         ? 'dark-background-image'
         : 'light-background-image'
-    )
+    );
     setTextColor(
       themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary'
-    )
+    );
     setBorderColor(
       themeStatus === ThemeType.DarkMode
         ? 'border-gradient-light'
         : 'border-gradient-dark'
-    )
-  }, [themeStatus])
+    );
+  }, [themeStatus]);
 
   return (
     <div
@@ -64,7 +64,7 @@ export function Navbar() {
         navbarOpen
           ? backgroundColor + ' transition duration-500 z-[1000] sticky top-0'
           : backgroundColor +
-            ' z-[1000] sticky top-0 transition duration-500 mt-40 relative'
+          ' z-[1000] sticky top-0 transition duration-500 mt-40 relative'
       }
       role="img"
       aria-label="Gradient background Image"
@@ -119,15 +119,14 @@ export function Navbar() {
                 ? ' left-0 top-[64px] block ease-out-in light-background-image overflow-y-scroll'
                 : ' top-[100vh] hidden left-0 xl:top-0 ease-in-out')
             }
-            style={{ height: navbarOpen ? 'calc(100vh - 65px)' : 'auto' }}
+            style={{height: navbarOpen ? 'calc(100vh - 65px)' : 'auto'}}
             role="img"
             aria-label="Gradient background Image"
           >
             <ul
               className={
                 'flex flex-col xl:flex-row xl:w-full xl:justify-center font-medium text-45 xl:text-16 ' +
-                (isMobile || isTablet ? ' text-primary' : '') +
-                ' xl:' +
+                (isMobile || isTablet ? ' text-primary xl:' : 'xl:') +
                 textColor
               }
             >
@@ -138,7 +137,7 @@ export function Navbar() {
                     'cursor-pointer relative xl:px-25 xl:py-10 ' +
                     (router.pathname == '/collections' ? 'text-[#AF5F5F]' : '')
                   }
-                  style={{ fontFamily: 'Subjectivity Serif' }}
+                  style={{fontFamily: 'Subjectivity Serif'}}
                 >
                   Collections
                 </a>
@@ -150,7 +149,7 @@ export function Navbar() {
                       'relative xl:px-25 xl:py-10 ' +
                       (router.pathname == '/about-us' ? 'text-[#AF5F5F]' : '')
                     }
-                    style={{ fontFamily: 'Subjectivity Serif' }}
+                    style={{fontFamily: 'Subjectivity Serif'}}
                   >
                     About Us
                   </a>
@@ -165,37 +164,39 @@ export function Navbar() {
               </li> */}
               <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0">
 
-                  <a
-                    onClick={goToOpenSea}
-                    className={
-                      'relative xl:px-25 xl:py-10 cursor-pointer ' +
-                      (router.pathname == '/opensea' ? 'text-[#AF5F5F]' : '')
-                    }
-                    style={{ fontFamily: 'Subjectivity Serif' }}
-                  >
-                    OpenSea
-                  </a>
+                <a
+                  onClick={goToOpenSea}
+                  className={
+                    'relative xl:px-25 xl:py-10 cursor-pointer ' +
+                    (router.pathname == '/opensea' ? 'text-[#AF5F5F]' : '')
+                  }
+                  style={{fontFamily: 'Subjectivity Serif'}}
+                >
+                  OpenSea
+                </a>
               </li>
-              <li className={"py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 " + (wallet ? 'block' : 'hidden')}>
+              <li
+                className={'py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 ' + (wallet ? 'block' : 'hidden')}>
                 <Link href="/wallet">
                   <a
                     className={
                       'relative xl:px-25 xl:py-10 ' +
                       (router.pathname == '/wallet' ? 'text-[#AF5F5F]' : '')
                     }
-                    style={{ fontFamily: 'Subjectivity Serif' }}
+                    style={{fontFamily: 'Subjectivity Serif'}}
                   >
                     Wallet
                   </a>
                 </Link>
               </li>
-              <li className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 relative group cursor-pointer">
+              <li
+                className="py-15 px-20 xl:px-0 nav-link border-b border-gradient-dark xl:border-b-0 relative group cursor-pointer">
                 <a
                   className={
                     'relative xl:px-25 xl:py-10 ' +
                     (router.pathname == '/other' ? 'text-[#AF5F5F]' : '')
                   }
-                  style={{ fontFamily: 'Subjectivity Serif' }}
+                  style={{fontFamily: 'Subjectivity Serif'}}
                 >
                   Other
                 </a>
@@ -254,7 +255,8 @@ export function Navbar() {
                           fontWeight: 400,
                         }}
                       >
-                        <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
+                        <Link
+                          href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
                           Whitepaper
                         </Link>
                       </span>
@@ -315,7 +317,7 @@ export function Navbar() {
               <div className="block xl:hidden p-20">
                 <div className="flex items-center mt-10">
                   <div className="w-20 flex">
-                    <Icon name="discord" color="#353637" size={20} />
+                    <Icon name="discord" color="#353637" size={20}/>
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -330,7 +332,7 @@ export function Navbar() {
                 </div>
                 <div className="flex items-center mt-30">
                   <div className="w-20 flex">
-                    <Icon name="file_text" color="#353637" size={20} />
+                    <Icon name="file_text" color="#353637" size={20}/>
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -340,14 +342,15 @@ export function Navbar() {
                       verticalAlign: 'middle',
                     }}
                   >
-                    <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
+                    <Link
+                      href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
                       Whitepaper
                     </Link>
                   </span>
                 </div>
                 <div className="flex items-center mt-30">
                   <div className="w-20 flex">
-                    <Icon name="instagram" color="#353637" size={20} />
+                    <Icon name="instagram" color="#353637" size={20}/>
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -364,7 +367,7 @@ export function Navbar() {
                 </div>
                 <div className="flex items-center mt-30">
                   <div className="w-20 flex">
-                    <Icon name="twitter" color="#353637" size={20} />
+                    <Icon name="twitter" color="#353637" size={20}/>
                   </div>
                   <span
                     className="ml-10 text-[18px] tracking-wider"
@@ -383,7 +386,7 @@ export function Navbar() {
             </ul>
           </div>
           <div className="hidden xl:flex px-20 xl:px-0 xl:mr-50">
-            <ConnectWalletButton />
+            <ConnectWalletButton/>
           </div>
         </div>
       </nav>
@@ -430,5 +433,5 @@ export function Navbar() {
         </div>
       </div>
     </div>
-  )
+  );
 }

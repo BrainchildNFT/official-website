@@ -4,7 +4,7 @@ export enum RaffleState {
   Ended = 2,
 }
 
-export const faq_display_limit = 6
+export const faq_display_limit = 6;
 
 export const faqs = {
   data: [
@@ -42,7 +42,7 @@ export const faqs = {
       content: '42',
     },
   ],
-}
+};
 
 export const nftList = {
   images: [
@@ -79,4 +79,4 @@ export const nftList = {
       height: 400,
     },
   ],
-}
+};

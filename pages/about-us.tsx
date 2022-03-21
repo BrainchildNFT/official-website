@@ -5,51 +5,51 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { TimeLeft, projectSchedule, monthNames } from '../core/data/base';
+import { monthNames, projectSchedule, TimeLeft } from '../core/data/base';
 import { Layout } from '../components/layout/layout';
 import { RaffleState } from '../core/data/landing';
 import Icon from '../components/ui-kit/icon';
 import RoadMap from '../components/about-us/road-map';
 
 export default function AboutUs() {
-  const [isTop, setIsTop] = useState(true)
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
-  const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
+  const [isTop, setIsTop] = useState(true);
+  const [raffleState, setRaffleState] = useState(RaffleState.Waiting);
+  const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
 
   const handleScroll = () => {
     if (typeof window !== 'undefined') {
       if (window.scrollY) {
-        setIsTop(false)
+        setIsTop(false);
       } else {
-        setIsTop(true)
+        setIsTop(true);
       }
     }
-  }
+  };
 
   useEffect(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white')
-        break
+        setStateBarBackground('bg-danger text-white');
+        break;
       case RaffleState.Live:
-        setStateBarBackground('bg-success text-white')
-        break
+        setStateBarBackground('bg-success text-white');
+        break;
       case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary')
-        break
+        setStateBarBackground('light-background-image text-primary');
+        break;
       default:
-        setStateBarBackground('bg-danger text-white')
+        setStateBarBackground('bg-danger text-white');
     }
-  }, [raffleState])
+  }, [raffleState]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
     let difference =
@@ -59,7 +59,7 @@ export default function AboutUs() {
       hours: 0,
       minutes: 0,
       seconds: 0,
-    }
+    };
 
     if (difference > 0) {
       timeLeft = {
@@ -67,30 +67,30 @@ export default function AboutUs() {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
-      }
+      };
     }
 
-    return timeLeft
-  }
+    return timeLeft;
+  };
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
 
-    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
-    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
-    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
-  }
+    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
+    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
+    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0))
-      setRaffleEndTimeLeft(calculateTimeLeft(1))
-      updateRaffleState()
-    }, 1000)
-  }, [])
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
+  }, []);
 
   return (
     <>
@@ -104,11 +104,12 @@ export default function AboutUs() {
       <Layout>
         <div className="dark-background-image" role="img" aria-label="Gradient background Image">
           {/*Pushing the boundaries of NFTs*/}
-          <section className="container mx-auto pt-35 sm:pt-105 lg:pt-145 pb-110 sm:pb-195 lg:pb-305 flex flex-col items-center">
+          <section
+            className="container mx-auto pt-35 sm:pt-105 lg:pt-145 pb-110 sm:pb-195 lg:pb-305 flex flex-col items-center">
             <h1 className="font-Future text-white text-center opacity-90 text-60 sm:text-100 lg:text-130">
               Pushing the
-              <br className="sm:hidden" /> boundaries
-              <br className="sm:hidden" /> of NFTs
+              <br className="sm:hidden"/> boundaries
+              <br className="sm:hidden"/> of NFTs
             </h1>
             <div className="-mt-150 -mb-100">
               <Image
@@ -143,14 +144,17 @@ export default function AboutUs() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  { projectSchedule.stateStr } begins on { projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear } at 00:00 AM UTC
+                  {projectSchedule.stateStr} begins
+                  on {projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear} at
+                  00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
-                  { projectSchedule.stateStr } Results{' '}
+                  {projectSchedule.stateStr} Results{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> end on
-                  { projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear } at 00:00 AM UTC
+                  {projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear} at
+                  00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
@@ -219,12 +223,13 @@ export default function AboutUs() {
 
           {/*RoadMap for New Year*/}
           <section className="container mx-auto py-150">
-            <RoadMap />
+            <RoadMap/>
           </section>
 
           <section className="relative about-us-members-background" role="img" aria-label="Gradient background Image">
             <div className="px-40 lg:px-100 xl:px-300 pb-100 lg:pb-120 xl:pb-150">
-              <h1 className="font-Future text-50 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300 text-center">
+              <h1
+                className="font-Future text-50 lg:text-90 xl:text-100 text-white opacity-90 mt-30 lg:mt-100 xl:mt-300 text-center">
                 Meet <span className="text-60">the</span> Team
               </h1>
 
@@ -235,7 +240,7 @@ export default function AboutUs() {
                 Confused kid in a confusing world
               </p>
               <p className="flex items-center font-Subjectivity text-white opacity-90">
-                <Icon className="mr-10" name="mail" color="white" size={20} />
+                <Icon className="mr-10" name="mail" color="white" size={20}/>
                 kensan42069@gmail.com
               </p>
               <p className="flex items-center font-Subjectivity text-white opacity-90">
@@ -248,7 +253,8 @@ export default function AboutUs() {
                 @kensan42069
               </p>
 
-              <p className="font-Future text-50 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">
+              <p
+                className="font-Future text-50 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">
                 PIGUBAOZA
               </p>
               <div className="flex flex-col items-end">
@@ -274,7 +280,8 @@ export default function AboutUs() {
               </p>
               <p className="text-white opacity-60">Also, pushing p i x e l s</p>
 
-              <p className="font-Future text-50 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">
+              <p
+                className="font-Future text-50 lg:text-90 xl:text-100 text-white text-right opacity-90 mt-30 lg:mt-150 xl:mt-300">
                 and more...
               </p>
               <div className="flex justify-end">
@@ -289,5 +296,5 @@ export default function AboutUs() {
         </div>
       </Layout>
     </>
-  )
+  );
 }

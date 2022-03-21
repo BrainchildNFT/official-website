@@ -11,7 +11,7 @@ export default function Error404() {
     <Layout>
       <section className="w-screen h-screen-without-navbar">
         <div className="container mx-auto flex flex-col justify-center items-center h-full">
-          <Icon name="error404" size={500} color="white" />
+          <Icon name="error404" size={500} color="white"/>
         </div>
       </section>
     </Layout>

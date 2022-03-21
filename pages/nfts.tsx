@@ -1,57 +1,57 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Layout } from '../components/layout/layout'
-import { RaffleState } from '../core/data/landing'
-import Icon from '../components/ui-kit/icon'
-import { NftsMenuType, NftsMenuTypeArr } from '../core/data/nfts'
-import About from '../components/nfts/about'
-import PerksAndUtility from '../components/nfts/perks-and-utility'
-import Timeline from '../components/nfts/timeline'
-import Enhancements from '../components/nfts/enhancements'
-import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
-import Artist from '../components/nfts/artist'
-import { themeUpdate } from '../core/actions/theme-update'
-import { monthNames, projectSchedule, ThemeType, TimeLeft } from '../core/data/base';
-import { sidebarUpdate } from '../core/actions/sidebar-update'
+import { Layout } from '../components/layout/layout';
+import { RaffleState } from '../core/data/landing';
+import Icon from '../components/ui-kit/icon';
+import { NftsMenuType, NftsMenuTypeArr } from '../core/data/nfts';
+import About from '../components/nfts/about';
+import PerksAndUtility from '../components/nfts/perks-and-utility';
+import Timeline from '../components/nfts/timeline';
+import Enhancements from '../components/nfts/enhancements';
+import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
+import Artist from '../components/nfts/artist';
+import { themeUpdate } from '../core/actions/theme-update';
+import { monthNames, projectSchedule, ThemeType } from '../core/data/base';
+import { sidebarUpdate } from '../core/actions/sidebar-update';
 
 export default function Nfts() {
-  const [isTop, setIsTop] = useState(true)
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
-  const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
-  const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About)
-  const [textColor, setTextColor] = useState('text-white')
+  const [isTop, setIsTop] = useState(true);
+  const [raffleState, setRaffleState] = useState(RaffleState.Waiting);
+  const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
+  const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About);
+  const [textColor, setTextColor] = useState('text-white');
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
 
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
-  const dispatch = useDispatch()
+  const themeStatus = useSelector((state: any) => state.ThemeStatus);
+  const dispatch = useDispatch();
 
-  const { isHuge } = useMatchBreakpoints()
-  const nftContentRef = useRef<HTMLDivElement>(null)
-  const mainBody = useRef<HTMLDivElement>(null)
+  const {isHuge} = useMatchBreakpoints();
+  const nftContentRef = useRef<HTMLDivElement>(null);
+  const mainBody = useRef<HTMLDivElement>(null);
 
   const menuList = [
-    { id: NftsMenuType.About, name: 'ABOUT' },
-    { id: NftsMenuType.Artist, name: 'ARTIST' },
-    { id: NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY' },
-    { id: NftsMenuType.TimeLine, name: 'TIMELINE' },
-    { id: NftsMenuType.Enhancements, name: 'ENHANCEMENTS' },
+    {id: NftsMenuType.About, name: 'ABOUT'},
+    {id: NftsMenuType.Artist, name: 'ARTIST'},
+    {id: NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY'},
+    {id: NftsMenuType.TimeLine, name: 'TIMELINE'},
+    {id: NftsMenuType.Enhancements, name: 'ENHANCEMENTS'},
     // {id:NftsMenuType.Gallery, name: 'GALLERY'},
-    { id: NftsMenuType.WhitePaper, name: 'WHITEPAPER' },
-  ]
+    {id: NftsMenuType.WhitePaper, name: 'WHITEPAPER'},
+  ];
 
   interface TimeLeft {
-    days: number
-    hours: number
-    minutes: number
-    seconds: number
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
   }
 
   const calculateTimeLeft = (flag: number): TimeLeft => {
@@ -62,7 +62,7 @@ export default function Nfts() {
       hours: 0,
       minutes: 0,
       seconds: 0,
-    }
+    };
 
     if (difference > 0) {
       timeLeft = {
@@ -70,115 +70,115 @@ export default function Nfts() {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
-      }
+      };
     }
 
-    return timeLeft
-  }
+    return timeLeft;
+  };
 
   const updateRaffleState = () => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
 
-    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
-    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
-    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
-  }
+    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
+    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
+    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended);
+  };
 
   useEffect(() => {
-    updateRaffleState()
+    updateRaffleState();
     const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0))
-      setRaffleEndTimeLeft(calculateTimeLeft(1))
-      updateRaffleState()
-    }, 1000)
-  }, [])
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
+  }, []);
 
   const handleScroll = () => {
     if (typeof window !== 'undefined') {
       if (window.scrollY) {
-        setIsTop(false)
+        setIsTop(false);
       } else {
-        setIsTop(true)
+        setIsTop(true);
       }
     }
 
-    let contentHeight = 0
+    let contentHeight = 0;
     Array.from(nftContentRef?.current?.children || []).map((item, index) => {
-      const nextHeight = contentHeight + item.clientHeight
-      const scrollTop = window.scrollY || 0
+      const nextHeight = contentHeight + item.clientHeight;
+      const scrollTop = window.scrollY || 0;
       if (scrollTop > contentHeight && scrollTop < nextHeight) {
-        setCurrentMenuId(NftsMenuTypeArr[index])
+        setCurrentMenuId(NftsMenuTypeArr[index]);
       }
-      contentHeight = nextHeight
-    })
-  }
+      contentHeight = nextHeight;
+    });
+  };
 
   const menuClicked = (menuId: NftsMenuType) => {
     if (menuId === NftsMenuType.WhitePaper) {
       window.open(
         'https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub',
         '_blank'
-      )
+      );
     } else {
-      setCurrentMenuId(menuId)
+      setCurrentMenuId(menuId);
 
       const selectedSectionIndex = NftsMenuTypeArr.findIndex(
         (element) => element === menuId
-      )
-      const childrenArr = Array.from(nftContentRef?.current?.children || [])
-      let contentHeight = 0
+      );
+      const childrenArr = Array.from(nftContentRef?.current?.children || []);
+      let contentHeight = 0;
       if (selectedSectionIndex < childrenArr.length) {
         for (let index = 0; index < selectedSectionIndex; index++) {
-          contentHeight += childrenArr[index].clientHeight
+          contentHeight += childrenArr[index].clientHeight;
         }
       }
       window.scrollTo({
         left: 0,
         top: contentHeight + 100,
         behavior: 'smooth',
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     if (currentMenuId === NftsMenuType.About) {
-      dispatch(themeUpdate(ThemeType.DarkMode))
+      dispatch(themeUpdate(ThemeType.DarkMode));
     } else {
-      dispatch(themeUpdate(ThemeType.LightMode))
+      dispatch(themeUpdate(ThemeType.LightMode));
     }
-  }, [currentMenuId])
+  }, [currentMenuId]);
 
   useEffect(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white')
-        break
+        setStateBarBackground('bg-danger text-white');
+        break;
       case RaffleState.Live:
-        setStateBarBackground('bg-success text-white')
-        break
+        setStateBarBackground('bg-success text-white');
+        break;
       case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary')
-        break
+        setStateBarBackground('light-background-image text-primary');
+        break;
       default:
-        setStateBarBackground('bg-danger text-white')
+        setStateBarBackground('bg-danger text-white');
     }
-  }, [raffleState])
+  }, [raffleState]);
 
   useEffect(() => {
     setTextColor(
       themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary'
-    )
-  }, [themeStatus])
+    );
+  }, [themeStatus]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -262,7 +262,7 @@ export default function Nfts() {
                           ? 'w-50 mr-10 border border-1'
                           : 'w-0 border-0')
                       }
-                      style={{ height: '1px' }}
+                      style={{height: '1px'}}
                     />
                     <p
                       className={
@@ -281,8 +281,8 @@ export default function Nfts() {
                           index === currentMenuId
                             ? 'danger'
                             : themeStatus === ThemeType.DarkMode
-                            ? 'white'
-                            : 'primary'
+                              ? 'white'
+                              : 'primary'
                         }
                         size={16}
                       />
@@ -330,14 +330,16 @@ export default function Nfts() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className={'text-center text-16 ' + textColor}>
-                  RAFFLE BEGINS ON { monthNames[projectSchedule.wMonth - 1] + ' ' + projectSchedule.wDay + ', ' + projectSchedule.wYear }
+                  RAFFLE BEGINS
+                  ON {monthNames[projectSchedule.wMonth - 1] + ' ' + projectSchedule.wDay + ', ' + projectSchedule.wYear}
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className={'text-center text-16 ' + textColor}>
                   RAFFLE RESULTS{' '}
                   <span className="text-30 font-bold">LIVE NOW!</span> END ON
-                  { projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear } at 00:00 AM UTC
+                  {projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear} at
+                  00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
@@ -347,7 +349,7 @@ export default function Nfts() {
                 </p>
               )}
             </div>
-            <div className={"py-20 px-30 hidden xl:block " + stateBarBackground}>
+            <div className={'py-20 px-30 hidden xl:block ' + stateBarBackground}>
               {raffleState === RaffleState.Waiting && (
                 <p className="text-center text-white text-40 font-Subjectivity font-bold">
                   {`${
@@ -449,49 +451,49 @@ export default function Nfts() {
               (isHuge ? ' collection-body-width' : ' w-screen')
             }
           >
-            <About />
-            <Artist />
-            <PerksAndUtility />
+            <About/>
+            <Artist/>
+            <PerksAndUtility/>
             <Timeline
               time={
                 raffleState === RaffleState.Waiting
                   ? `${
-                      raffleStartTimeLeft.days < 10
-                        ? '0' + raffleStartTimeLeft.days
-                        : raffleStartTimeLeft.days
-                    }:${
-                      raffleStartTimeLeft.hours < 10
-                        ? '0' + raffleStartTimeLeft.hours
-                        : raffleStartTimeLeft.hours
-                    }:${
-                      raffleStartTimeLeft.minutes < 10
-                        ? '0' + raffleStartTimeLeft.minutes
-                        : raffleStartTimeLeft.minutes
-                    }:${
-                      raffleStartTimeLeft.seconds < 10
-                        ? '0' + raffleStartTimeLeft.seconds
-                        : raffleStartTimeLeft.seconds
-                    }`
+                    raffleStartTimeLeft.days < 10
+                      ? '0' + raffleStartTimeLeft.days
+                      : raffleStartTimeLeft.days
+                  }:${
+                    raffleStartTimeLeft.hours < 10
+                      ? '0' + raffleStartTimeLeft.hours
+                      : raffleStartTimeLeft.hours
+                  }:${
+                    raffleStartTimeLeft.minutes < 10
+                      ? '0' + raffleStartTimeLeft.minutes
+                      : raffleStartTimeLeft.minutes
+                  }:${
+                    raffleStartTimeLeft.seconds < 10
+                      ? '0' + raffleStartTimeLeft.seconds
+                      : raffleStartTimeLeft.seconds
+                  }`
                   : `${
-                      raffleEndTimeLeft.days < 10
-                        ? '0' + raffleEndTimeLeft.days
-                        : raffleEndTimeLeft.days
-                    }:${
-                      raffleEndTimeLeft.hours < 10
-                        ? '0' + raffleEndTimeLeft.hours
-                        : raffleEndTimeLeft.hours
-                    }:${
-                      raffleEndTimeLeft.minutes < 10
-                        ? '0' + raffleEndTimeLeft.minutes
-                        : raffleEndTimeLeft.minutes
-                    }:${
-                      raffleEndTimeLeft.seconds < 10
-                        ? '0' + raffleEndTimeLeft.seconds
-                        : raffleEndTimeLeft.seconds
-                    }`
+                    raffleEndTimeLeft.days < 10
+                      ? '0' + raffleEndTimeLeft.days
+                      : raffleEndTimeLeft.days
+                  }:${
+                    raffleEndTimeLeft.hours < 10
+                      ? '0' + raffleEndTimeLeft.hours
+                      : raffleEndTimeLeft.hours
+                  }:${
+                    raffleEndTimeLeft.minutes < 10
+                      ? '0' + raffleEndTimeLeft.minutes
+                      : raffleEndTimeLeft.minutes
+                  }:${
+                    raffleEndTimeLeft.seconds < 10
+                      ? '0' + raffleEndTimeLeft.seconds
+                      : raffleEndTimeLeft.seconds
+                  }`
               }
             />
-            <Enhancements />
+            <Enhancements/>
             {/*<Gallery />*/}
           </div>
         </div>
@@ -576,5 +578,5 @@ export default function Nfts() {
         </section>
       </Layout>
     </>
-  )
+  );
 }

@@ -7,7 +7,8 @@ type dialogContextType = {
 };
 
 const dialogContextDefaultValues: dialogContextType = {
-  openDialog: (_: ReactNode) => {},
+  openDialog: (_: ReactNode) => {
+  },
 };
 
 const DialogContext = createContext<dialogContextType>(dialogContextDefaultValues);
@@ -20,13 +21,13 @@ type Props = {
   children: ReactNode;
 }
 
-export function DialogProvider({ children }: Props) {
+export function DialogProvider({children}: Props) {
   const [openStatus, setOpenStatus] = useState<boolean[]>([]);
   const [dialogs, setDialogs] = useState<ReactNode[]>([]);
   const openDialog = (dialog: ReactNode) => {
     setDialogs([...dialogs, dialog]);
     setOpenStatus([...openStatus, true]);
-  }
+  };
   const closeDialog = (index: number) => {
     const newOpenStatus = [...openStatus];
     newOpenStatus[index] = false;
@@ -41,7 +42,7 @@ export function DialogProvider({ children }: Props) {
     // }, 300);
   };
 
-  const value = { openDialog };
+  const value = {openDialog};
 
   return (
     <>
@@ -56,5 +57,5 @@ export function DialogProvider({ children }: Props) {
         })}
       </DialogContext.Provider>
     </>
-  )
+  );
 }

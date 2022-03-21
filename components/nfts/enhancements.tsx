@@ -1,14 +1,14 @@
-import Image from 'next/image'
-import ScrollContainer from 'react-indiana-drag-scroll'
-import Icon from '../ui-kit/icon'
-import { useState } from 'react'
+import Image from 'next/image';
+import ScrollContainer from 'react-indiana-drag-scroll';
+import Icon from '../ui-kit/icon';
+import { useState } from 'react';
 
 export default function Enhancements() {
-  const [openLevel, setOpenLevel] = useState(false)
-  const [openEnvironment, setOpenEnvironment] = useState(false)
-  const [openShine, setOpenShine] = useState(false)
-  const [openEfficiency, setOpenEfficiency] = useState(false)
-  const [openEnhancement, setOpenEnhancement] = useState(true)
+  const [openLevel, setOpenLevel] = useState(false);
+  const [openEnvironment, setOpenEnvironment] = useState(false);
+  const [openShine, setOpenShine] = useState(false);
+  const [openEfficiency, setOpenEfficiency] = useState(false);
+  const [openEnhancement, setOpenEnhancement] = useState(true);
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function Enhancements() {
         >
           <p
             className="p-10 text-40 text-primary text-center break-words"
-            style={{ fontFamily: 'Future Classic' }}
+            style={{fontFamily: 'Future Classic'}}
           >
             Enhancement Outcomes
           </p>
@@ -44,7 +44,8 @@ export default function Enhancements() {
           </div>
         </div>
         <div className={openEnhancement ? 'block' : 'hidden'}>
-          <div className="mt-20 grid grid-cols-1 grid-rows-5 sm:grid-cols-2 sm:grid-rows-3 lg:grid-cols-3 lg:grid-rows-2 xxl:grid-cols-5 xxl:grid-rows-1">
+          <div
+            className="mt-20 grid grid-cols-1 grid-rows-5 sm:grid-cols-2 sm:grid-rows-3 lg:grid-cols-3 lg:grid-rows-2 xxl:grid-cols-5 xxl:grid-rows-1">
             <div className="relative enhancement-item-background min-h-270 p-20 text-[#373839] flex-1 m-10">
               <p className="text-20 font-Subjectivity font-semibold">
                 GOD-TEIR
@@ -509,5 +510,5 @@ export default function Enhancements() {
         </div>
       </div>
     </>
-  )
+  );
 }

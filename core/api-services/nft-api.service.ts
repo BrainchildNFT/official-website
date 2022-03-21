@@ -9,7 +9,7 @@ export const nftApiService = {
     };
     const method = 'Post';
     return new Promise((resolve, reject) => {
-      fetch(tokenURI, { body, headers, method })
+      fetch(tokenURI, {body, headers, method})
         .then(async res => {
           const result = await res.json();
           if (res.ok) {
@@ -39,16 +39,16 @@ export const nftApiService = {
     return doGet('/api/v0/mint-count/' + wallet);
   },
   registerWallet: async (wallet: string, signature: string): Promise<Response> => {
-    return doPost('/api/v0/wallet/' + wallet, { signature });
+    return doPost('/api/v0/wallet/' + wallet, {signature});
   },
   updateWalletInfo: async (wallet: string, state: number, signature: string): Promise<Response> => {
-    return doPut('/api/v0/wallet/' + wallet, { state, signature });
+    return doPut('/api/v0/wallet/' + wallet, {state, signature});
   },
   raffle: async (signature: string): Promise<Response> => {
-    return doPost('/api/v0/raffle', { signature });
+    return doPost('/api/v0/raffle', {signature});
   },
   reset: async (signature: string): Promise<Response> => {
-    return doPost('/api/v0/reset', { signature });
+    return doPost('/api/v0/reset', {signature});
   }
 
 };

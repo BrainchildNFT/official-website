@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import ReactSlider from 'react-slider';
 import Head from 'next/head';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,6 +16,7 @@ import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/lan
 import useGAService from '../core/app-services/ga-service';
 import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
 import Icon from '../components/ui-kit/icon';
+import { AppContext } from '../components/context/app-context';
 
 SwiperCore.use([Scrollbar]);
 
@@ -92,10 +92,11 @@ export default function Home() {
   const chairImageRef = useRef<HTMLImageElement>(null);
   const heroSectionRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperCore>();
-
+  const {connected} = useContext(AppContext);
   const nfts = nftList.images;
   const faqData = faqs.data;
   const {isDesktop, isMobile} = useMatchBreakpoints();
+  const router = useRouter();
 
   useEffect(() => {
     switch (raffleState) {
@@ -115,18 +116,26 @@ export default function Home() {
 
   const size = useWindowSize();
 
-  const onInit = (Swiper: SwiperCore): void => {
+  const onInit = useCallback((Swiper: SwiperCore): void => {
     swiperRef.current = Swiper;
-  };
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    setScrollY(window.scrollY);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
 
     handleScroll();
     setPrevChairWidth(chairImageRef.current?.clientWidth || 0);
     setPrevChairHeight(chairImageRef.current?.clientHeight || 0);
+
+    updateRaffleState();
+    const timer = setInterval(() => {
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
 
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -167,9 +176,7 @@ export default function Home() {
     }
   }, [scrollY]);
 
-  const router = useRouter();
-
-  const calculateTimeLeft = (flag: number): TimeLeft => {
+  const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
     let difference =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let timeLeft: TimeLeft = {
@@ -189,9 +196,9 @@ export default function Home() {
     }
 
     return timeLeft;
-  };
+  }, []);
 
-  const updateRaffleState = () => {
+  const updateRaffleState = useCallback(() => {
     let differenceFromRaffleStart =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
@@ -203,15 +210,6 @@ export default function Home() {
       if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
       if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
     }
-  };
-
-  useEffect(() => {
-    updateRaffleState();
-    const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0));
-      setRaffleEndTimeLeft(calculateTimeLeft(1));
-      updateRaffleState();
-    }, 1000);
   }, []);
 
   const stateComponent = useMemo(() => {
@@ -304,14 +302,14 @@ export default function Home() {
               )}
               {raffleState === RaffleState.Ended && (
                 <p className="font-medium text-center">
-                  Connect wallet to check if you’re whitelisted
+                  {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
                 </p>
               )}
             </div>
           </div>
         )}
     </>);
-  }, [raffleStartTimeLeft, raffleEndTimeLeft, stateBarBackground, raffleState]);
+  }, [raffleStartTimeLeft, raffleEndTimeLeft, stateBarBackground, raffleState, connected]);
 
   return (
     <>

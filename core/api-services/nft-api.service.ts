@@ -41,6 +41,9 @@ export const nftApiService = {
   registerWallet: async (wallet: string, signature: string): Promise<Response> => {
     return doPost('/api/v0/wallet/' + wallet, {signature});
   },
+  registerDirectWallet: async (wallet: string, signature: string): Promise<Response> => {
+    return doPost('/api/v0/direct-wallet/' + wallet, {signature});
+  },
   updateWalletInfo: async (wallet: string, state: number, signature: string): Promise<Response> => {
     return doPut('/api/v0/wallet/' + wallet, {state, signature});
   },

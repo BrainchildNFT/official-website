@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,6 +20,7 @@ import Artist from '../components/nfts/artist';
 import { themeUpdate } from '../core/actions/theme-update';
 import { monthNames, projectSchedule, ThemeType } from '../core/data/base';
 import { sidebarUpdate } from '../core/actions/sidebar-update';
+import { AppContext } from '../components/context/app-context';
 
 export default function Nfts() {
   const [isTop, setIsTop] = useState(true);
@@ -32,12 +33,12 @@ export default function Nfts() {
 
   const themeStatus = useSelector((state: any) => state.ThemeStatus);
   const dispatch = useDispatch();
-
+  const {connected} = useContext(AppContext);
   const {isHuge} = useMatchBreakpoints();
   const nftContentRef = useRef<HTMLDivElement>(null);
   const mainBody = useRef<HTMLDivElement>(null);
 
-  const menuList = [
+  const menuList = useMemo(() => [
     {id: NftsMenuType.About, name: 'ABOUT'},
     {id: NftsMenuType.Artist, name: 'ARTIST'},
     {id: NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY'},
@@ -45,7 +46,7 @@ export default function Nfts() {
     {id: NftsMenuType.Enhancements, name: 'ENHANCEMENTS'},
     // {id:NftsMenuType.Gallery, name: 'GALLERY'},
     {id: NftsMenuType.WhitePaper, name: 'WHITEPAPER'},
-  ];
+  ], []);
 
   interface TimeLeft {
     days: number;
@@ -54,7 +55,7 @@ export default function Nfts() {
     seconds: number;
   }
 
-  const calculateTimeLeft = (flag: number): TimeLeft => {
+  const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
     let difference =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let timeLeft: TimeLeft = {
@@ -74,9 +75,9 @@ export default function Nfts() {
     }
 
     return timeLeft;
-  };
+  }, []);
 
-  const updateRaffleState = () => {
+  const updateRaffleState = useCallback(() => {
     let differenceFromRaffleStart =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
@@ -85,7 +86,23 @@ export default function Nfts() {
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
     if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended);
-  };
+  }, []);
+
+  useEffect(() => {
+    switch (raffleState) {
+      case RaffleState.Waiting:
+        setStateBarBackground('bg-danger text-white');
+        break;
+      case RaffleState.Live:
+        setStateBarBackground('bg-success text-white');
+        break;
+      case RaffleState.Ended:
+        setStateBarBackground('light-background-image text-primary');
+        break;
+      default:
+        setStateBarBackground('bg-danger text-white');
+    }
+  }, [raffleState]);
 
   useEffect(() => {
     updateRaffleState();
@@ -116,7 +133,7 @@ export default function Nfts() {
     });
   };
 
-  const menuClicked = (menuId: NftsMenuType) => {
+  const menuClicked = useCallback((menuId: NftsMenuType) => {
     if (menuId === NftsMenuType.WhitePaper) {
       window.open(
         'https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub',
@@ -141,7 +158,7 @@ export default function Nfts() {
         behavior: 'smooth',
       });
     }
-  };
+  }, [nftContentRef]);
 
   useEffect(() => {
     if (currentMenuId === NftsMenuType.About) {
@@ -150,22 +167,6 @@ export default function Nfts() {
       dispatch(themeUpdate(ThemeType.LightMode));
     }
   }, [currentMenuId]);
-
-  useEffect(() => {
-    switch (raffleState) {
-      case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white');
-        break;
-      case RaffleState.Live:
-        setStateBarBackground('bg-success text-white');
-        break;
-      case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary');
-        break;
-      default:
-        setStateBarBackground('bg-danger text-white');
-    }
-  }, [raffleState]);
 
   useEffect(() => {
     setTextColor(
@@ -395,12 +396,12 @@ export default function Nfts() {
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p className="text-center text-white text-40 font-Subjectivity font-bold">
-                  Connect wallet to check if you’re whitelisted
+                <p className="text-center text-primary text-20 font-Subjectivity font-bold">
+                  {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
                 </p>
               )}
               <p className="text-16 text-white flex items-center justify-center">
-                <span className="pr-25 opacity-40">Stay connected</span>
+                <span className={"pr-25 " + (raffleState === RaffleState.Ended ? 'text-primary opacity-80' : 'text-white opacity-40')}>Stay connected</span>
                 <Link href="https://discord.gg/7S55rjvxm3" passHref>
                   <a
                     className="flex items-center justify-center sm:justify-start"
@@ -409,7 +410,7 @@ export default function Nfts() {
                     <Icon
                       className="pr-25"
                       name="discord"
-                      color="white"
+                      color={raffleState === RaffleState.Ended ? 'primary' : 'white'}
                       size={16}
                     />
                   </a>
@@ -422,7 +423,7 @@ export default function Nfts() {
                     <Icon
                       className="pr-25"
                       name="twitter"
-                      color="white"
+                      color={raffleState === RaffleState.Ended ? 'primary' : 'white'}
                       size={16}
                     />
                   </a>
@@ -435,7 +436,7 @@ export default function Nfts() {
                     <Icon
                       className="pr-25"
                       name="instagram"
-                      color="white"
+                      color={raffleState === RaffleState.Ended ? 'primary' : 'white'}
                       size={16}
                     />
                   </a>
@@ -571,7 +572,7 @@ export default function Nfts() {
             )}
             {raffleState === RaffleState.Ended && (
               <p className="font-medium text-center">
-                Connect wallet to check if you’re whitelisted
+                {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
               </p>
             )}
           </div>

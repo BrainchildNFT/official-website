@@ -41,8 +41,11 @@ export default function Wallet() {
   const [showMint, setShowMint] = useState(false);
   const [presaleAllowed, setPresaleAllowed] = useState(false);
   const [currentTokenId, setCurrentTokenId] = useState(0);
+  const [maxMintCount, setMaxMintCount] = useState(0);
   const [isAllowedChainId, setIsAllowedChainId] = useState(false);
+  const [isAllowedDirectDrop, setIsAllowedDirectDrop] = useState(false);
   const [tokenIdList, setTokenIdList] = useState<number[]>([]);
+  const [tokenPrice, setTokenPrice] = useState<BigNumber>(BigNumber.from(0));
   const [tokenInfoList, setTokenInfoList] = useState<Object[]>([]);
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
@@ -122,10 +125,10 @@ export default function Wallet() {
   }, []);
 
   const showMintDiv = useCallback(() => {
-    if (isWhiteListed && !isAllMinted) {
+    if ((isWhiteListed && !isAllMinted) || (!isWhiteListed && !isAllMinted && isAllowedDirectDrop)) {
       setShowMint(true);
     }
-  }, [isWhiteListed, isAllMinted]);
+  }, [isWhiteListed, isAllMinted, isAllowedDirectDrop]);
 
   const shortenTxHash = useCallback((txHash: any) => {
     return txHash.substr(0, 6) + '_' + txHash.substr(txHash.length - 4);
@@ -156,6 +159,10 @@ export default function Wallet() {
     setLoadingCount(counter => counter - 1);
   }, []);
 
+  const etherPrice = useMemo(() => {
+    return tokenPrice ? parseFloat(tokenPrice.mul(10000).div(ethers.constants.WeiPerEther).toString())/10000 : '0.0'
+  }, [tokenPrice]);
+
   const checkChainId = useCallback(async () => {
     if(connected) {
       try {
@@ -169,10 +176,20 @@ export default function Wallet() {
         if (switchError.code === 4902) {
           try {
             await provider.send('wallet_addEthereumChain',[{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
-          } catch (addError) {
+          } catch (addError: any) {
             // handle "add" error
-            console.log('addError = ', addError);
+            if (addError.code === 4001) {
+              alertService.notify('Adding Network', 'You rejected adding network.', 'Ok');
+            } else {
+              alertService.notify('Adding Network', addError.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+            }
           }
+        }
+
+        if (switchError.code === 4001) {
+          alertService.notify('Switching Network', 'You rejected switching network.', 'Ok');
+        } else {
+          alertService.notify('Switching Network', switchError.message || 'You wallet not connect correctly. Please try again.', 'Ok');
         }
         // handle other "switch" errors
       } finally {
@@ -200,8 +217,11 @@ export default function Wallet() {
         });
         setTokenInfoList(tempList);
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again1.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Token URI', 'You rejected getting token uri.', 'Ok');
+        } else {
+          alertService.notify('Token URI', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -215,9 +235,14 @@ export default function Wallet() {
         const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
         const _currentTokenId = await contract.totalSupply();
         setCurrentTokenId(parseInt(_currentTokenId));
+        const _currentPrice = await contract.getPrice(wallet);
+        setTokenPrice(_currentPrice);
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again2.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Current Token Information', 'You rejected getting current token information.', 'Ok');
+        } else {
+          alertService.notify('Current Token Information', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -232,9 +257,12 @@ export default function Wallet() {
           setIsOwner(true);
         }
         const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
+        const _maxMintCount = await contract._MAX_MINT_COUNT_();
+        setMaxMintCount(parseInt(_maxMintCount));
         const _tokenIdList = await contract.getTokenIdList(wallet);
         setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
-        console.log('_tokenIdList', _tokenIdList);
+        const _isAllowedDirectDrop = await contract.isAdditionalDrop();
+        setIsAllowedDirectDrop(_isAllowedDirectDrop);
         const result = await nftApiService.requestWalletInfo(wallet);
         if (result.state === ErrorMessage.NoneResult) {
           setIsRegistered(false);
@@ -243,7 +271,7 @@ export default function Wallet() {
           setIsRegistered(true);
           const mintCountResult = await nftApiService.requestMintCount(wallet);
           const mintCount = mintCountResult.content || 0;
-          if (mintCount >= (process.env.mintCount as any)) {
+          if (mintCount >= maxMintCount) {
             setIsAllMinted(true);
           }
           const _presaleAllowed = await contract._PRESALE_ALLOWED_();
@@ -264,9 +292,11 @@ export default function Wallet() {
           return;
         }
       } catch (err: any) {
-        console.log('err = ', err);
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again3.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Initial Contract Information', 'You rejected getting initial contract information.', 'Ok');
+        } else {
+          alertService.notify('Initial Contract Information', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -288,8 +318,11 @@ export default function Wallet() {
           alertService.notify('Wallet Register Error', errorDescription[registerRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again4.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Register Raffle', 'You rejected registering to the raffle.', 'Ok');
+        } else {
+          alertService.notify('Register Raffle', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -321,8 +354,11 @@ export default function Wallet() {
           alertService.notify('Raffle Error', errorDescription[raffleRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again5.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Raffle', 'You rejected raffle.', 'Ok');
+        } else {
+          alertService.notify('Raffle', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -333,10 +369,12 @@ export default function Wallet() {
     if (isOwner && connected && isAllowedChainId) {
       try {
         increaseLoading();
+        const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
+        await contract.enableRaffle();
+
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
         const signature = await provider.getSigner().signMessage(plainText);
-
         const raffleRes = await nftApiService.reset(signature);
         if (raffleRes.state === ErrorMessage.Success) {
           alertService.notify('Reset Success', 'Successfully reset.', 'Ok');
@@ -345,8 +383,11 @@ export default function Wallet() {
           alertService.notify('Reset Error', errorDescription[raffleRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again6.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Reset Raffle', 'You rejected resetting raffle.', 'Ok');
+        } else {
+          alertService.notify('Reset Raffle', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -354,11 +395,11 @@ export default function Wallet() {
   }, [provider, wallet, connected, isAllowedChainId, isOwner]);
 
   const mint = useCallback(async () => {
-    if (isWhiteListed && connected && isAllowedChainId) {
+    if (connected && isAllowedChainId) {
       try {
         increaseLoading();
         const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
-        const dropSubscriber = await contract.drop({value: presaleAllowed ? process.env.preSaleAmount : process.env.publicSaleAmount, from: wallet});
+        const dropSubscriber = isWhiteListed ? await contract.drop({value: tokenPrice, from: wallet}) : await contract.directDrop({value: tokenPrice, from: wallet});
         await dropSubscriber.wait();
         // await contract.drop().send({
         //   from: wallet,
@@ -371,12 +412,15 @@ export default function Wallet() {
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
         const signature = await provider.getSigner().signMessage(plainText);
+        if (!isWhiteListed) {
+          await nftApiService.registerDirectWallet(wallet, signature);
+        }
         const updateRes = await nftApiService.updateWalletInfo(wallet, WalletSate.Minted, signature);
         if (updateRes.state === ErrorMessage.Success) {
           alertService.notify('Minting Success', 'You minted a ' + tokenId + '\'s Eth-Clock NFT.', 'Ok');
           const mintCountResult = await nftApiService.requestMintCount(wallet);
           const mintCount = mintCountResult.content || 0;
-          if (mintCount >= (process.env.mintCount as any)) {
+          if (mintCount >= maxMintCount) {
             setIsAllMinted(true);
           }
           const _tokenIdList = await contract.getTokenIdList(wallet);
@@ -385,8 +429,11 @@ export default function Wallet() {
           alertService.notify('Mint Error', errorDescription[updateRes.state], 'Ok');
         }
       } catch (err: any) {
-        alertService.notify('MetaMask Connection Error', 'You wallet not connect correctly. Please try again7.', 'Ok');
-        console.log(err);
+        if (err.code === 4001) {
+          alertService.notify('Token Dropping', 'You rejected dropping.', 'Ok');
+        } else {
+          alertService.notify('Token Dropping', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+        }
       } finally {
         decreaseLoading();
       }
@@ -473,7 +520,7 @@ export default function Wallet() {
                   <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white"
                                                 size={16}/></span>
                   <span
-                    className="text-white text-16 font-semibold">{isWhiteListed ? (isAllMinted ? process.env.mintCount + ' times Minted' : 'Start Minting') : 'Not Whitelisted'}</span>
+                    className="text-white text-16 font-semibold">{isWhiteListed ? (isAllMinted ? maxMintCount + ' times Minted' : 'Start Minting') : (isAllowedDirectDrop ? 'Direct Mint' : 'Not Whitelisted')}</span>
                 </div>
                 <div onClick={() => raffleClicked()}
                      className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger ' + (isOwner ? 'block' : 'hidden')}>
@@ -727,7 +774,7 @@ export default function Wallet() {
                 <div className="bg-black-70 h-200 rounded-3xl w-full flex flex-col">
                   <div className="grow text-white text-20 font-semibold flex flex-col justify-center items-center">
                     <p>1 mint per wallet</p>
-                    <p>{presaleAllowed ? (process.env.preSaleAmount as any) / 1000000000000000000 : (process.env.publicSaleAmount as any) / 1000000000000000000} ETH
+                    <p>{etherPrice} ETH
                       each</p>
                   </div>
                   <div

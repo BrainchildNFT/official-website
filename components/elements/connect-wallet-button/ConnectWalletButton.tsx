@@ -26,7 +26,7 @@ const ConnectWalletButton = () => {
   }, []);
 
   const shortenTxHash = useCallback((txHash: any) => {
-    return txHash.substr(0, 6) + '_' + txHash.substr(txHash.length - 4);
+    return txHash.substr(0, 6) + '...' + txHash.substr(txHash.length - 4);
   }, []);
 
   const connectWallet = useCallback(async () => {

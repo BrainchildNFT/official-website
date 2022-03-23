@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import 'swiper/css';
@@ -10,6 +10,7 @@ import { Layout } from '../components/layout/layout';
 import { RaffleState } from '../core/data/landing';
 import Icon from '../components/ui-kit/icon';
 import RoadMap from '../components/about-us/road-map';
+import { AppContext } from '../components/context/app-context';
 
 export default function AboutUs() {
   const [isTop, setIsTop] = useState(true);
@@ -17,6 +18,7 @@ export default function AboutUs() {
   const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const {connected} = useContext(AppContext);
 
   const handleScroll = () => {
     if (typeof window !== 'undefined') {
@@ -45,13 +47,20 @@ export default function AboutUs() {
   }, [raffleState]);
 
   useEffect(() => {
+    updateRaffleState();
+    const timer = setInterval(() => {
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  const calculateTimeLeft = (flag: number): TimeLeft => {
+  const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
     let difference =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let timeLeft: TimeLeft = {
@@ -71,9 +80,9 @@ export default function AboutUs() {
     }
 
     return timeLeft;
-  };
+  }, []);
 
-  const updateRaffleState = () => {
+  const updateRaffleState = useCallback(() => {
     let differenceFromRaffleStart =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
@@ -82,14 +91,6 @@ export default function AboutUs() {
     if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
     if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
     if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended);
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0));
-      setRaffleEndTimeLeft(calculateTimeLeft(1));
-      updateRaffleState();
-    }, 1000);
   }, []);
 
   return (
@@ -215,7 +216,7 @@ export default function AboutUs() {
               )}
               {raffleState === RaffleState.Ended && (
                 <p className="font-medium text-center">
-                  Connect wallet to check if you’re whitelisted
+                  {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
                 </p>
               )}
             </div>

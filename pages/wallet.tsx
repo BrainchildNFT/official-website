@@ -45,7 +45,7 @@ export default function Wallet() {
   const [isAllowedChainId, setIsAllowedChainId] = useState(false);
   const [isAllowedDirectDrop, setIsAllowedDirectDrop] = useState(false);
   const [tokenIdList, setTokenIdList] = useState<number[]>([]);
-  const [tokenPrice, setTokenPrice] = useState<BigNumber>(null);
+  const [tokenPrice, setTokenPrice] = useState<BigNumber>(BigNumber.from(0));
   const [tokenInfoList, setTokenInfoList] = useState<Object[]>([]);
   const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
@@ -176,7 +176,7 @@ export default function Wallet() {
         if (switchError.code === 4902) {
           try {
             await provider.send('wallet_addEthereumChain',[{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
-          } catch (addError) {
+          } catch (addError: any) {
             // handle "add" error
             if (addError.code === 4001) {
               alertService.notify('Adding Network', 'You rejected adding network.', 'Ok');

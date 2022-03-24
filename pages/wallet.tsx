@@ -263,6 +263,8 @@ export default function Wallet() {
         setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
         const _isAllowedDirectDrop = await contract.isAdditionalDrop();
         setIsAllowedDirectDrop(_isAllowedDirectDrop);
+        const _presaleAllowed = await contract._PRESALE_ALLOWED_();
+        setPresaleAllowed(!!_presaleAllowed);
         const result = await nftApiService.requestWalletInfo(wallet);
         if (result.state === ErrorMessage.NoneResult) {
           setIsRegistered(false);
@@ -274,8 +276,6 @@ export default function Wallet() {
           if (mintCount >= maxMintCount) {
             setIsAllMinted(true);
           }
-          const _presaleAllowed = await contract._PRESALE_ALLOWED_();
-          setPresaleAllowed(!!_presaleAllowed);
           switch (result.content.state) {
             case WalletSate.WhiteListed:
               setIsWhiteListed(true);

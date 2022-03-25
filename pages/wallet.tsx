@@ -30,7 +30,7 @@ import { nftApiService } from '../core/api-services/nft-api.service';
 
 export default function Wallet() {
   const [isTop, setIsTop] = useState(true);
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting);
+  const [raffleState, setRaffleState] = useState(-1);
   const [selectedMenu, setSelectedMenu] = useState(WalletMenuType.NFTs);
   const [showOutcomeStates, setShowOutcomeStates] = useState(true);
   const [loadingCount, setLoadingCount] = useState(0);
@@ -41,7 +41,7 @@ export default function Wallet() {
   const [showMint, setShowMint] = useState(false);
   const [presaleAllowed, setPresaleAllowed] = useState(false);
   const [currentTokenId, setCurrentTokenId] = useState(0);
-  const [maxMintCount, setMaxMintCount] = useState(0);
+  const [maxMintCount, setMaxMintCount] = useState(3);
   const [isAllowedChainId, setIsAllowedChainId] = useState(false);
   const [isAllowedDirectDrop, setIsAllowedDirectDrop] = useState(false);
   const [tokenIdList, setTokenIdList] = useState<number[]>([]);
@@ -275,6 +275,8 @@ export default function Wallet() {
           const mintCount = mintCountResult.content || 0;
           if (mintCount >= maxMintCount) {
             setIsAllMinted(true);
+          } else {
+            setIsAllMinted(false);
           }
           switch (result.content.state) {
             case WalletSate.WhiteListed:
@@ -422,6 +424,8 @@ export default function Wallet() {
           const mintCount = mintCountResult.content || 0;
           if (mintCount >= maxMintCount) {
             setIsAllMinted(true);
+          } else {
+            setIsAllMinted(false);
           }
           const _tokenIdList = await contract.getTokenIdList(wallet);
           setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
@@ -438,7 +442,7 @@ export default function Wallet() {
         decreaseLoading();
       }
     }
-  }, [wallet, provider, connected, isAllowedChainId, isWhiteListed]);
+  }, [wallet, provider, connected, isAllowedChainId, isWhiteListed, tokenPrice]);
 
   const stateComponent = useMemo(() => {
     return (<>
@@ -516,7 +520,7 @@ export default function Wallet() {
             {raffleState === RaffleState.Ended && (
               <div className="flex gap-10">
                 <div onClick={() => showMintDiv()}
-                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer ' + (isWhiteListed ? 'bg-success-500' : 'bg-danger')}>
+                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer ' + (isWhiteListed || isAllowedDirectDrop ? 'bg-success-500' : 'bg-danger')}>
                   <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white"
                                                 size={16}/></span>
                   <span
@@ -552,7 +556,7 @@ export default function Wallet() {
         </div>
       </div>
     </>);
-  }, [stateBarBackground, raffleStartTimeLeft, raffleEndTimeLeft, raffleState, isWhiteListed, isRegistered]);
+  }, [stateBarBackground, raffleStartTimeLeft, raffleEndTimeLeft, raffleState, isWhiteListed, isRegistered, isAllowedDirectDrop, maxMintCount, isAllMinted]);
 
   return (
     <>

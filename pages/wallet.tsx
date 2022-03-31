@@ -584,7 +584,7 @@ export default function Wallet() {
       <Layout>
         <div className="relative flex flex-col xl:flex-row overflow-hidden">
           <div id="left-bar"
-               className={'sm:min-w-500 top-65 flex flex-col z-50 dark-background-image ' + (isTop ? 'xl:h-screen-without-navbar' : 'xl:h-screen-without-topbar')}
+               className={'sm:min-w-400 top-65 flex flex-col z-50 dark-background-image ' + (isTop ? 'xl:h-screen-without-navbar_1' : 'xl:h-screen-without-topbar_1')}
                role="img" aria-label="Gradient background Image">
             <div className="bg-white-10 p-20 xl:p-30 h-full">
               <div className="flex items-center justify-between border-b border-gradient-light">
@@ -622,7 +622,7 @@ export default function Wallet() {
               </div>
 
               <div
-                className={'mt-20 xl:mt-40 grid grid-cols-2 grid-rows-3 gap-10 ' + (showOutcomeStates ? 'block' : 'hidden')}>
+                className={'mt-20 xl:mt-40 grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-1 xl:grid-rows-4 gap-10 ' + (showOutcomeStates ? 'block' : 'hidden')}>
                 <div
                   className="p-10 sm:p-25 dark-background-image rounded-2xl font-medium text-white flex flex-col justify-between cursor-pointer"
                   role="img" aria-label="Gradient background Image">

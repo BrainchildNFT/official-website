@@ -144,12 +144,16 @@ export default function Wallet() {
         if (isWhiteListed) {
           return 'bg-wallet-bar-success';
         } else {
-          return 'bg-wallet-bar-danger';
+          if (isAllowedDirectDrop) {
+            return 'bg-wallet-bar-warning';
+          } else {
+            return 'bg-wallet-bar-danger';
+          }
         }
       default:
         return 'bg-danger text-white';
     }
-  }, [raffleState, isWhiteListed]);
+  }, [raffleState, isWhiteListed, isAllowedDirectDrop]);
 
   const increaseLoading = useCallback(() => {
     setLoadingCount(counter => counter + 1);
@@ -220,7 +224,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Token URI', 'You rejected getting token uri.', 'Ok');
         } else {
-          alertService.notify('Token URI', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Token URI', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -241,7 +245,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Current Token Information', 'You rejected getting current token information.', 'Ok');
         } else {
-          alertService.notify('Current Token Information', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Current Token Information', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -259,25 +263,33 @@ export default function Wallet() {
         const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
         const _maxMintCount = await contract._MAX_MINT_COUNT_();
         setMaxMintCount(parseInt(_maxMintCount));
+        const _mintCount = await contract.mintedCount(wallet);
+        if (_mintCount >= _maxMintCount) {
+          setIsAllMinted(true);
+        } else {
+          setIsAllMinted(false);
+        }
+
         const _tokenIdList = await contract.getTokenIdList(wallet);
         setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
         const _isAllowedDirectDrop = await contract.isAdditionalDrop();
         setIsAllowedDirectDrop(_isAllowedDirectDrop);
         const _presaleAllowed = await contract._PRESALE_ALLOWED_();
         setPresaleAllowed(!!_presaleAllowed);
+
         const result = await nftApiService.requestWalletInfo(wallet);
         if (result.state === ErrorMessage.NoneResult) {
           setIsRegistered(false);
           setIsWhiteListed(false);
         } else if (result.state === ErrorMessage.Success) {
           setIsRegistered(true);
-          const mintCountResult = await nftApiService.requestMintCount(wallet);
-          const mintCount = mintCountResult.content || 0;
-          if (mintCount >= maxMintCount) {
-            setIsAllMinted(true);
-          } else {
-            setIsAllMinted(false);
-          }
+          // const mintCountResult = await nftApiService.requestMintCount(wallet);
+          // const mintCount = mintCountResult.content || 0;
+          // if (mintCount >= maxMintCount) {
+          //   setIsAllMinted(true);
+          // } else {
+          //   setIsAllMinted(false);
+          // }
           switch (result.content.state) {
             case WalletSate.WhiteListed:
               setIsWhiteListed(true);
@@ -297,7 +309,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Initial Contract Information', 'You rejected getting initial contract information.', 'Ok');
         } else {
-          alertService.notify('Initial Contract Information', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Initial Contract Information', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -323,7 +335,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Register Raffle', 'You rejected registering to the raffle.', 'Ok');
         } else {
-          alertService.notify('Register Raffle', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Register Raffle', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -359,7 +371,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Raffle', 'You rejected raffle.', 'Ok');
         } else {
-          alertService.notify('Raffle', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Raffle', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -388,7 +400,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Reset Raffle', 'You rejected resetting raffle.', 'Ok');
         } else {
-          alertService.notify('Reset Raffle', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Reset Raffle', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -410,25 +422,27 @@ export default function Wallet() {
         let tokenId = await contract.totalSupply();
         tokenId = parseInt(tokenId);
         setShowMint(false);
+        const _mintCount = await contract.mintedCount(wallet);
+        if (_mintCount >= maxMintCount) {
+          setIsAllMinted(true);
+        } else {
+          setIsAllMinted(false);
+        }
+        const _tokenIdList = await contract.getTokenIdList(wallet);
+        setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
 
         const plainTextRes = await nftApiService.requestPlainText();
         const plainText = plainTextRes.content;
         const signature = await provider.getSigner().signMessage(plainText);
         if (!isWhiteListed) {
-          await nftApiService.registerDirectWallet(wallet, signature);
+          const directWalletRes = await nftApiService.registerDirectWallet(wallet, signature);
+          if (directWalletRes.state === ErrorMessage.Success) {
+            setIsWhiteListed(true);
+          }
         }
         const updateRes = await nftApiService.updateWalletInfo(wallet, WalletSate.Minted, signature);
         if (updateRes.state === ErrorMessage.Success) {
           alertService.notify('Minting Success', 'You minted a ' + tokenId + '\'s Eth-Clock NFT.', 'Ok');
-          const mintCountResult = await nftApiService.requestMintCount(wallet);
-          const mintCount = mintCountResult.content || 0;
-          if (mintCount >= maxMintCount) {
-            setIsAllMinted(true);
-          } else {
-            setIsAllMinted(false);
-          }
-          const _tokenIdList = await contract.getTokenIdList(wallet);
-          setTokenIdList(_tokenIdList.map((id: any) => parseInt(id)) || []);
         } else {
           alertService.notify('Mint Error', errorDescription[updateRes.state], 'Ok');
         }
@@ -436,7 +450,7 @@ export default function Wallet() {
         if (err.code === 4001) {
           alertService.notify('Token Dropping', 'You rejected dropping.', 'Ok');
         } else {
-          alertService.notify('Token Dropping', err.message || 'You wallet not connect correctly. Please try again.', 'Ok');
+          alertService.notify('Token Dropping', err.code ? 'Response Error Code: ' + err.code : 'You wallet not connect correctly. Please try again.', 'Ok');
         }
       } finally {
         decreaseLoading();
@@ -520,19 +534,19 @@ export default function Wallet() {
             {raffleState === RaffleState.Ended && (
               <div className="flex gap-10">
                 <div onClick={() => showMintDiv()}
-                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer ' + (isWhiteListed || isAllowedDirectDrop ? 'bg-success-500' : 'bg-danger')}>
+                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer ' + (connected ? 'block ' : 'hidden ') + (isWhiteListed ? 'bg-success-500' : (isAllowedDirectDrop ? 'bg-success-200' : 'bg-danger'))}>
                   <span className="mr-10"><Icon name={isWhiteListed ? 'gem' : 'circle_info'} color="white"
                                                 size={16}/></span>
                   <span
                     className="text-white text-16 font-semibold">{isWhiteListed ? (isAllMinted ? maxMintCount + ' times Minted' : 'Start Minting') : (isAllowedDirectDrop ? 'Direct Mint' : 'Not Whitelisted')}</span>
                 </div>
                 <div onClick={() => raffleClicked()}
-                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger ' + (isOwner ? 'block' : 'hidden')}>
+                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger ' + (isOwner && connected ? 'block ' : 'hidden ') + (isWhiteListed ? 'bg-success-500' : (isAllowedDirectDrop ? 'bg-success-200' : 'bg-danger'))}>
                   <span className="mr-10"><Icon name="gem" color="white" size={16}/></span>
                   <span title="Owner can only do raffle" className="text-white text-16 font-semibold">Raffle</span>
                 </div>
                 <div onClick={() => resetClicked()}
-                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger ' + (isOwner ? 'block' : 'hidden')}>
+                     className={'px-20 py-10 xl:ml-15 rounded-full flex items-center cursor-pointer bg-danger ' + (isOwner && connected ? 'block ' : 'hidden ') + (isWhiteListed ? 'bg-success-500' : (isAllowedDirectDrop ? 'bg-success-200' : 'bg-danger'))}>
                   <span className="mr-10"><Icon name="setting" color="white" size={16}/></span>
                   <span title="Owner can only do reset" className="text-white text-16 font-semibold">Reset</span>
                 </div>

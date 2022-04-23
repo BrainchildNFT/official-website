@@ -56,14 +56,15 @@ export default function Nfts() {
   }
 
   const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
+    let difference = 0
     if (flag == 1) {
-      let difference =
+      difference =
         +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
     } else {
-      let difference =
+      difference =
       +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     }
-    
+
     let timeLeft: TimeLeft = {
       days: 0,
       hours: 0,

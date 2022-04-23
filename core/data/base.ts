@@ -89,15 +89,15 @@ export const errorDescription: { [key: number]: string } = {
 
 export const projectSchedule = {
   wYear: 2022,
-  wMonth: 3,
-  wDay: 29,
+  wMonth: 4,
+  wDay: 25,
   wHour: 0,
   wMin: 0,
   wSec: 0,
   endYear: 2022,
   endMonth: 4,
   endDay: 27,
-  endHour: 14,
+  endHour: 0,
   endMin: 0,
   endSec: 0,
   stateStr: 'Presale raffle',

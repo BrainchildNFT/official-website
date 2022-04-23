@@ -61,8 +61,15 @@ export default function AboutUs() {
   }, []);
 
   const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
-    let difference =
-      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay + flag, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
+    let difference = 0
+    if (flag == 1) {
+      difference =
+        +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
+    } else {
+      difference =
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
+    }
+
     let timeLeft: TimeLeft = {
       days: 0,
       hours: 0,
@@ -145,23 +152,24 @@ export default function AboutUs() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className="font-medium text-center">
-                  {projectSchedule.stateStr} begins
-                  on {projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear} at
+                  {projectSchedule.stateStr} begins on 
+                  {' ' + projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear} at
                   00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className="font-medium text-center">
-                  {projectSchedule.stateStr} Results{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span> end on
-                  {projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear} at
+                  Whitelist raffle registration
+                  <span className="text-30 font-bold"> OPEN NOW!</span> ends on
+                  {' ' + projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear} at
                   00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
                 <p className="font-medium text-center">
                   Raffle Results{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span>
+                  <span className="text-30 font-bold">LIVE NOW! </span>
+                  Connect to mint now!
                 </p>
               )}
 

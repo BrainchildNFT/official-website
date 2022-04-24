@@ -50,6 +50,6 @@ jobs:
           NAME: "Root"
         with:
           hosts: ${{secrets.STAGING_USER}}@${{secrets.STAGING_HOST}}
-          privateKey: ${{ secrets.STAGING_SSH_KEY }}
+          privateKey: ${{secrets.STAGING_SSH_KEY}}
           debug: false
           command: /home/ubuntu/job/deploy.sh

@@ -407,7 +407,9 @@ export default function Home() {
           </div>
 
           {/*state bar*/}
+
           {stateComponent}
+
         </section>
 
         <div className="light-background-image" role="img" aria-label="Gradient background Image">

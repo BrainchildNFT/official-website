@@ -141,7 +141,7 @@ export default function AboutUs() {
             </p>
           </section>
 
-          <section className={isTop ? '' : 'hidden'}>
+          <section className={isTop ? 'hidden' : 'hidden'}>
             <div
               className={
                 'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 ' +

@@ -61,6 +61,7 @@ const ConnectWalletButton = () => {
   }, []);
 
   return (
+
     <>
       <div
         className="group relative flex items-center cursor-pointer"
@@ -129,6 +130,7 @@ const ConnectWalletButton = () => {
             </defs>
           </svg>
         </div>
+
         <svg
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 group-hover:-mt-40"
           width="41"

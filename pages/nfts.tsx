@@ -330,7 +330,7 @@ export default function Nfts() {
             </div>
             <div
               className={
-                'px-30 py-15 hidden xl:block ' +
+                'px-30 py-15 hidden xl:hidden ' +
                 (themeStatus === ThemeType.DarkMode
                   ? 'bg-primary'
                   : 'bg-white-50')
@@ -358,9 +358,11 @@ export default function Nfts() {
                 </p>
               )}
             </div>
+
             <div className={'py-20 px-30 hidden xl:block ' + stateBarBackground}>
+
               {raffleState === RaffleState.Waiting && (
-                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                <p className="text-center text-white text-20 font-Subjectivity font-bold">
                   {`${
                     raffleStartTimeLeft.days < 10
                       ? '0' + raffleStartTimeLeft.days
@@ -382,7 +384,7 @@ export default function Nfts() {
               )}
 
               {raffleState === RaffleState.Live && (
-                <p className="text-center text-white text-40 font-Subjectivity font-bold">
+                <p className="text-center text-white text-20 font-Subjectivity font-bold">
                   {`${
                     raffleEndTimeLeft.days < 10
                       ? '0' + raffleEndTimeLeft.days
@@ -404,8 +406,10 @@ export default function Nfts() {
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
+
                 <p className="text-center text-primary text-20 font-Subjectivity font-bold">
                   {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
+
                 </p>
               )}
               <p className="text-16 text-white flex items-center justify-center">
@@ -507,7 +511,7 @@ export default function Nfts() {
           </div>
         </div>
 
-        <section className={isTop ? 'z-40 block xl:hidden' : 'hidden'}>
+        <section className={isTop ? 'z-40 hidden xl:hidden' : 'hidden'}>
           <div
             className={
               'absolute bottom-0 lg:h-50 w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 ' +

@@ -55,20 +55,23 @@ export default function Timeline({time}: Props) {
                       </p>
                     )}
                     {item.isFairmint && (
+
                       <p className="text-primary font-bold text-center sm:text-left grow">
                         <span className="text-25 text-danger font-Subjectivity font-bold mr-10">
                           Presale Raffle
                         </span>
-                        <span className="text-18 font-medium">Starts</span> 07
-                        Feburary 2022 <br/>
+                        <span className="text-18 font-medium">Starts</span> 25
+                        April 2022 <br/>
                         <span className="text-18 font-medium">at</span> 00:00 AM
                         UTC
+
                       </p>
                     )}
                     <p className="text-16 text-primary">{item.date}</p>
                   </div>
                 </div>
               </div>
+
               {item.isFairmint && (
                 <div>
                   <div className="flex">
@@ -127,6 +130,7 @@ export default function Timeline({time}: Props) {
                   </div>
                 </div>
               )}
+
             </div>
           ))}
         </div>

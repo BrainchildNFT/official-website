@@ -1,4 +1,6 @@
+
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+
 import React from 'react';
 
 class MyDocument extends Document {
@@ -6,9 +8,11 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+
           <meta name="application-name" content="Brainchild"/>
           <link rel="apple-touch-icon" href="/icons/icon-512.png"/>
           <meta name="apple-mobile-web-app-capable" content="yes"/>
+
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="default"
@@ -23,6 +27,7 @@ class MyDocument extends Document {
             content="width=device-width, initial-scale=1, maximum-scale=1"
           />
           {/*Facebook Meta Tags*/}
+
           <meta property="og:url" content="https://www.brainchildnft.com/"/>
           <meta property="og:type" content="website"/>
           <meta property="og:title" content="BrainchildNFT - EthClock"/>
@@ -41,6 +46,7 @@ class MyDocument extends Document {
           {/*Meta Tags Generated via https://www.opengraph.xyz*/}
           <link rel="manifest" href="/manifest.json"/>
           <link rel="shortcut icon" href="/favicon.ico"/>
+
           <link
             rel="apple-touch-startup-image"
             href="/splash/splash-320.png"
@@ -63,8 +69,10 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+
         <Main/>
         <NextScript/>
+
         </body>
       </Html>
     );

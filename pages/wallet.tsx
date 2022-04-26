@@ -172,14 +172,14 @@ export default function Wallet() {
       try {
         increaseLoading();
         const id = await provider.getNetwork().then(network => network.chainId);
-        if (id != netInfo.rinkeby.chainId) {
-          await provider.send("wallet_switchEthereumChain", [{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
+        if (id != netInfo.mainnet.chainId) {
+          await provider.send("wallet_switchEthereumChain", [{chainId: idToHexString(netInfo.mainnet.chainId)}]);
         }
       } catch (switchError: any) {
         // This error code indicates that the chain has not been added to MetaMask.
         if (switchError.code === 4902) {
           try {
-            await provider.send('wallet_addEthereumChain',[{chainId: idToHexString(netInfo.rinkeby.chainId)}]);
+            await provider.send('wallet_addEthereumChain',[{chainId: idToHexString(netInfo.mainnet.chainId)}]);
           } catch (addError: any) {
             // handle "add" error
             if (addError.code === 4001) {
@@ -199,7 +199,7 @@ export default function Wallet() {
       } finally {
         decreaseLoading();
         const id = await provider.getNetwork().then(network => network.chainId);
-        if (id === netInfo.rinkeby.chainId) {
+        if (id === netInfo.mainnet.chainId) {
           setIsAllowedChainId(true);
         } else {
           setIsAllowedChainId(false);
@@ -261,7 +261,7 @@ export default function Wallet() {
           setIsOwner(true);
         }
         const contract = new ethers.Contract(process.env.contractAddress as any, ethereumClockTokenAbi, provider.getSigner());
-        const _maxMintCount = await contract._MAX_MINT_COUNT_();
+        const _maxMintCount = await contract.getMintLimitCount();
         setMaxMintCount(parseInt(_maxMintCount));
         const _mintCount = await contract.mintedCount(wallet);
         if (_mintCount >= _maxMintCount) {

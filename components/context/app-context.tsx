@@ -45,11 +45,11 @@ const providerOptions: any = {
  * @returns StaticJsonRpcProvider for querying
  */
 const getMainnetStaticProvider = () => {
-  return new StaticJsonRpcProvider(netInfo.rinkeby.rpcURI);
+  return new StaticJsonRpcProvider(netInfo.mainnet.rpcURI);
 };
 
 const initModal = typeof window !== 'undefined' ? new Web3Modal({
-  network: netInfo.rinkeby.network,
+  network: netInfo.mainnet.network,
   cacheProvider: true,
   providerOptions,
 }) : null;

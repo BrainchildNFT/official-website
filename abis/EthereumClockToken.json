@@ -1003,6 +1003,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getMintLimitCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -1277,6 +1290,25 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "owners",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address[]",
         "name": "_addressList",
         "type": "address[]"
@@ -1330,11 +1362,37 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_ownerAddr",
+        "type": "address"
+      }
+    ],
+    "name": "registerOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_contractAddr",
         "type": "address"
       }
     ],
     "name": "removeController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_ownerAddr",
+        "type": "address"
+      }
+    ],
+    "name": "removeOwner",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

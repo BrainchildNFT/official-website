@@ -22,7 +22,7 @@ export default function useGAService(): GAService {
   };
 
   const event = (category: string, action: string) => {
-    ReactGA.event({ category, action });
+    ReactGA.event({category, action});
   };
 
   return {

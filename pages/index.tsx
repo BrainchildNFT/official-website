@@ -1,27 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
-import ReactSlider from 'react-slider'
-import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css/scrollbar'
-import SwiperCore, { Scrollbar } from 'swiper'
-import { Layout } from '../components/layout/layout'
-import {
-  faq_display_limit,
-  faqs,
-  nftList,
-  RaffleState,
-} from '../core/data/landing'
-import useGAService from '../core/app-services/ga-service'
-import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
-import Icon from '../components/ui-kit/icon'
-import { useRouter } from 'next/router'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import ReactSlider from 'react-slider';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import SwiperCore, { Scrollbar } from 'swiper';
 
-SwiperCore.use([Scrollbar])
+import { monthNames, projectSchedule, TimeLeft } from '../core/data/base';
+import { Layout } from '../components/layout/layout';
+import { faq_display_limit, faqs, nftList, RaffleState, } from '../core/data/landing';
+import useGAService from '../core/app-services/ga-service';
+import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
+import Icon from '../components/ui-kit/icon';
+import { AppContext } from '../components/context/app-context';
+
+SwiperCore.use([Scrollbar]);
 
 const swiperBreakPoints = {
   640: {
@@ -36,11 +33,11 @@ const swiperBreakPoints = {
     width: 1024,
     slidesPerView: 2,
   },
-}
+};
 
 interface WindowSize {
-  width: number
-  height: number
+  width: number;
+  height: number;
 }
 
 function useWindowSize() {
@@ -49,7 +46,7 @@ function useWindowSize() {
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: 0,
     height: 0,
-  })
+  });
 
   useEffect(() => {
     // only execute all the code below in client side
@@ -60,86 +57,95 @@ function useWindowSize() {
         setWindowSize({
           width: window.innerWidth,
           height: window.innerHeight,
-        })
-      }
+        });
+      };
 
       // Add event listener
-      window.addEventListener('resize', handleResize)
+      window.addEventListener('resize', handleResize);
 
       // Call handler right away so state gets updated with initial window size
-      handleResize()
+      handleResize();
 
       // Remove event listener on cleanup
-      return () => window.removeEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize);
     }
-  }, []) // Empty array ensures that effect is only run on mount
-  return windowSize
+  }, []); // Empty array ensures that effect is only run on mount
+  return windowSize;
 }
 
 export default function Home() {
-  const gaService = useGAService()
-  gaService.pageView('/')
+  const gaService = useGAService();
+  gaService.pageView('/');
 
-  const [currentFaqIndex, setCurrentFaqIndex] = useState(-1)
-  const [isLoadMoreFaq, setIsLoadMoreFaq] = useState(false)
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
-  const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
-  const [swiperValue, setSwiperValue] = useState(0)
+  const [currentFaqIndex, setCurrentFaqIndex] = useState(-1);
+  const [isLoadMoreFaq, setIsLoadMoreFaq] = useState(false);
+  const [raffleState, setRaffleState] = useState<RaffleState>(RaffleState.Waiting);
+  const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
+  const [swiperValue, setSwiperValue] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  const [prevChairWidth, setPrevChairWidth] = useState(500);
+  const [prevChairHeight, setPrevChairHeight] = useState(700);
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
 
-  const nfts = nftList.images
-  const faqData = faqs.data
-  const { isDesktop, isMobile } = useMatchBreakpoints()
+  const experiencedNFTRef = useRef<HTMLDivElement>(null);
+  const chairImageRef = useRef<HTMLImageElement>(null);
+  const heroSectionRef = useRef<HTMLDivElement>(null);
+  const swiperRef = useRef<SwiperCore>();
+  const {connected} = useContext(AppContext);
+  const nfts = nftList.images;
+  const faqData = faqs.data;
+  const {isDesktop, isMobile} = useMatchBreakpoints();
+  const router = useRouter();
 
   useEffect(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white')
-        break
+        setStateBarBackground('bg-danger text-white');
+        break;
       case RaffleState.Live:
-        setStateBarBackground('bg-success text-white')
-        break
+        setStateBarBackground('bg-success text-white');
+        break;
       case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary')
-        break
+        setStateBarBackground('light-background-image text-primary');
+        break;
       default:
-        setStateBarBackground('bg-danger text-white')
+        setStateBarBackground('bg-danger text-white');
     }
-  }, [raffleState])
+  }, [raffleState]);
 
-  const size = useWindowSize()
+  const size = useWindowSize();
 
-  const experiencedNFTRef = useRef<HTMLDivElement>(null)
-  const chairImageRef = useRef<HTMLImageElement>(null)
-  const exploreImageRef = useRef<HTMLDivElement>(null)
-  const heroSectionRef = useRef<HTMLDivElement>(null)
-  const swiperRef = useRef<SwiperCore>()
+  const onInit = useCallback((Swiper: SwiperCore): void => {
+    swiperRef.current = Swiper;
+  }, []);
 
-  const onInit = (Swiper: SwiperCore): void => {
-    swiperRef.current = Swiper
-  }
-
-  const [scrollY, setScrollY] = useState(0)
-  const [prevChairWidth, setPrevChairWidth] = useState(500)
-  const [prevChairHeight, setPrevChairHeight] = useState(700)
+  const handleScroll = useCallback(() => {
+    setScrollY(window.scrollY);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
 
-    handleScroll()
-    setPrevChairWidth(chairImageRef.current?.clientWidth || 0)
-    setPrevChairHeight(chairImageRef.current?.clientHeight || 0)
+    handleScroll();
+    setPrevChairWidth(chairImageRef.current?.clientWidth || 0);
+    setPrevChairHeight(chairImageRef.current?.clientHeight || 0);
 
-    window.addEventListener('scroll', handleScroll)
+    updateRaffleState();
+    const timer = setInterval(() => {
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
+
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const experiencedTop =
-      experiencedNFTRef.current?.getBoundingClientRect().top || 0
+      experiencedNFTRef.current?.getBoundingClientRect().top || 0;
     if (experiencedTop < -window.innerHeight) {
       if (chairImageRef.current) {
         if (!isMobile) {
@@ -149,142 +155,188 @@ export default function Home() {
               experiencedTop -
               window.innerHeight -
               400) /
-              ((experiencedNFTRef.current?.clientHeight || 0) -
-                2 * window.innerHeight -
-                400)
-          )
+            ((experiencedNFTRef.current?.clientHeight || 0) -
+              2 * window.innerHeight -
+              400)
+          );
           chairImageRef.current.style.width =
             window.innerWidth -
             (window.innerWidth - prevChairWidth) * progress +
-            'px'
+            'px';
           chairImageRef.current.style.height =
             window.innerHeight -
             (window.innerHeight - prevChairHeight) * progress +
-            'px'
+            'px';
           // chairImageRef.current.style.marginTop = `-${300 * progress}px`
         } else {
-          chairImageRef.current.style.width = '100%'
-          chairImageRef.current.style.height = '100%'
+          chairImageRef.current.style.width = '100%';
+          chairImageRef.current.style.height = '100%';
         }
       }
     }
-  }, [scrollY])
+  }, [scrollY]);
 
-  const router = useRouter()
-
-  interface TimeLeft {
-    days: string
-    hours: string
-    minutes: string
-    seconds: string
-  }
-
-  const calculateTimeLeft = (flag: number): TimeLeft => {
-    let difference =
-      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
-    let timeLeft: TimeLeft = {
-      days: '00',
-      hours: '00',
-      minutes: '00',
-      seconds: '00',
+  const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
+    let difference = 0
+    if (flag == 1) {
+      difference =
+        +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
+    } else {
+      difference =
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     }
 
+    let timeLeft: TimeLeft = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+
+    
     if (difference > 0) {
       timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        minutes: Math.floor((difference / 1000 / 60) % 60).toLocaleString(
-          'en-US',
-          {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }
-        ),
-        seconds: Math.floor((difference / 1000) % 60).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        }),
-      }
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
     }
 
-    return timeLeft
-  }
+    return timeLeft;
+  }, []);
 
-  const updateRaffleState = () => {
+  const updateRaffleState = useCallback(() => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
 
-    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
-    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
-    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
-  }
+    if (differenceFromRaffleEnd < 1) {
+      setRaffleState(RaffleState.Ended);
+    } else {
+      if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
+      if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
+    }
+  }, []);
 
-  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(0)
-  )
-  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(1)
-  )
+  const stateComponent = useMemo(() => {
+    return (<>
+      {scrollY <
+        (heroSectionRef.current?.clientHeight || 0) - size.height / 2 && (
+          <div className="fixed bottom-0 w-full flex flex-col items-center">
+            <div
+              className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer"
+              onClick={() => router.push('/nfts')}
+            >
+              <img src="/assets/images/landing-page/icon-ethereum.svg" alt="Ethereum Icon"/>
+              <span className="mx-15">EXPLORE COLLECTION</span>
+              <img src="/assets/images/landing-page/icon-arrow-right.svg" alt="Ethereum Icon"/>
+            </div>
+            <div
+              className={
+                'w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 text-18 sm:text-20 mt-50 ' +
+                stateBarBackground
+              }
+            >
+              {raffleState === RaffleState.Waiting && (
+                <p className="font-medium text-center">
+                  {projectSchedule.stateStr} begins on
+                  {' ' + projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear} at
+                  00:00 AM UTC
+                </p>
+              )}
+              {raffleState === RaffleState.Live && (
+                <p className="font-medium text-center">
+                  Whitelist raffle registration
+                  <span className="text-30 font-bold"> OPEN NOW!</span> ends on
+                  {' ' + projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear} at
+                  00:00 AM UTC
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  RAFFLE RESULTS{' '}
+                  <span className="text-30 font-bold">LIVE NOW! </span>
+                  Connect to mint now!
+                </p>
+              )}
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0))
-      setRaffleEndTimeLeft(calculateTimeLeft(1))
-      updateRaffleState()
-    }, 1000)
-  }, [])
+              {raffleState === RaffleState.Waiting && (
+                <p className="font-medium text-center">
+                  <span className="text-30 font-bold">
+                      {`${
+                        raffleStartTimeLeft.days < 10
+                          ? '0' + raffleStartTimeLeft.days
+                          : raffleStartTimeLeft.days
+                      }:${
+                        raffleStartTimeLeft.hours < 10
+                          ? '0' + raffleStartTimeLeft.hours
+                          : raffleStartTimeLeft.hours
+                      }:${
+                        raffleStartTimeLeft.minutes < 10
+                          ? '0' + raffleStartTimeLeft.minutes
+                          : raffleStartTimeLeft.minutes
+                      }:${
+                        raffleStartTimeLeft.seconds < 10
+                          ? '0' + raffleStartTimeLeft.seconds
+                          : raffleStartTimeLeft.seconds
+                      }`}
+                  </span>{' '}
+                  Left
+                </p>
+              )}
+
+              {raffleState === RaffleState.Live && (
+                <p className="font-medium text-center">
+                  {`${
+                    raffleEndTimeLeft.days < 10
+                      ? '0' + raffleEndTimeLeft.days
+                      : raffleEndTimeLeft.days
+                  }:${
+                    raffleEndTimeLeft.hours < 10
+                      ? '0' + raffleEndTimeLeft.hours
+                      : raffleEndTimeLeft.hours
+                  }:${
+                    raffleEndTimeLeft.minutes < 10
+                      ? '0' + raffleEndTimeLeft.minutes
+                      : raffleEndTimeLeft.minutes
+                  }:${
+                    raffleEndTimeLeft.seconds < 10
+                      ? '0' + raffleEndTimeLeft.seconds
+                      : raffleEndTimeLeft.seconds
+                  }`}{' '}
+                  Left
+                </p>
+              )}
+              {raffleState === RaffleState.Ended && (
+                <p className="font-medium text-center">
+                  {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+    </>);
+  }, [raffleStartTimeLeft, raffleEndTimeLeft, stateBarBackground, raffleState, connected]);
 
   return (
     <>
       <Head>
         <title>Brainchild: HomePage</title>
-        <meta
-          name="description"
-          content="Unlocking innovative ownership experiences by connecting to web3. Redeem, upgrade, enhance NFTs that traverse both digital and real world."
-        />
+        <meta name="description"
+              content="A tribute to Ethereum.  Redeem, upgrade, enhance NFTs traversing the digital & real world. Unlock innovative ownership experinces with Web3."/>
       </Head>
       <Layout>
         {/*Ether clock landing page*/}
-        <section className="dark-background-image overflow-hidden">
+        <section className="dark-background-image overflow-hidden" role="img" aria-label="Gradient background Image">
           <div
             className="relative"
             ref={heroSectionRef}
-            // onMouseMove={(event) => {
-            //   if (exploreImageRef.current) {
-            //     exploreImageRef.current.style.top =
-            //       event.clientY - 105 + scrollY + 'px'
-            //     exploreImageRef.current.style.left = event.clientX + 'px'
-            //   }
-            // }}
-            // onClick={() => router.push('/nfts')}
           >
-            {/* <div
-              className="absolute w-120 h-120 sm:w-120 sm:h-120 xl:w-150 xl:h-150 -top-[50px] left-[5px] sm:left-[50px] lg:left-[100px] xl:top-[400px] xl:right-[50px] xl:left-auto transform -translate-x-1/2 -translate-y-1/2 z-[0] sm:z-[400]"
-              ref={exploreImageRef}
-            >
-              <Image
-                src="/assets/images/landing-page/radial-explore.png"
-                layout="fill"
-                alt="Explore"
-              />
-            </div> */}
-
             <div className="relative pt-60 sm:pt-80 flex justify-center items-center">
-              <div className="absolute w-full sm:w-3/5 flex items-center justify-center transform -translate-y-1/4 transy20">
+              <div
+                className="absolute w-full sm:w-3/5 flex items-center justify-center transform -translate-y-1/4 transy20">
                 <div className="w-full flex justify-center">
                   <Image
                     src="/assets/images/landing-page/eth-clock-design.png"
@@ -297,7 +349,7 @@ export default function Home() {
               </div>
               <div
                 className="w-full sm:w-2/3 mx-auto flex justify-center"
-                style={{ fontFamily: 'Future Classic' }}
+                style={{fontFamily: 'Future Classic'}}
               >
                 <Image
                   className="animate-spin-60s"
@@ -309,43 +361,44 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="px-30 lg:px-100 flex flex-col sm:flex-row sm:flex-wrap items-end sm:items-center justify-center text-white text-20 sm:text-28 text-right xl:text-center font-light py-35 xl:py-100">
+            <div
+              className="px-30 lg:px-100 flex flex-col sm:flex-row sm:flex-wrap items-end sm:items-center justify-center text-white text-20 sm:text-28 text-right xl:text-center font-light py-35 xl:py-100">
               <p className="pb-20 sm:py-30 xl:py-0">
                 <span
                   className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
+                  style={{fontFamily: 'Subjectivity Serif'}}
                 >
                   5000
                 </span>{' '}
                 Mints
               </p>
-              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full" />
+              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full"/>
               <p className="pb-20 sm:py-30 xl:py-0">
                 Up to{' '}
                 <span
                   className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
+                  style={{fontFamily: 'Subjectivity Serif'}}
                 >
                   Level 10
                 </span>{' '}
                 Enhancement
               </p>
-              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full" />
+              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full"/>
               <p className="pb-20 sm:py-30 xl:py-0">
                 Perpetually{' '}
                 <span
                   className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
+                  style={{fontFamily: 'Subjectivity Serif'}}
                 >
                   Redeemable
                 </span>
               </p>
-              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full" />
+              <div className="hidden sm:block bg-white w-10 h-10 mx-30 rounded-full"/>
               <p className="pb-20 sm:py-30 xl:py-0">
                 Mint Price{' '}
                 <span
                   className="font-bold italic"
-                  style={{ fontFamily: 'Subjectivity Serif' }}
+                  style={{fontFamily: 'Subjectivity Serif'}}
                 >
                   0.12 Eth
                 </span>
@@ -354,114 +407,55 @@ export default function Home() {
           </div>
 
           {/*state bar*/}
-          {scrollY <
-            (heroSectionRef.current?.clientHeight || 0) - size.height / 2 && (
-            <div className="fixed bottom-0 w-full flex flex-col items-center hidden">
-              <div
-                className="text-[#363738] font-bold text-16 sm:text-18 p-20 sm:p-25 rounded-[20px] bg-white flex items-center justify-between cursor-pointer"
-                onClick={() => router.push('/nfts')}
-              >
-                <img src="/assets/images/landing-page/icon-ethereum.svg" />
-                <span className="mx-15">EXPLORE COLLECTION</span>
-                <img src="/assets/images/landing-page/icon-arrow-right.svg" />
-              </div>
-              <div
-                className={
-                  'w-full bg-danger flex flex-col lg:flex-row items-center justify-between px-20 sm:px-40 py-10 sm:py-0 text-18 sm:text-20 mt-50 ' +
-                  stateBarBackground
-                }
-              >
-                {raffleState === RaffleState.Waiting && (
-                  <p className="font-medium text-center">
-                    Presale raffle begins on 07 Feb, 2022 at 00:00 AM UTC
-                  </p>
-                )}
-                {raffleState === RaffleState.Live && (
-                  <p className="font-medium text-center">
-                    Presale raffle Results{' '}
-                    <span className="text-30 font-bold">LIVE NOW!</span> end on
-                    08 Feb, 2022 at 00:00 AM UTC
-                  </p>
-                )}
-                {raffleState === RaffleState.Ended && (
-                  <p className="font-medium text-center">
-                    Raffle Results{' '}
-                    <span className="text-30 font-bold">LIVE NOW!</span>
-                  </p>
-                )}
 
-                {raffleState === RaffleState.Waiting && (
-                  <p className="font-medium text-center">
-                    <span className="text-30 font-bold">{`${raffleStartTimeLeft.days}:${raffleStartTimeLeft.hours}:${raffleStartTimeLeft.minutes}:${raffleStartTimeLeft.seconds}`}</span>{' '}
-                    Left
-                  </p>
-                )}
+          {stateComponent}
 
-                {raffleState === RaffleState.Live && (
-                  <p className="font-medium text-center">
-                    <span className="text-30 font-bold">{`${raffleEndTimeLeft.days}:${raffleEndTimeLeft.hours}:${raffleEndTimeLeft.minutes}:${raffleEndTimeLeft.seconds}`}</span>{' '}
-                    Left
-                  </p>
-                )}
-                {raffleState === RaffleState.Ended && (
-                  <p className="font-medium text-center">
-                    Connect wallet to check if you’re whitelisted
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
         </section>
 
-        <div className="light-background-image">
+        <div className="light-background-image" role="img" aria-label="Gradient background Image">
           {/*Immerse yourself in the new age of LUXURY*/}
           <section className="relative pt-130 overflow-x-hidden">
-            {/* <div className="border-y border-gradient-dark p-25">
-              <p className="text-primary-50 whitespace-nowrap transition eas-in-out transform -translate-y-1">
-                Fermentum euismod sed pretium amet viverra odio ut. Mattis urna
-                eget mi augue malesuada scelerisque sed consequat, non. Sagittis
-                magnis ac, auctor dictum tristique turpis posuere. Fermentum
-                euismod sed pretium amet viverra odio ut. Mattis urna eget mi
-                augue malesuada scelerisque sed consequat, non.
-              </p>
-            </div> */}
             <div className="p-30 sm:p-100 mx-auto relative z-50">
               <div
                 className="text-45 sm:text-95 lg:text-120 text-center leading-tight text-primary-75 pt-60 lg:text-center"
-                style={{ fontFamily: 'Future Classic' }}
+                style={{fontFamily: 'Future Classic'}}
               >
                 <p>
                   <span>Immerse</span>
-                  <br className="block sm:hidden" /> <span>yourself</span>
-                  <br className="hidden lg:block" />{' '}
+                  <br className="block sm:hidden"/> <span>yourself</span>
+                  <br className="hidden lg:block"/>{' '}
                   <span className="text-45 sm:text-71 lg:text-80">in the</span>{' '}
-                  <br className="block lg:hidden" />
+                  <br className="block lg:hidden"/>
                   NEW AGE{' '}
                   <span className="text-45 sm:text-71 lg:text-80">of</span>
                 </p>
                 <p className="mt-10 text-70 sm:text-140 lg:text-160">LUXURY</p>
               </div>
             </div>
-            <div className="grid w-full grid-cols-1 grid-rows-3 md:grid-cols-3 md:grid-rows-1 p-0 md:p-40 lg:p-80 gap-0 md:gap-[40px] lg:gap-[80px] -mt-160 md:-mt-240 lg:-mt-300">
+            <div
+              className="grid w-full grid-cols-1 grid-rows-3 md:grid-cols-3 md:grid-rows-1 p-0 md:p-40 lg:p-80 gap-0 md:gap-[40px] lg:gap-[80px] -mt-160 md:-mt-240 lg:-mt-300">
               <img
                 className="w-full h-600 sm:h-auto object-cover"
                 src="/assets/images/landing-page/gallery-1.png"
+                alt="LUXURY-1"
               />
               <img
                 className="w-full h-600 sm:h-auto object-cover"
                 src="/assets/images/landing-page/gallery-2.png"
+                alt="LUXURY-2"
               />
               <div className="w-full h-600 sm:h-auto relative overflow-y-clip">
                 <img
                   className="w-full h-full object-cover"
                   src="/assets/images/landing-page/gallery-3.png"
+                  alt="LUXURY-3"
                 />
                 <div className="absolute w-full bottom-0 right-0 text-white p-20 z-50">
                   <p className="text-right">
                     Luxury has always been a timeless phenomenon but has it ever
                     truly been forever?
-                    <br />
-                    <br />
+                    <br/>
+                    <br/>
                     Well, Our NFTs are redeemable forever... Yes,
                   </p>
                   <p className="text-right font-Voyage text-80 break-words leading-none">
@@ -490,12 +484,14 @@ export default function Home() {
               <div className="w-full overflow-x-clip h-screen flex items-center justify-center sticky top-0">
                 <img
                   className="hidden sm:block sm:p-50 xs:p-200"
-                  style={{ maxWidth: '100%' }}
+                  style={{maxWidth: '100%'}}
                   src="/assets/images/landing-page/text-experienced-nft.svg"
+                  alt="Experience NFT"
                 />
                 <img
                   className="block sm:hidden w-full"
                   src="/assets/images/landing-page/text-experienced-nft-mobile.svg"
+                  alt="Mobile Experience NFT"
                 />
               </div>
               <div className="w-full h-screen flex items-center justify-center sticky top-0">
@@ -522,7 +518,7 @@ export default function Home() {
             <div className="flex justify-between items-center px-20 sm:px-80 xl:px-200">
               <p
                 className="text-30 sm:text-50 text-primary-75"
-                style={{ fontFamily: 'Future Classic' }}
+                style={{fontFamily: 'Future Classic'}}
               >
                 and more...
               </p>
@@ -540,14 +536,14 @@ export default function Home() {
                 }}
                 onInit={onInit}
                 onProgress={(swiper, progress) => {
-                  setSwiperValue(progress * 100)
+                  setSwiperValue(progress * 100);
                 }}
               >
-                <SwiperSlide className="flex-grow" style={{ height: 'auto' }}>
+                <SwiperSlide className="flex-grow" style={{height: 'auto'}}>
                   <div className="background-gray-blur p-30 sm:p-40 pb-0 sm:pb-0 w-full">
                     <p
                       className="text-50 sm:text-80 text-[#232425]"
-                      style={{ fontFamily: 'Future Classic' }}
+                      style={{fontFamily: 'Future Classic'}}
                     >
                       Enhance
                     </p>
@@ -560,35 +556,41 @@ export default function Home() {
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-enhanced.svg"
+                        alt="Enhanced Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-god-teir.svg"
+                        alt="God Tier Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-frozen.svg"
+                        alt="Frozen Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-failed.svg"
+                        alt="Failed Tag"
                       />
                       <img
                         className="p-10 h-50"
                         src="/assets/images/landing-page/tag-charred.svg"
+                        alt="Charred Tag"
                       />
                     </div>
                     <img
                       className="w-full"
                       src="/assets/images/landing-page/bg-enhance-item.png"
+                      alt="Enhance Item"
                     />
                   </div>
                 </SwiperSlide>
-                <SwiperSlide className="flex-grow" style={{ height: 'auto' }}>
+                <SwiperSlide className="flex-grow" style={{height: 'auto'}}>
                   <div className="background-gray-blur p-30 sm:p-40 w-full h-full pb-0 relative">
                     <p
                       className="text-50 sm:text-80 text-[#232425]"
-                      style={{ fontFamily: 'Future Classic' }}
+                      style={{fontFamily: 'Future Classic'}}
                     >
                       Redeem
                     </p>
@@ -601,14 +603,15 @@ export default function Home() {
                     <img
                       className="w-full absolute bottom-0 left-0"
                       src="/assets/images/landing-page/bg-redeem-item.png"
+                      alt="Redeem Item"
                     />
                   </div>
                 </SwiperSlide>
-                <SwiperSlide className="flex-grow" style={{ height: 'auto' }}>
+                <SwiperSlide className="flex-grow" style={{height: 'auto'}}>
                   <div className="background-gray-blur p-30 sm:p-40 w-full h-full pb-0 relative">
                     <p
                       className="text-50 sm:text-80 text-[#232425]"
-                      style={{ fontFamily: 'Future Classic' }}
+                      style={{fontFamily: 'Future Classic'}}
                     >
                       Participate
                     </p>
@@ -621,14 +624,15 @@ export default function Home() {
                     <img
                       className="w-full mt-20 absolute left-0 bottom-0"
                       src="/assets/images/landing-page/bg-coming-soon.svg"
+                      alt="Coming Soon"
                     />
                   </div>
                 </SwiperSlide>
-                <SwiperSlide className="flex-grow" style={{ height: 'auto' }}>
+                <SwiperSlide className="flex-grow" style={{height: 'auto'}}>
                   <div className="background-gray-blur p-30 sm:p-40 w-full h-full pb-0 relative">
                     <p
                       className="text-50 sm:text-80 text-[#232425]"
-                      style={{ fontFamily: 'Future Classic' }}
+                      style={{fontFamily: 'Future Classic'}}
                     >
                       Vote
                     </p>
@@ -640,6 +644,7 @@ export default function Home() {
                     <img
                       className="w-full mt-20 absolute left-0 bottom-0"
                       src="/assets/images/landing-page/bg-coming-soon.svg"
+                      alt="Coming Soon"
                     />
                   </div>
                 </SwiperSlide>
@@ -690,7 +695,7 @@ export default function Home() {
                 )}
                 value={swiperValue}
                 onChange={(value, index) => {
-                  swiperRef.current?.setProgress(value / 100)
+                  swiperRef.current?.setProgress(value / 100);
                 }}
               />
             </div>
@@ -698,18 +703,19 @@ export default function Home() {
         </div>
 
         {/*Collaboration*/}
-        <section className="relative dark-background-image" id="collaborations">
+        <section className="relative dark-background-image" id="collaborations" role="img"
+                 aria-label="Gradient background Image">
           <div
             className="container mx-auto p-30 pt-50 sm:pt-200 text-white text-center"
-            style={{ fontFamily: 'Future Classic' }}
+            style={{fontFamily: 'Future Classic'}}
           >
             <p className="text-45 lg:text-80">exquisite</p>
-            <p
+            <h1
               className="text-justify indent-2 sm:indent-0 sm:ml-0 sm:text-center break-all text-80 lg:text-100 xl:text-150"
-              style={{ textIndent: `${isMobile ? '4rem' : '0'}` }}
+              style={{textIndent: `${isMobile ? '4rem' : '0'}`}}
             >
               Collaborations
-            </p>
+            </h1>
             <p className="text-45 lg:text-80">
               <span className="text-30 lg:text-60">with</span> wondrous artists
             </p>
@@ -726,7 +732,7 @@ export default function Home() {
           <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between mt-90 sm:mt-110">
             <div className="w-300 h-300 flex items-center justify-center my-80 sm:my-0 group cursor-pointer">
               <div className="hidden group-hover:block">
-                <Link href="mailto:BrainchildNFT@gmail.com">
+                <a href="mailto:BrainchildNFT@gmail.com">
                   <Image
                     src="/assets/images/landing-page/radial-connect-hover.png"
                     layout="intrinsic"
@@ -734,7 +740,7 @@ export default function Home() {
                     height={420}
                     alt="Hand Drawing White Hourse"
                   />
-                </Link>
+                </a>
               </div>
               <div className="block group-hover:hidden">
                 <Image
@@ -750,8 +756,8 @@ export default function Home() {
               <p className="sm:max-w-290">
                 We ensure a rich collaborative experience to bring an
                 uncompromised creative vision to fruition.
-                <br />
-                <br />
+                <br/>
+                <br/>
                 Connect with our talented artists to build your identities
                 beyond the cryptoverse!
               </p>
@@ -760,19 +766,19 @@ export default function Home() {
         </section>
 
         {/*FAQs*/}
-        <section className="relative dark-background-image">
+        <section className="relative dark-background-image" role="img" aria-label="Gradient background Image">
           <div className="py-45 sm:py-95 flex flex-col lg:flex-row">
             <div className="lg:w-1/3 flex lg:justify-center text-white">
               <p
                 className="lg:hidden px-30 text-80 lg:vertical-letter"
-                style={{ fontFamily: 'Future Classic' }}
+                style={{fontFamily: 'Future Classic'}}
               >
                 FAQ
               </p>
               {currentFaqIndex === -1 && (
                 <p
                   className="hidden lg:block text-130 vertical-letter"
-                  style={{ fontFamily: 'Future Classic' }}
+                  style={{fontFamily: 'Future Classic'}}
                 >
                   FAQ
                 </p>
@@ -810,7 +816,7 @@ export default function Home() {
                           // if (isMobile) {
                           setCurrentFaqIndex(
                             currentFaqIndex == index ? -1 : index
-                          )
+                          );
                           // }
                         }}
                       >
@@ -856,5 +862,5 @@ export default function Home() {
         </section>
       </Layout>
     </>
-  )
+  );
 }

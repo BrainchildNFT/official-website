@@ -89,6 +89,7 @@ module.exports = {
         75: '#BFE3BC',
         100: '#74B06F',
         200: '#63965F',
+        500: '#71A1ED',
       },
       warning: {
         DEFAULT: '#F18F01',
@@ -118,7 +119,7 @@ module.exports = {
       },
       pink: {
         gray: '#AF5F5F',
-      },
+      }
     },
     fontFamily: {
       poppins: ['Inter', 'sans-serif'],
@@ -148,7 +149,7 @@ module.exports = {
     // },
     fontSize: {
       ...range(minFontSize, maxFontSize).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
+        (merged, f) => ({...merged, [f]: `${f}px`}),
         {}
       ),
     },
@@ -161,45 +162,45 @@ module.exports = {
     },
     spacing: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
+        (merged, f) => ({...merged, [f]: `${f}px`}),
         {}
       ),
     },
     maxWidth: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
+        (merged, f) => ({...merged, [f]: `${f}px`}),
         {}
       ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...vhs.reduce((merged, vh) => ({...merged, [vh]: vh}), {}),
     },
     minWidth: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
+        (merged, f) => ({...merged, [f]: `${f}px`}),
         {}
       ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...vhs.reduce((merged, vh) => ({...merged, [vh]: vh}), {}),
     },
     maxHeight: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
+        (merged, f) => ({...merged, [f]: `${f}px`}),
         {}
       ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...vhs.reduce((merged, vh) => ({...merged, [vh]: vh}), {}),
     },
     minHeight: {
       ...range(minSpacingPixel, maxSpacingPixel, spacingPixelIncrement).reduce(
-        (merged, f) => ({ ...merged, [f]: `${f}px` }),
+        (merged, f) => ({...merged, [f]: `${f}px`}),
         {}
       ),
-      ...vhs.reduce((merged, vh) => ({ ...merged, [vh]: vh }), {}),
+      ...vhs.reduce((merged, vh) => ({...merged, [vh]: vh}), {}),
     },
     animation: {
       fadeIn: 'fadeIn 0.5s ease-in-out',
     },
     keyframes: {
       fadeIn: {
-        '0%': { opacity: 0 },
-        '100%': { opacity: 1 },
+        '0%': {opacity: 0},
+        '100%': {opacity: 1},
       },
     },
     extend: {},

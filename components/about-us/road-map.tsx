@@ -1,15 +1,15 @@
-import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function RoadMap() {
-  const [currentRoadMap, setCurrentRoadMap] = useState(0)
-  const [scrollY, setScrollY] = useState(0)
-  const [childrenHeights, setChildrenHeights] = useState<number[]>([])
+  const [currentRoadMap, setCurrentRoadMap] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  const [childrenHeights, setChildrenHeights] = useState<number[]>([]);
 
-  const roadMapContentRef = useRef<HTMLDivElement>(null)
-  const roadMapRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
+  const roadMapContentRef = useRef<HTMLDivElement>(null);
+  const roadMapRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const roadMapPeriodNames = [
     {
       year: 2021,
@@ -31,70 +31,71 @@ export default function RoadMap() {
       text: 'Q3',
       name: 'BEYOND',
     },
-  ]
+  ];
 
   const goToNfts = () => {
-    router.push('/nfts')
-  }
+    router.push('/nfts');
+  };
 
   const goToGithub = () => {
-    window.open('https://github.com/BrainchildNFT/Ethereum-Clock', '_blank')
-  }
+    window.open('https://github.com/BrainchildNFT/Ethereum-Clock', '_blank');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
+      setScrollY(window.scrollY);
+    };
 
-    handleScroll()
+    handleScroll();
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
-    const roadMapTop = roadMapRef.current?.getBoundingClientRect().top || 0
+    const roadMapTop = roadMapRef.current?.getBoundingClientRect().top || 0;
 
     if (roadMapTop < 0) {
-      const newRoadMapTop = Math.abs(roadMapTop)
-      let heightSum = 0
+      const newRoadMapTop = Math.abs(roadMapTop);
+      let heightSum = 0;
       for (let index = 0; index < childrenHeights.length; index++) {
         if (newRoadMapTop > heightSum) {
-          setCurrentRoadMap(index)
+          setCurrentRoadMap(index);
         }
-        heightSum += childrenHeights[index]
+        heightSum += childrenHeights[index];
       }
     }
-  }, [scrollY])
+  }, [scrollY]);
 
   const roadMapPeriodClicked = (index: number) => {
-    setCurrentRoadMap(index)
-    let heightSum = 0
+    setCurrentRoadMap(index);
+    let heightSum = 0;
     for (let i = 0; i < index; i++) {
-      heightSum += childrenHeights[i]
+      heightSum += childrenHeights[i];
     }
     window.scrollTo({
       left: 0,
       top: heightSum + (roadMapRef?.current?.offsetTop || 0) + 200,
       behavior: 'smooth',
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     const tmpChildrenHeight: any[] = Array.from(
       roadMapContentRef?.current?.children || []
-    ).map((item: any) => item.clientHeight)
-    setChildrenHeights(tmpChildrenHeight)
-  }, [])
+    ).map((item: any) => item.clientHeight);
+    setChildrenHeights(tmpChildrenHeight);
+  }, []);
 
   return (
     <>
       <div className="flex flex-row" ref={roadMapRef}>
         <div className="relative lg:w-1/2">
           <div className="pr-50">
-            <div className="text-white h-200 sticky top-60 z-20 dark-background-image">
+            <div className="text-white h-200 sticky top-60 z-20 dark-background-image" role="img"
+                 aria-label="Gradient background Image">
               <p className="text-22 opacity-30 mb-10 pt-20">ROADMAP</p>
               {roadMapPeriodNames.map((item, index) => (
                 <p
@@ -293,7 +294,7 @@ export default function RoadMap() {
           <div className="left-40 lg:left-0 h-screen pb-100">
             <div
               className="road-map-period-border text-white h-full flex flex-col justify-between py-100"
-              style={{ width: '1px' }}
+              style={{width: '1px'}}
             >
               {roadMapPeriodNames.map((item, index) => (
                 <div
@@ -341,5 +342,5 @@ export default function RoadMap() {
         </div>
       </div>
     </>
-  )
+  );
 }

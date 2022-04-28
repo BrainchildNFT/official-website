@@ -1,43 +1,44 @@
-import Head from 'next/head'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import Head from 'next/head';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-import { Layout } from '../components/layout/layout'
-import Icon from '../components/ui-kit/icon'
-import { RaffleState } from '../core/data/landing'
-import { useEffect, useState } from 'react'
+import { Layout } from '../components/layout/layout';
+import Icon from '../components/ui-kit/icon';
+import { RaffleState } from '../core/data/landing';
+import { useEffect, useState } from 'react';
 
 export default function Search() {
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
-  const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
+  const [raffleState, setRaffleState] = useState(RaffleState.Waiting);
+  const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
 
   useEffect(() => {
     switch (raffleState) {
       case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white')
-        break
+        setStateBarBackground('bg-danger text-white');
+        break;
       case RaffleState.Live:
-        setStateBarBackground('bg-success text-white')
-        break
+        setStateBarBackground('bg-success text-white');
+        break;
       case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary')
-        break
+        setStateBarBackground('light-background-image text-primary');
+        break;
       default:
-        setStateBarBackground('bg-danger text-white')
+        setStateBarBackground('bg-danger text-white');
     }
-  }, [raffleState])
+  }, [raffleState]);
 
   return (
     <>
       <Head>
         <title>Brainchild: Search</title>
-        <meta name="description" content="" />
+        <meta name="description" content=""/>
       </Head>
 
       <Layout>
-        <section className="relative dark-background-image">
-          <div className="container mx-auto h-screen-without-navbar py-50 sm:pt-150 flex flex-col justify-start items-center">
+        <section className="relative dark-background-image" role="img" aria-label="Gradient background Image">
+          <div
+            className="container mx-auto h-screen-without-navbar py-50 sm:pt-150 flex flex-col justify-start items-center">
             <div className="flex justify-between border border-gradient-light rounded-md p-15 sm:w-1/2">
               <input
                 type="search"
@@ -46,34 +47,39 @@ export default function Search() {
               />
             </div>
             <div className="mt-20 sm:w-1/2 px-20">
-              <div className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
+              <div
+                className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
                 <p>Home/Enhancement</p>
                 <a className="cursor-pointer">
-                  <Icon name="hyperLink" color="white" size={24} />
+                  <Icon name="hyperLink" color="white" size={24}/>
                 </a>
               </div>
-              <div className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
+              <div
+                className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
                 <p>Home/Enhancement</p>
                 <a className="cursor-pointer">
-                  <Icon name="hyperLink" color="white" size={24} />
+                  <Icon name="hyperLink" color="white" size={24}/>
                 </a>
               </div>
-              <div className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
+              <div
+                className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
                 <p>Home/Enhancement</p>
                 <a className="cursor-pointer">
-                  <Icon name="hyperLink" color="white" size={24} />
+                  <Icon name="hyperLink" color="white" size={24}/>
                 </a>
               </div>
-              <div className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
+              <div
+                className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
                 <p>Home/Enhancement</p>
                 <a className="cursor-pointer">
-                  <Icon name="hyperLink" color="white" size={24} />
+                  <Icon name="hyperLink" color="white" size={24}/>
                 </a>
               </div>
-              <div className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
+              <div
+                className="flex justify-between items-center bg-black-40 border border-gradient-light text-white text-18 font-medium p-30 mb-10">
                 <p>Home/Enhancement</p>
                 <a className="cursor-pointer">
-                  <Icon name="hyperLink" color="white" size={24} />
+                  <Icon name="hyperLink" color="white" size={24}/>
                 </a>
               </div>
             </div>
@@ -119,5 +125,5 @@ export default function Search() {
         </section>
       </Layout>
     </>
-  )
+  );
 }

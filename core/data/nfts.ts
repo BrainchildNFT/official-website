@@ -16,7 +16,7 @@ export const NftsMenuTypeArr: NftsMenuType[] = [
   NftsMenuType.Enhancements,
   // NftsMenuType.Gallery,
   NftsMenuType.WhitePaper,
-]
+];
 
 export const timelineData = [
   {
@@ -68,7 +68,7 @@ export const timelineData = [
     content:
       'In viverra tortor, egestas tristique bibendum tortor. Orci integer aenean praesent nisi. Ac egestas nullam pellentesque tincidunt orci eu sed consequat. At egestas duis tincidunt enim fames. ',
   },
-]
+];
 
 export const timelineStepData = [
   {
@@ -89,7 +89,7 @@ export const timelineStepData = [
     content:
       'Whitelisted wallet will be announced on our community channels and website, alternatively, you can also connect your wallet via metamask and find out if you have been whitelisted. You will have 48 hours to mint 1 EthClock directly into your wallet by sending 0.06 ETH. Excess ETH will not be refunded, please do not send any other amount excluding gas fees.',
   },
-]
+];
 
 export const enhancementsData = [
   {
@@ -107,7 +107,7 @@ export const enhancementsData = [
     content:
       'Eget id dictum nibh quis fermentum, amet. Semper mattis eget venenatis',
   },
-]
+];
 
 export const galleryData = [
   {
@@ -125,4 +125,4 @@ export const galleryData = [
     width: 560,
     height: 700,
   },
-]
+];

@@ -4,7 +4,7 @@ export enum RaffleState {
   Ended = 2,
 }
 
-export const faq_display_limit = 6
+export const faq_display_limit = 6;
 
 export const faqs = {
   data: [
@@ -25,7 +25,7 @@ export const faqs = {
     },
     {
       name: 'When do EthClocks go on sale?',
-      content: 'Presale 7th Feb 2022. Fairmint Raffle TBD.',
+      content: 'Join our Discord server to for the latest information about our multi-stage Fairmint Raffle.',
     },
     {
       name: 'How many EthClocks are available?',
@@ -35,14 +35,14 @@ export const faqs = {
     {
       name: 'How do I buy EthClock?',
       content:
-        'Presale goes live on 7th Feb 2022 at 00:00 AM UTC. Be ready with your wallets to submit your signature.',
+        'Join our Discord server to for the latest information.',
     },
     {
       name: 'What is the answer to life?',
       content: '42',
     },
   ],
-}
+};
 
 export const nftList = {
   images: [
@@ -79,4 +79,4 @@ export const nftList = {
       height: 400,
     },
   ],
-}
+};

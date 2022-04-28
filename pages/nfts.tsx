@@ -1,61 +1,76 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Layout } from '../components/layout/layout'
-import { RaffleState } from '../core/data/landing'
-import Icon from '../components/ui-kit/icon'
-import { NftsMenuType, NftsMenuTypeArr } from '../core/data/nfts'
-import About from '../components/nfts/about'
-import PerksAndUtility from '../components/nfts/perks-and-utility'
-import Timeline from '../components/nfts/timeline'
-import Enhancements from '../components/nfts/enhancements'
-import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints'
-import Artist from '../components/nfts/artist'
-import { themeUpdate } from '../core/actions/theme-update'
-import { ThemeType } from '../core/data/base'
-import { sidebarUpdate } from '../core/actions/sidebar-update'
+import { Layout } from '../components/layout/layout';
+import { RaffleState } from '../core/data/landing';
+import Icon from '../components/ui-kit/icon';
+import { NftsMenuType, NftsMenuTypeArr } from '../core/data/nfts';
+import About from '../components/nfts/about';
+import PerksAndUtility from '../components/nfts/perks-and-utility';
+import Timeline from '../components/nfts/timeline';
+import Enhancements from '../components/nfts/enhancements';
+import useMatchBreakpoints from '../components/ui-kit/common/useMatchBreakpoints';
+import Artist from '../components/nfts/artist';
+import { themeUpdate } from '../core/actions/theme-update';
+import { monthNames, projectSchedule, ThemeType } from '../core/data/base';
+import { sidebarUpdate } from '../core/actions/sidebar-update';
+import { AppContext } from '../components/context/app-context';
 
 export default function Nfts() {
-  const [isTop, setIsTop] = useState(true)
-  const [raffleState, setRaffleState] = useState(RaffleState.Waiting)
-  const [stateBarBackground, setStateBarBackground] = useState('bg-danger')
-  const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About)
-  const [textColor, setTextColor] = useState('text-white')
+  const [isTop, setIsTop] = useState(true);
+  const [raffleState, setRaffleState] = useState(RaffleState.Waiting);
+  const [stateBarBackground, setStateBarBackground] = useState('bg-danger');
+  const [currentMenuId, setCurrentMenuId] = useState(NftsMenuType.About);
+  const [textColor, setTextColor] = useState('text-white');
+  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>({days: 0, hours: 0, minutes: 0, seconds: 0});
 
-  const themeStatus = useSelector((state: any) => state.ThemeStatus)
-  const dispatch = useDispatch()
+  const themeStatus = useSelector((state: any) => state.ThemeStatus);
+  const dispatch = useDispatch();
+  const {connected} = useContext(AppContext);
+  const {isHuge} = useMatchBreakpoints();
+  const nftContentRef = useRef<HTMLDivElement>(null);
+  const mainBody = useRef<HTMLDivElement>(null);
 
-  const { isHuge } = useMatchBreakpoints()
-  const nftContentRef = useRef<HTMLDivElement>(null)
-  const mainBody = useRef<HTMLDivElement>(null)
-
-  const menuList = [
-    { id: NftsMenuType.About, name: 'ABOUT' },
-    { id: NftsMenuType.Artist, name: 'ARTIST' },
-    { id: NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY' },
-    { id: NftsMenuType.TimeLine, name: 'TIMELINE' },
-    { id: NftsMenuType.Enhancements, name: 'ENHANCEMENTS' },
+  const menuList = useMemo(() => [
+    {id: NftsMenuType.About, name: 'ABOUT'},
+    {id: NftsMenuType.Artist, name: 'ARTIST'},
+    {id: NftsMenuType.PerksAndUtility, name: 'PERKS AND UTILITY'},
+    {id: NftsMenuType.TimeLine, name: 'TIMELINE'},
+    {id: NftsMenuType.Enhancements, name: 'ENHANCEMENTS'},
     // {id:NftsMenuType.Gallery, name: 'GALLERY'},
-    { id: NftsMenuType.WhitePaper, name: 'WHITEPAPER' },
-  ]
+    {id: NftsMenuType.WhitePaper, name: 'WHITEPAPER'},
+  ], []);
 
   interface TimeLeft {
-    days: number
-    hours: number
-    minutes: number
-    seconds: number
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
   }
 
-  const calculateTimeLeft = (flag: number): TimeLeft => {
-    let difference =
-      +new Date(Date.UTC(2022, 1, 7 + flag, 0, 0, 0)) - +new Date()
-    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  const calculateTimeLeft = useCallback((flag: number): TimeLeft => {
+    let difference = 0
+    if (flag == 1) {
+      difference =
+        +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
+    } else {
+      difference =
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
+    }
+
+    let timeLeft: TimeLeft = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
 
     if (difference > 0) {
       timeLeft = {
@@ -63,121 +78,115 @@ export default function Nfts() {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
-      }
+      };
     }
 
-    return timeLeft
-  }
+    return timeLeft;
+  }, []);
 
-  const updateRaffleState = () => {
+  const updateRaffleState = useCallback(() => {
     let differenceFromRaffleStart =
-      +new Date(Date.UTC(2022, 1, 7, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.wYear, projectSchedule.wMonth - 1, projectSchedule.wDay, projectSchedule.wHour, projectSchedule.wMin, projectSchedule.wSec)) - +new Date();
     let differenceFromRaffleEnd =
-      +new Date(Date.UTC(2022, 1, 8, 0, 0, 0)) - +new Date()
+      +new Date(Date.UTC(projectSchedule.endYear, projectSchedule.endMonth - 1, projectSchedule.endDay, projectSchedule.endHour, projectSchedule.endMin, projectSchedule.endSec)) - +new Date();
 
-    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting)
-    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live)
-    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended)
-  }
-
-  const [raffleStartTimeLeft, setRaffleStartTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(0)
-  )
-  const [raffleEndTimeLeft, setRaffleEndTimeLeft] = useState<TimeLeft>(
-    calculateTimeLeft(1)
-  )
+    if (differenceFromRaffleStart > 0) setRaffleState(RaffleState.Waiting);
+    if (differenceFromRaffleStart < 1) setRaffleState(RaffleState.Live);
+    if (differenceFromRaffleEnd < 1) setRaffleState(RaffleState.Ended);
+  }, []);
 
   useEffect(() => {
+    switch (raffleState) {
+      case RaffleState.Waiting:
+        setStateBarBackground('bg-danger text-white');
+        break;
+      case RaffleState.Live:
+        setStateBarBackground('bg-success text-white');
+        break;
+      case RaffleState.Ended:
+        setStateBarBackground('light-background-image text-primary');
+        break;
+      default:
+        setStateBarBackground('bg-danger text-white');
+    }
+  }, [raffleState]);
+
+  useEffect(() => {
+    updateRaffleState();
     const timer = setInterval(() => {
-      setRaffleStartTimeLeft(calculateTimeLeft(0))
-      setRaffleEndTimeLeft(calculateTimeLeft(1))
-      updateRaffleState()
-    }, 1000)
-  }, [])
+      setRaffleStartTimeLeft(calculateTimeLeft(0));
+      setRaffleEndTimeLeft(calculateTimeLeft(1));
+      updateRaffleState();
+    }, 1000);
+  }, []);
 
   const handleScroll = () => {
     if (typeof window !== 'undefined') {
       if (window.scrollY) {
-        setIsTop(false)
+        setIsTop(false);
       } else {
-        setIsTop(true)
+        setIsTop(true);
       }
     }
 
-    let contentHeight = 0
+    let contentHeight = 0;
     Array.from(nftContentRef?.current?.children || []).map((item, index) => {
-      const nextHeight = contentHeight + item.clientHeight
-      const scrollTop = window.scrollY || 0
+      const nextHeight = contentHeight + item.clientHeight;
+      const scrollTop = window.scrollY || 0;
       if (scrollTop > contentHeight && scrollTop < nextHeight) {
-        setCurrentMenuId(NftsMenuTypeArr[index])
+        setCurrentMenuId(NftsMenuTypeArr[index]);
       }
-      contentHeight = nextHeight
-    })
-  }
+      contentHeight = nextHeight;
+    });
+  };
 
-  const menuClicked = (menuId: NftsMenuType) => {
+  const menuClicked = useCallback((menuId: NftsMenuType) => {
     if (menuId === NftsMenuType.WhitePaper) {
       window.open(
         'https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub',
         '_blank'
-      )
+      );
     } else {
-      setCurrentMenuId(menuId)
+      setCurrentMenuId(menuId);
 
       const selectedSectionIndex = NftsMenuTypeArr.findIndex(
         (element) => element === menuId
-      )
-      const childrenArr = Array.from(nftContentRef?.current?.children || [])
-      let contentHeight = 0
+      );
+      const childrenArr = Array.from(nftContentRef?.current?.children || []);
+      let contentHeight = 0;
       if (selectedSectionIndex < childrenArr.length) {
         for (let index = 0; index < selectedSectionIndex; index++) {
-          contentHeight += childrenArr[index].clientHeight
+          contentHeight += childrenArr[index].clientHeight;
         }
       }
       window.scrollTo({
         left: 0,
         top: contentHeight + 100,
         behavior: 'smooth',
-      })
+      });
     }
-  }
+  }, [nftContentRef]);
 
   useEffect(() => {
     if (currentMenuId === NftsMenuType.About) {
-      dispatch(themeUpdate(ThemeType.DarkMode))
+      dispatch(themeUpdate(ThemeType.DarkMode));
     } else {
-      dispatch(themeUpdate(ThemeType.LightMode))
+      dispatch(themeUpdate(ThemeType.LightMode));
     }
-  }, [currentMenuId])
-
-  useEffect(() => {
-    switch (raffleState) {
-      case RaffleState.Waiting:
-        setStateBarBackground('bg-danger text-white')
-        break
-      case RaffleState.Live:
-        setStateBarBackground('bg-success text-white')
-        break
-      case RaffleState.Ended:
-        setStateBarBackground('light-background-image text-primary')
-        break
-      default:
-        setStateBarBackground('bg-danger text-white')
-    }
-  }, [raffleState])
+  }, [currentMenuId]);
 
   useEffect(() => {
     setTextColor(
       themeStatus === ThemeType.DarkMode ? 'text-white' : 'text-primary'
-    )
-  }, [themeStatus])
+    );
+  }, [themeStatus]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -198,6 +207,8 @@ export default function Nfts() {
                 ? ' dark-background-image'
                 : ' light-background-image')
             }
+            role="img"
+            aria-label="Gradient background Image"
           >
             <div
               className={
@@ -259,7 +270,7 @@ export default function Nfts() {
                           ? 'w-50 mr-10 border border-1'
                           : 'w-0 border-0')
                       }
-                      style={{ height: '1px' }}
+                      style={{height: '1px'}}
                     />
                     <p
                       className={
@@ -278,8 +289,8 @@ export default function Nfts() {
                           index === currentMenuId
                             ? 'danger'
                             : themeStatus === ThemeType.DarkMode
-                            ? 'white'
-                            : 'primary'
+                              ? 'white'
+                              : 'primary'
                         }
                         size={16}
                       />
@@ -327,24 +338,29 @@ export default function Nfts() {
             >
               {raffleState === RaffleState.Waiting && (
                 <p className={'text-center text-16 ' + textColor}>
-                  PRESALE RAFFLE BEGINS ON FEB 07, 2022
+                  {projectSchedule.stateStr} begins on
+                  {' ' + projectSchedule.wDay + ' ' + monthNames[projectSchedule.wMonth - 1] + ', ' + projectSchedule.wYear}
                 </p>
               )}
               {raffleState === RaffleState.Live && (
                 <p className={'text-center text-16 ' + textColor}>
-                  RAFFLE RESULTS{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span> END ON 08
-                  FEB, 2022
+                  Whitelist raffle registration
+                  <span className="text-30 font-bold"> OPEN NOW!</span> ends on
+                  {' ' + projectSchedule.endDay + ' ' + monthNames[projectSchedule.endMonth - 1] + ', ' + projectSchedule.endYear} at
+                  00:00 AM UTC
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
                 <p className={'text-center text-16 ' + textColor}>
                   RAFFLE RESULTS{' '}
-                  <span className="text-30 font-bold">LIVE NOW!</span>
+                  <span className="text-30 font-bold">LIVE NOW! </span>
+                  Connect to mint now!
                 </p>
               )}
             </div>
-            <div className="bg-danger py-20 px-30 hidden xl:hidden">
+
+            <div className={'py-20 px-30 hidden xl:block ' + stateBarBackground}>
+
               {raffleState === RaffleState.Waiting && (
                 <p className="text-center text-white text-20 font-Subjectivity font-bold">
                   {`${
@@ -390,12 +406,14 @@ export default function Nfts() {
                 </p>
               )}
               {raffleState === RaffleState.Ended && (
-                <p className="text-center text-white text-20 font-Subjectivity font-bold">
-                  Connect wallet to check if you’re whitelisted
+
+                <p className="text-center text-primary text-20 font-Subjectivity font-bold">
+                  {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
+
                 </p>
               )}
               <p className="text-16 text-white flex items-center justify-center">
-                <span className="pr-25 opacity-40">Stay connected</span>
+                <span className={"pr-25 " + (raffleState === RaffleState.Ended ? 'text-primary opacity-80' : 'text-white opacity-40')}>Stay connected</span>
                 <Link href="https://discord.gg/7S55rjvxm3" passHref>
                   <a
                     className="flex items-center justify-center sm:justify-start"
@@ -404,7 +422,7 @@ export default function Nfts() {
                     <Icon
                       className="pr-25"
                       name="discord"
-                      color="white"
+                      color={raffleState === RaffleState.Ended ? 'primary' : 'white'}
                       size={16}
                     />
                   </a>
@@ -417,7 +435,7 @@ export default function Nfts() {
                     <Icon
                       className="pr-25"
                       name="twitter"
-                      color="white"
+                      color={raffleState === RaffleState.Ended ? 'primary' : 'white'}
                       size={16}
                     />
                   </a>
@@ -430,7 +448,7 @@ export default function Nfts() {
                     <Icon
                       className="pr-25"
                       name="instagram"
-                      color="white"
+                      color={raffleState === RaffleState.Ended ? 'primary' : 'white'}
                       size={16}
                     />
                   </a>
@@ -446,49 +464,49 @@ export default function Nfts() {
               (isHuge ? ' collection-body-width' : ' w-screen')
             }
           >
-            <About />
-            <Artist />
-            <PerksAndUtility />
+            <About/>
+            <Artist/>
+            <PerksAndUtility/>
             <Timeline
               time={
                 raffleState === RaffleState.Waiting
                   ? `${
-                      raffleStartTimeLeft.days < 10
-                        ? '0' + raffleStartTimeLeft.days
-                        : raffleStartTimeLeft.days
-                    }:${
-                      raffleStartTimeLeft.hours < 10
-                        ? '0' + raffleStartTimeLeft.hours
-                        : raffleStartTimeLeft.hours
-                    }:${
-                      raffleStartTimeLeft.minutes < 10
-                        ? '0' + raffleStartTimeLeft.minutes
-                        : raffleStartTimeLeft.minutes
-                    }:${
-                      raffleStartTimeLeft.seconds < 10
-                        ? '0' + raffleStartTimeLeft.seconds
-                        : raffleStartTimeLeft.seconds
-                    }`
+                    raffleStartTimeLeft.days < 10
+                      ? '0' + raffleStartTimeLeft.days
+                      : raffleStartTimeLeft.days
+                  }:${
+                    raffleStartTimeLeft.hours < 10
+                      ? '0' + raffleStartTimeLeft.hours
+                      : raffleStartTimeLeft.hours
+                  }:${
+                    raffleStartTimeLeft.minutes < 10
+                      ? '0' + raffleStartTimeLeft.minutes
+                      : raffleStartTimeLeft.minutes
+                  }:${
+                    raffleStartTimeLeft.seconds < 10
+                      ? '0' + raffleStartTimeLeft.seconds
+                      : raffleStartTimeLeft.seconds
+                  }`
                   : `${
-                      raffleEndTimeLeft.days < 10
-                        ? '0' + raffleEndTimeLeft.days
-                        : raffleEndTimeLeft.days
-                    }:${
-                      raffleEndTimeLeft.hours < 10
-                        ? '0' + raffleEndTimeLeft.hours
-                        : raffleEndTimeLeft.hours
-                    }:${
-                      raffleEndTimeLeft.minutes < 10
-                        ? '0' + raffleEndTimeLeft.minutes
-                        : raffleEndTimeLeft.minutes
-                    }:${
-                      raffleEndTimeLeft.seconds < 10
-                        ? '0' + raffleEndTimeLeft.seconds
-                        : raffleEndTimeLeft.seconds
-                    }`
+                    raffleEndTimeLeft.days < 10
+                      ? '0' + raffleEndTimeLeft.days
+                      : raffleEndTimeLeft.days
+                  }:${
+                    raffleEndTimeLeft.hours < 10
+                      ? '0' + raffleEndTimeLeft.hours
+                      : raffleEndTimeLeft.hours
+                  }:${
+                    raffleEndTimeLeft.minutes < 10
+                      ? '0' + raffleEndTimeLeft.minutes
+                      : raffleEndTimeLeft.minutes
+                  }:${
+                    raffleEndTimeLeft.seconds < 10
+                      ? '0' + raffleEndTimeLeft.seconds
+                      : raffleEndTimeLeft.seconds
+                  }`
               }
             />
-            <Enhancements />
+            <Enhancements/>
             {/*<Gallery />*/}
           </div>
         </div>
@@ -566,12 +584,12 @@ export default function Nfts() {
             )}
             {raffleState === RaffleState.Ended && (
               <p className="font-medium text-center">
-                Connect wallet to check if you’re whitelisted
+                {connected ? '' : 'Connect wallet to check if you’re whitelisted'}
               </p>
             )}
           </div>
         </section>
       </Layout>
     </>
-  )
+  );
 }

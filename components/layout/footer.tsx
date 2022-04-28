@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import Icon from '../ui-kit/icon'
+import Link from 'next/link';
+import Image from 'next/image';
+import Icon from '../ui-kit/icon';
 
 export function Footer() {
   return (
@@ -52,7 +52,7 @@ export function Footer() {
                     className="flex items-center justify-center sm:justify-start"
                     target="_blank"
                   >
-                    <Icon name="discord" color="white" size={18} />
+                    <Icon name="discord" color="white" size={18}/>
                     <span className="ml-10">Discord</span>
                   </a>
                 </Link>
@@ -63,7 +63,7 @@ export function Footer() {
                     className="flex items-center justify-center sm:justify-start"
                     target="_blank"
                   >
-                    <Icon name="twitter" color="white" size={18} />
+                    <Icon name="twitter" color="white" size={18}/>
                     <span className="ml-10">Twitter</span>
                   </a>
                 </Link>
@@ -74,7 +74,7 @@ export function Footer() {
                     className="flex items-center justify-center sm:justify-start"
                     target="_blank"
                   >
-                    <Icon name="instagram" color="white" size={18} />
+                    <Icon name="instagram" color="white" size={18}/>
                     <span className="ml-10">Instagram</span>
                   </a>
                 </Link>
@@ -83,7 +83,7 @@ export function Footer() {
           </div>
           <div>
             <p className="text-14 font-Subjectivity font-bold text-white mb-20 mt-30 lg:mt-0 tracking-widest">
-              RELEVENT LINKS
+              RELEVANT LINKS
             </p>
             <ul className="flex flex-col font-['Inter']">
               <li className="py-5">
@@ -94,7 +94,8 @@ export function Footer() {
                 </Link>
               </li>
               <li className="py-5">
-                <Link href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
+                <Link
+                  href="https://docs.google.com/document/d/e/2PACX-1vSFQQYJ06nu371dWY_Yu9PgS4onGKnWCiTDjZ899f3z77ih3eoNkdnbJvmYK2uHvg/pub">
                   <a target="_blank" rel="noreferrer">
                     Whitepaper
                   </a>
@@ -118,5 +119,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
